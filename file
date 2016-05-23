@@ -1,0 +1,32 @@
+programa Main;
+	entero :dos, vec[2], matrix[1][2];
+	real : realUno, realDos[2][3];
+	char : strUno, strDos;
+
+	modulo real modUno(); {
+		regresa 4.0;
+	}
+
+	modulo char modDos(real a, real b); {
+
+		regresa 2 * ((uno / 50) - 3);
+	}
+
+	principal() {
+		modUno();
+		modDos(realUno, realDos);
+		
+		mientraz( realUno > realDos ) haz {
+			si( (realUno - matriz[1][2])/2 <> 3) entonces {
+				lee(strUno);
+			} sino {
+				escribe("dos", strDos);
+			}
+
+			repite {
+				si(modUno() > modDos(realUno, realDos) ) entonces {
+					escribe("Mod uno");
+				}
+			} hasta( modUno() < modDos(realUno, modTres() ) || strUno <> strDos && dos > matriz );
+		}
+	}

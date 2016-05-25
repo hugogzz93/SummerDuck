@@ -1,6 +1,7 @@
 %{
 	#include <cstdio>
 	#include <iostream>
+	#include "ProcDirHandler.h"
 	using namespace std;
 
 	// stuff from flex that bison needs to know about:
@@ -12,6 +13,10 @@
 	extern "C" int line_num;
 	 
 	void yyerror(const char *s);
+
+	// compiler code
+	ProcDirHandler procedureDirectoryHandler = new ProcDirHandler();
+
 
 %}
 
@@ -104,10 +109,10 @@
 		| ;
 
 	dec_var:
-		tipo COLON lista_ids SEMI_COLON ;
+		tipo {} COLON lista_ids SEMI_COLON ;
 
 	expresion: 
-		expresion_a exp expresion_b
+		expresion_a exp expresion_b;
 		 // exp expresion_a exp
 		// | exp ;
 	expresion_a:

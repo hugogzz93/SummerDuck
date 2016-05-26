@@ -15,8 +15,9 @@ public:
 		T_ENTERO, T_REAL, T_CHAR
 	};
 	
-	VariableRecord(int type, string name);
-	VariableRecord(int type, string name, int vAddress, string scope);
+	// VariableRecord(int type, string name);
+	// VariableRecord(int type, string name, int dimensions, int vAddress, string scope);
+	VariableRecord(string name, string scope, int type, int dimensions, int vAddress, int sizes[]);
 	VariableRecord();
 	
 	int getType();
@@ -36,7 +37,7 @@ public:
 
 private:
 	string name = "undefined_name", scope = "undefined_scope";
-	int type = -1, vAddress = -1;
+	int type = -1, vAddress = -1, dimensions = 1, sizes[2];
 	bool constant = false;
 };
 

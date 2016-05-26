@@ -5,7 +5,7 @@
 
 ProcDirHandler::ProcDirHandler(ProcedureDirectory *directory) { 
 	this->directory = directory;
-	this->global = ProcedureRecord();
+	this->global = ProcedureRecord("principal");
 	this->local = ProcedureRecord();
 	unordered_map<int, int> new_virtual_addresses = { 
 		{ VariableRecord::T_ENTERO, 0 }, 
@@ -17,10 +17,13 @@ ProcDirHandler::ProcDirHandler(ProcedureDirectory *directory) {
 	setScope(GLOBAL);
 }
 
+void ProcDirHandler::setName(string name) {
+	ProcedureRecord* record = scope == GLOBAL ? &global : &local ;
+	record->setName(name);
+}
+
 void ProcDirHandler::setScope(int scope) {
 	this->scope = scope;
-	if (scope == GLOBAL) 
-		cleanLocal();
 }
 
 void ProcDirHandler::setVariableType(int type) {
@@ -28,17 +31,26 @@ void ProcDirHandler::setVariableType(int type) {
 }
 
 void ProcDirHandler::setReturnType(int type) {
-	this->type = type;
+	ProcedureRecord* record = scope == GLOBAL ? &global : &local ;
+	record->setType(type);
 }
 
 void ProcDirHandler::addVariable(int context, string name, int dimensions, int sizes[]) {
-	int virtualAddress = assignVirtualAddress(variableType, dimensions, sizes);
-	VariableRecord record = VariableRecord(variableType, name, virtualAddress, this->name);
 	ProcedureRecord* procedure = scope == GLOBAL ? &global : &local;
+
+	int virtualAddress = assignVirtualAddress(variableType, dimensions, sizes);
+	VariableRecord record(name, procedure->getName(), variableType, dimensions, virtualAddress, sizes);
 	if (context == PARAMETER) { procedure->addParameter(record); } 
 	else { procedure->addVariable(record); }
-
 }
+
+void ProcDirHandler::registerProcedure() {
+	ProcedureRecord* record = scope == GLOBAL ? &global : &local ;
+	directory->addRecord(*record);
+	cleanLocal();
+	local = ProcedureRecord();
+}
+
 
 void ProcDirHandler::cleanLocal() {
 	parameters.clear();
@@ -52,8 +64,17 @@ void ProcDirHandler::cleanLocal() {
 int ProcDirHandler::assignVirtualAddress(int type, int dimensions, int sizes[]) {
 	unordered_map<int, int> *virtualAddresses = scope == GLOBAL ? &globalVariableIndex : &localVariableIndex;
 
-	int units = 1;
-	for (int i = 0; i < dimensions; ++i) { units += sizes[i]; }
+	int units;
+	if(dimensions == 0) {
+		units = 1;
+	} else if (dimensions == 1) {
+		units = sizes[0];
+	} else {
+		units = sizes[0]*sizes[1];
+	}
+	// for (int i = 0; i < dimensions; ++i) { units += }
+	// int units = dimensions == 0 ? 1 : 0;
+
 
 	int virtualAddress = (*virtualAddresses)[type];
 	(*virtualAddresses)[type] += units;

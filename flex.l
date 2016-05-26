@@ -56,8 +56,8 @@
 
 [\n]                        	{ line_num++; }
 [ \t\n]							{ ; }
-[0-9]+\.[0-9]+					{ yylval.sval = strdup(yytext); return CTE_REAL; }
-[0-9]+							{ yylval.sval = strdup(yytext); return CTE_ENTERO; }
+[0-9]+\.[0-9]+					{ yylval.fval = atof(yytext); return CTE_REAL; }
+[0-9]+							{ yylval.ival = atoi(yytext); return CTE_ENTERO; }
 [a-zA-Z](_?([a-zA-Z]|[0-9]))*   { yylval.sval = strdup(yytext); return ID; }
 \"(\\.|[^\\"])*\"               { yylval.sval = strdup(yytext); return CTE_CHAR; }
 .								{ ; }

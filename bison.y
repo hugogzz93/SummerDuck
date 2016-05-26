@@ -1,6 +1,5 @@
 %{
 	#include <cstdio>
-	#include <iostream>
 	#include "ProcDirHandler.h"
 	using namespace std;
 
@@ -17,6 +16,31 @@
 	// compiler code
 	ProcedureDirectory directory;
 	ProcDirHandler procedureDirectoryHandler(&directory);
+
+	// var declaration aux
+	string name_aux;
+	int dimensions_aux, sizes_aux[2];
+
+	inline void resetAux() {
+		name_aux = "undefined";
+		dimensions_aux = -1;
+		size_t size = sizeof(sizes_aux) / sizeof(int);
+		for (size_t i = 0; i < size; ++i)
+		{
+			sizes_aux[i] = 1;
+		}
+	}
+
+	inline void addVariable(int context) {
+		procedureDirectoryHandler.addVariable(context, name_aux, dimensions_aux, sizes_aux);
+		resetAux(); //caller must be inline for this to work
+	}
+
+	inline void finish() {
+		printf("accepted\n");
+		procedureDirectoryHandler.registerProcedure();
+		directory.listDirectory(true);
+	}
 
 
 %}
@@ -75,10 +99,10 @@
 %token O_OR
 
 // general
-%token ID
-%token CTE_ENTERO
-%token CTE_REAL
-%token CTE_CHAR
+%token<sval> ID
+%token<ival> CTE_ENTERO
+%token<ival> CTE_REAL
+%token<sval> CTE_CHAR
 
 
 
@@ -87,10 +111,15 @@
 %token REAL
 %token CHAR 
 
+
+
+%type<ival> tipo
+
 %%
 
 	programa: 
-		PROGRAMA ID SEMI_COLON vars programa_a PRINCIPAL LEFT_PAREN RIGHT_PAREN LEFT_BRACKET vars estatutos RIGHT_BRACKET { printf("accepted!\n");} ;
+		PROGRAMA ID SEMI_COLON vars programa_a PRINCIPAL LEFT_PAREN RIGHT_PAREN LEFT_BRACKET vars estatutos RIGHT_BRACKET 
+		{ finish(); } ;
 
 	programa_a:
 		dec_func programa_a
@@ -101,16 +130,16 @@
 		| ;
 
 	tipo:
-		ENTERO
-		| REAL
-		| CHAR ;
+		ENTERO { $$ = VariableRecord::T_ENTERO;	}
+		| REAL { $$ = VariableRecord::T_REAL; 	}
+		| CHAR { $$ = VariableRecord::T_CHAR;	} ;
 
 	vars:
 		dec_var vars
 		| ;
 
 	dec_var:
-		tipo {} COLON lista_ids SEMI_COLON ;
+		tipo { procedureDirectoryHandler.setVariableType($1); } COLON lista_ids SEMI_COLON ;
 
 	expresion: 
 		expresion_a exp expresion_b;
@@ -155,7 +184,10 @@
 
 
 	dec_func:
-		MODULO tipo ID LEFT_PAREN dec_func_a RIGHT_PAREN SEMI_COLON LEFT_BRACKET vars estatutos REGRESA dec_func_b SEMI_COLON RIGHT_BRACKET ;
+		{ procedureDirectoryHandler.setScope(ProcDirHandler::LOCAL); } 
+		MODULO tipo ID { procedureDirectoryHandler.setReturnType($3); procedureDirectoryHandler.setName(string($4)); } 
+		LEFT_PAREN dec_func_a RIGHT_PAREN SEMI_COLON LEFT_BRACKET vars estatutos REGRESA dec_func_b SEMI_COLON RIGHT_BRACKET 
+		{ procedureDirectoryHandler.registerProcedure(); procedureDirectoryHandler.setScope(ProcDirHandler::GLOBAL) ;} ;
 
 	dec_func_a:
 		params
@@ -167,23 +199,31 @@
 
 
 	params:
-		tipo ID
-		| tipo ID COMA params ;
+		tipo dim_id { procedureDirectoryHandler.setVariableType($1); addVariable(ProcDirHandler::PARAMETER); } 
+		params_a;
+	
+	params_a:
+		COMA params
+		| ;
+
 
 	lista_ids:
-		dim_id
-		| dim_id COMA lista_ids ;
+		dim_id { addVariable(ProcDirHandler::VARIABLE); } lista_ids_a ;
+
+	lista_ids_a:
+		COMA lista_ids
+		| ;
 
 	dim_id:
-		ID
+		ID { name_aux = string($1); }
 		| vector_id
 		| matriz_id ;
 
 	vector_id:
-		ID LEFT_SQRBRACKET CTE_ENTERO RIGHT_SQRBRACKET ;
+		ID LEFT_SQRBRACKET CTE_ENTERO RIGHT_SQRBRACKET { name_aux = string($1);  dimensions_aux = 1; sizes_aux[0] = $3; } ;
 
 	matriz_id:
-		vector_id LEFT_SQRBRACKET CTE_ENTERO RIGHT_SQRBRACKET matriz_id_a ;
+		vector_id LEFT_SQRBRACKET CTE_ENTERO RIGHT_SQRBRACKET matriz_id_a { dimensions_aux = 2; sizes_aux[1] = $3; } ;
 
 	matriz_id_a:
 			O_INV

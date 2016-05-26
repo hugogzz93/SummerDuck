@@ -26,7 +26,7 @@
 	// void ProcedureDirectory::addFunction(string type, string name) {
 
 	// 	ProcedureRecord newRecord(type, name, parameterDir, variableDir);
-	// 	procDir.push_back(newRecord);
+	// 	procedures.push_back(newRecord);
 
 		
 	// 	parameterDir.clear();
@@ -44,7 +44,7 @@
 	// 	if (this->scope)
 	// 	{
 	// 		int vAddress = getVAddress("main", type);
-	// 		procDir.front().addVariable(type, name, vAddress, "main");
+	// 		procedures.front().addVariable(type, name, vAddress, "main");
 	// 	} else {
 	// 		VariableRecord newRecord(type, name);
 	// 		newRecord.setScope(getCurrentScope());
@@ -57,7 +57,7 @@
 	// 	assignVirtualAddress(record);
 		
 	// 	if (scope) {
-	// 		procDir.front().addVariable(record);
+	// 		procedures.front().addVariable(record);
 			
 	// 	} else {
 	// 		variableDir.push_back(record);
@@ -70,8 +70,8 @@
 		ProcedureRecord record;
 		// vector<Quadruple> functionQuadruples;
 		
-		for (std::vector<ProcedureRecord>::iterator functionRecord = procDir.begin(); 
-										functionRecord != procDir.end(); ++functionRecord)
+		for (std::vector<ProcedureRecord>::iterator functionRecord = procedures.begin(); 
+										functionRecord != procedures.end(); ++functionRecord)
 		{
 			functionRecord->showSignature(verbose);
 			// cout << "Instructions: " << endl;
@@ -83,9 +83,12 @@
 			// }
 			// cout << endl;
 		}
-
-
 	}
+
+	void ProcedureDirectory::addRecord(ProcedureRecord record) {
+		procedures.push_back(record);
+	}
+
 
 	// void ProcedureDirectory::assignVirtualAddresses(vector<VariableRecord> &vec, string name) {
 	// 	int vAddress;
@@ -125,7 +128,7 @@
 
 	// 	if (scope)
 	// 	{
-	// 		VariableRecord *record =  procDir.front().getVariableByName(name);
+	// 		VariableRecord *record =  procedures.front().getVariableByName(name);
 	// 		return record;
 
 	// 	}
@@ -161,7 +164,7 @@
 	// }
 
 	ProcedureRecord* ProcedureDirectory::getFunctionByName(string name) {
-		for (std::vector<ProcedureRecord>::iterator function = procDir.begin(); function != procDir.end(); ++function)
+		for (std::vector<ProcedureRecord>::iterator function = procedures.begin(); function != procedures.end(); ++function)
 		{
 			if (function->getName() == name)
 			{

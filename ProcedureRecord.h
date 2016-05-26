@@ -1,8 +1,6 @@
 #ifndef GUARD_PROCEDURE_RECORD
 #define GUARD_PROCEDURE_RECORD 
 
-#include <iostream>
-#include <vector>
 #include "VariableRecord.h"
 
 using namespace std;
@@ -11,6 +9,7 @@ class ProcedureRecord
 public:
 	// ProcedureRecord(string type, string name, vector<VariableRecord> parameters);
 	ProcedureRecord(string type, string name, vector<VariableRecord> parameters, vector<VariableRecord> variables);
+	ProcedureRecord(string name);
 	ProcedureRecord();
 
 	// void setReturnType(string type);

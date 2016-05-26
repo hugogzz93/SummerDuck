@@ -9,6 +9,7 @@ using namespace std;
 ProcedureRecord::ProcedureRecord(string type, string name, vector<VariableRecord> parameters, vector<VariableRecord> variables): 
 	type(type), name(name), parameters(parameters), variables(variables) {}
 	
+ProcedureRecord::ProcedureRecord(string name): name(name) {}
 ProcedureRecord::ProcedureRecord() {}
 
 
@@ -38,13 +39,20 @@ void ProcedureRecord::showSignature(bool verbose) {
 }
 
 void ProcedureRecord::addVariable(VariableRecord record) {
-	parameters.push_back(record);
-}
-
-void ProcedureRecord::addParameter(VariableRecord record) {
 	variables.push_back(record);
 }
 
+void ProcedureRecord::addParameter(VariableRecord record) {
+	parameters.push_back(record);
+}
+
+void ProcedureRecord::setName(string name) {
+	this->name = name;
+}
+
+void ProcedureRecord::setType(int type) {
+	this->type = type;
+}
 
 VariableRecord *ProcedureRecord::getVariableByName(string name) {
 

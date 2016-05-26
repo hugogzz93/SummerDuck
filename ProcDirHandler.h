@@ -2,10 +2,7 @@
 #define GUARD_PROC_DIR_HANDLER
 
 #include "ErrorHandler.h"
-#include "VariableRecord.h"
-#include "ProcedureRecord.h"
 #include "ProcedureDirectory.h"
-#include <vector>
 using namespace std;
 class ProcDirHandler
 {
@@ -21,12 +18,14 @@ public:
 
 	ProcDirHandler(ProcedureDirectory *directory);
 
+	void setName(string name);
 	void setScope(int scope);
 	void setVariableType(int type);
 	void setReturnType(int type);
 
 	//context: whether parameter or variable
 	void addVariable(int context, string name, int dimensions, int sizes[]); 
+	void registerProcedure();
 
 private:
 	ProcedureDirectory *directory;
@@ -35,11 +34,12 @@ private:
 
 	vector<VariableRecord> parameters;
 
-	string name, type;
 	unordered_map<int, int> localVariableIndex;
 	unordered_map<int, int> globalVariableIndex;
 
-	// 
+	// function attributes
+	// string name, type;
+	// variable attributes
 	int variableType, scope;
 
 	void cleanLocal();

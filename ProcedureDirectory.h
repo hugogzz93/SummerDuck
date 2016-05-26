@@ -1,10 +1,7 @@
 #ifndef GUARD_PROCEDURE_DIRECTORY
 #define GUARD_PROCEDURE_DIRECTORY 
 
-#include <iostream>
-#include <vector>
 #include "ProcedureRecord.h"
-#include "VariableRecord.h"
 // #include "Quadruple.h"
 
 using namespace std;
@@ -20,6 +17,7 @@ public:
 	// void addParameter(string type, string name);
 	// void addVariable(string type, string name);
 	void listDirectory(bool verbose = false);
+	void addRecord(ProcedureRecord);
 	// void updateVariableRecord(VariableRecord& record);
 	// void setCurrentScope(string name);
 
@@ -49,7 +47,7 @@ public:
 private:
 	// bool scope; //true = global
 	// string currentScopeName = "main";
-	vector<ProcedureRecord> procDir;
+	vector<ProcedureRecord> procedures;
 	// int returnTypeFlag;
 
 	// temporal signature storage for functions

@@ -3,10 +3,10 @@
 #define REAL_MAX 3000
 #define CHAR_MAX 4000
 
-ProcDirHandler::ProcDirHandler(ProcedureDirectory directory) { 
+ProcDirHandler::ProcDirHandler(ProcedureDirectory *directory) { 
 	this->directory = directory;
-	this->global = new ProcedureRecord();
-	this->local = new ProcedureRecord();
+	this->global = ProcedureRecord();
+	this->local = ProcedureRecord();
 	unordered_map<int, int> new_virtual_addresses = { 
 		{ VariableRecord::T_ENTERO, 0 }, 
 		{ VariableRecord::T_REAL, 1000 }, 
@@ -33,7 +33,7 @@ void ProcDirHandler::setReturnType(int type) {
 
 void ProcDirHandler::addVariable(int context, string name, int dimensions, int sizes[]) {
 	int virtualAddress = assignVirtualAddress(variableType, dimensions, sizes);
-	VariableRecord record = new VariableRecord(variableType, name, virtualAddress, this->name);
+	VariableRecord record = VariableRecord(variableType, name, virtualAddress, this->name);
 	ProcedureRecord* procedure = scope == GLOBAL ? &global : &local;
 	if (context == PARAMETER) { procedure->addParameter(record); } 
 	else { procedure->addVariable(record); }
@@ -55,9 +55,9 @@ int ProcDirHandler::assignVirtualAddress(int type, int dimensions, int sizes[]) 
 	int units = 1;
 	for (int i = 0; i < dimensions; ++i) { units += sizes[i]; }
 
-	int virtualAddress = *virtualAddresses[type];
-	*virtualAddresses[type] += units;
-	int MEM_MAX = type == VariableRecord::T_ENTERO ? type == VariableRecord::T_REAL : REAL_MAX : CHAR_MAX : ENTERO_MAX ;
-	if (*virtualAddress[type] >= MEM_MAX) { ErrorHandler.memoryLimitExceeded(); }
-	return virtualAddress
+	int virtualAddress = (*virtualAddresses)[type];
+	(*virtualAddresses)[type] += units;
+	int MEM_MAX = type == VariableRecord::T_ENTERO ? ENTERO_MAX : type == VariableRecord::T_REAL ? REAL_MAX : CHAR_MAX ;
+	if ((*virtualAddresses)[type] >= MEM_MAX) { ErrorHandler::memoryLimitExceeded(); }
+	return virtualAddress;
 }

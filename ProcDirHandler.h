@@ -19,7 +19,7 @@ public:
 		PARAMETER, VARIABLE
 	};
 
-	ProcDirHandler(ProcedureDirectory directory);
+	ProcDirHandler(ProcedureDirectory *directory);
 
 	void setScope(int scope);
 	void setVariableType(int type);
@@ -29,7 +29,7 @@ public:
 	void addVariable(int context, string name, int dimensions, int sizes[]); 
 
 private:
-	ProcedureDirectory directory;
+	ProcedureDirectory *directory;
 	ProcedureRecord global;
 	ProcedureRecord local;
 

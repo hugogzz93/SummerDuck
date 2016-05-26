@@ -15,7 +15,8 @@
 	void yyerror(const char *s);
 
 	// compiler code
-	ProcDirHandler procedureDirectoryHandler = new ProcDirHandler();
+	ProcedureDirectory directory;
+	ProcDirHandler procedureDirectoryHandler(&directory);
 
 
 %}

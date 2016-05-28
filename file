@@ -13,13 +13,15 @@ programa Main;
 
 	modulo real modTres(real x[2][3], real y); {
 		real : realUno[2][3], realDos[2][3];
-
 		regresa x[0][0];
 	}
 
 	principal() {
 		modUno();
 		modDos(realUno, realDos);
+		realUno = 2.0;
+		realDos[0][0] = (realUno - 5.2) * 6;
+		strUno = "hola mundo";
 		
 		mientraz( realUno > realDos ) haz {
 			si( (realUno - matriz[1][2])/2 <> 3) entonces {

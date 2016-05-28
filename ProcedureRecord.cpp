@@ -39,10 +39,21 @@ void ProcedureRecord::showSignature(bool verbose) {
 }
 
 void ProcedureRecord::addVariable(VariableRecord record) {
+	// check for redeclaration
+	try {
+		VariableRecord variable = *getVariableByName(record.getName());
+		ErrorHandler::variableRedefinition(record.getName());
+	} catch(exception e) {	}
+
 	variables.push_back(record);
 }
 
 void ProcedureRecord::addParameter(VariableRecord record) {
+	// check for redeclaration
+	try {
+		VariableRecord variable = *getVariableByName(record.getName());
+		ErrorHandler::variableRedefinition(record.getName());
+	} catch(exception e) {}
 	parameters.push_back(record);
 }
 

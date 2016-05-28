@@ -1,6 +1,7 @@
 #ifndef GUARD_VARIABLE_RECORD
 #define GUARD_VARIABLE_RECORD 
 
+#include "ErrorHandler.h"
 #include <iostream>
 #include <vector>
 #include <unordered_map>

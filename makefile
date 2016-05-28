@@ -30,5 +30,5 @@ procedureDirectory: variableRecord procedureRecord
 procedureRecord: variableRecord
 	g++ -w -std=c++11 -c ProcedureRecord.cpp	
 
-variableRecord:
+variableRecord: errorHandler
 	g++ -w -std=c++11 -c VariableRecord.cpp	

@@ -9,5 +9,7 @@ public:
 	ErrorHandler();
 
 	static void memoryLimitExceeded();
+	static void variableRedefinition(string);
+	static void moduleRedefinition(string);
 };
 #endif

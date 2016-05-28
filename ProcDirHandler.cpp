@@ -46,6 +46,7 @@ void ProcDirHandler::addVariable(int context, string name, int dimensions, int s
 
 void ProcDirHandler::registerProcedure() {
 	ProcedureRecord* record = scope == GLOBAL ? &global : &local ;
+
 	directory->addRecord(*record);
 	cleanLocal();
 	local = ProcedureRecord();

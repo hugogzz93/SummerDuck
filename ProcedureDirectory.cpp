@@ -1,7 +1,4 @@
 #include "ProcedureDirectory.h"
-#include "ProcedureRecord.h"
-#include "VariableRecord.h"
-// #include "Quadruple.h"
 #include <stdexcept>
 #include <algorithm>
 #include <iomanip>
@@ -86,6 +83,12 @@
 	}
 
 	void ProcedureDirectory::addRecord(ProcedureRecord record) {
+		// check for redefinition
+		try {
+			ProcedureRecord oldRecord = *getFunctionByName(record.getName());
+			ErrorHandler::moduleRedefinition(record.getName());
+		} catch(exception e) {}
+
 		procedures.push_back(record);
 	}
 

@@ -186,7 +186,7 @@
 	dec_func:
 		{ procedureDirectoryHandler.setScope(ProcDirHandler::LOCAL); } 
 		MODULO tipo ID { procedureDirectoryHandler.setReturnType($3); procedureDirectoryHandler.setName(string($4)); } 
-		LEFT_PAREN dec_func_a RIGHT_PAREN SEMI_COLON LEFT_BRACKET vars estatutos REGRESA dec_func_b SEMI_COLON RIGHT_BRACKET 
+		LEFT_PAREN dec_func_a RIGHT_PAREN SEMI_COLON LEFT_BRACKET vars estatutos RIGHT_BRACKET 
 		{ procedureDirectoryHandler.registerProcedure(); procedureDirectoryHandler.setScope(ProcDirHandler::GLOBAL) ;} ;
 
 	dec_func_a:
@@ -197,6 +197,9 @@
 		expresion
 		| ;
 
+	regresa:
+		REGRESA expresion
+		| REGRESA ;
 
 	params:
 		tipo dim_id { procedureDirectoryHandler.setVariableType($1); addVariable(ProcDirHandler::PARAMETER); } 
@@ -241,30 +244,14 @@
 		| ;
 
 	llamada_func_b:
-		var_cte
-		| var_cte COMA llamada_func_a ;
-
-	// lectura:
-	// 	LEE LEFT_PAREN lectura_a RIGHT_PAREN SEMI_COLON ;
-
-	// lectura_a:
-	// 	dim_id
-	// 	| dim_id COMA lectura_a ;
-
-	// escritura:
-	// 	ESCRIBE LEFT_PAREN escritura_a RIGHT_PAREN SEMI_COLON ;
-
-	// escritura_a:
-	// 	CTE_CHAR
-	// 	| expresion
-	// 	| CTE_CHAR COMA escritura_a
-	// 	| expresion COMA escritura_a ;
+		expresion
+		| expresion COMA llamada_func_a ;
 
 	decision:
 		SI LEFT_PAREN expresion RIGHT_PAREN ENTONCES LEFT_BRACKET estatutos RIGHT_BRACKET decision_b ;
 	
 	decision_b:
-		SINO LEFT_BRACKET estatutos RIGHT_BRACKET
+		SINO LEFT_BRACKET estatutos RIGHT_BRACKET 
 		| ;
 
 	ciclo_while:
@@ -276,11 +263,10 @@
 	estatuto:
 		asignacion SEMI_COLON
 		| llamada_func SEMI_COLON
-		// | lectura
-		// | escritura
-		| ciclo_while
 		| ciclo_do_while SEMI_COLON
-		| decision ;
+		| regresa SEMI_COLON 
+		| ciclo_while
+		| decision
 
 
 %%

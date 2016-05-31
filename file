@@ -4,7 +4,11 @@ programa Main;
 	char : strUno, strDos;
 
 	modulo real modUno(char a); {
-		regresa 4.0;
+		si(a < 1) entonces {
+			regresa 4.0;
+		} sino {
+			modUno(a - 1);
+		}
 	}
 
 	modulo char modDos(real a, entero b); {
@@ -14,6 +18,22 @@ programa Main;
 	modulo real modTres(real x[2][3], real y); {
 		real : realUno[2][3], realDos[2][3];
 		regresa x[0][0];
+	}
+
+	modulo real fibonacci(real a); {
+		si(a == 1 || a == 0) entonces {
+			regresa 1;
+		} sino {
+			regresa fibonacci(a-1) + fibonacci(a-2);
+		}
+	}
+
+	modulo real factorial(real a); {
+		si(a == 2) entonces {
+			regresa 2;
+		} sino {
+			regresa a * factorial(a-1);
+		}
 	}
 
 	principal() {

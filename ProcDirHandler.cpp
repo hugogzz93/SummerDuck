@@ -5,7 +5,7 @@
 
 ProcDirHandler::ProcDirHandler(ProcedureDirectory *directory) { 
 	this->directory = directory;
-	this->global = ProcedureRecord("principal");
+	this->global = ProcedureRecord("global");
 	this->local = ProcedureRecord();
 	unordered_map<int, int> new_virtual_addresses = { 
 		{ VariableRecord::T_ENTERO, 0 }, 

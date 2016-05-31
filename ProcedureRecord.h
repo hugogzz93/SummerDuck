@@ -2,6 +2,7 @@
 #define GUARD_PROCEDURE_RECORD 
 
 #include "VariableRecord.h"
+#include "Quadruple.h"
 
 using namespace std;
 class ProcedureRecord

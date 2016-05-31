@@ -1,6 +1,7 @@
 %{
 	#include <cstdio>
 	#include "ProcDirHandler.h"
+	#include "QuadrupleGenerator.h"
 	using namespace std;
 
 	// stuff from flex that bison needs to know about:
@@ -16,6 +17,8 @@
 	// compiler code
 	ProcedureDirectory directory;
 	ProcDirHandler procedureDirectoryHandler(&directory);
+	QuadrupleGenerator quadrupleGenerator(&directory, &procedureDirectoryHandler);
+
 
 	// var declaration aux
 	string name_aux;
@@ -118,8 +121,9 @@
 %%
 
 	programa: 
-		PROGRAMA ID SEMI_COLON vars programa_a PRINCIPAL LEFT_PAREN RIGHT_PAREN LEFT_BRACKET vars estatutos RIGHT_BRACKET 
-		{ finish(); } ;
+		PROGRAMA ID SEMI_COLON vars { procedureDirectoryHandler.registerProcedure(); } 
+		programa_a PRINCIPAL { procedureDirectoryHandler.setScope(ProcDirHandler::LOCAL);  procedureDirectoryHandler.setName("principal"); }
+		LEFT_PAREN RIGHT_PAREN LEFT_BRACKET vars estatutos RIGHT_BRACKET { finish(); } ;
 
 	programa_a:
 		dec_func programa_a
@@ -191,10 +195,6 @@
 
 	dec_func_a:
 		params
-		| ;
-
-	dec_func_b:
-		expresion
 		| ;
 
 	regresa:

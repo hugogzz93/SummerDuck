@@ -37,6 +37,8 @@ programa Main;
 	}
 
 	principal() {
+		real : realUno[2][3], realDos[2][3];
+	
 		modUno();
 		modDos(realUno, realDos);
 		realUno = 2.0;

@@ -11,5 +11,8 @@ public:
 	static void memoryLimitExceeded();
 	static void variableRedefinition(string);
 	static void moduleRedefinition(string);
+	static void invalidAccess(string msg);
+	static void unidentifiedId(string, string);
+	static void invalidType(string);
 };
 #endif

@@ -27,6 +27,10 @@ public:
 	void addVariable(int context, string name, int dimensions, int sizes[]); 
 	void registerProcedure();
 
+	int getScope();
+	ProcedureRecord* getRecord(int scope);
+	ProcedureRecord* getProcedure(int);
+
 private:
 	ProcedureDirectory *directory;
 	ProcedureRecord global;
@@ -37,8 +41,6 @@ private:
 	unordered_map<int, int> localVariableIndex;
 	unordered_map<int, int> globalVariableIndex;
 
-	// function attributes
-	// string name, type;
 	// variable attributes
 	int variableType, scope;
 

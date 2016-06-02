@@ -36,6 +36,27 @@ string VariableRecord::expose() {
 	return message;
 }
 
+int VariableRecord::arrayAccess(int coordinates[]) {
+	if (sizeof(coordinates)/sizeof(coordinates[0]) != dimensions)
+	{
+		string msg = name + " no tiene suficientes dimensionses.";
+		ErrorHandler::invalidAccess(msg);
+	} else if( dimensions == 1) {
+		// vector
+		if (coordinates[0] > sizes[0] || coordinates[0] < 0)
+		{
+			ErrorHandler::invalidAccess("Accesso fuera de limites");
+		}
+		return coordinates[0];
+	} else {
+		if (coordinates[0] > sizes[0] || coordinates[0] < 0 || coordinates[1] > sizes[1] || coordinates[1] < 0)
+		{
+			ErrorHandler::invalidAccess("Accesso fuera de limites");
+		}
+		return coordinates[0]*sizes[0] + coordinates[1];
+	}
+}
+
 string VariableRecord::getTypeAsString() {
 	string msg;
 	if (type == T_ENTERO) { msg = "ENTERO"; } 
@@ -70,4 +91,34 @@ void VariableRecord::setScope(string scope) {
 
 void VariableRecord::setConstant(bool constant) {
 	this->constant = constant;
+}
+
+void VariableRecord::getValue(int &container) {
+	if (type != T_ENTERO) { ErrorHandler::invalidType(name); }
+	container = data.ival;
+}
+
+void VariableRecord::getValue(double &container) {
+	if (type != T_REAL) { ErrorHandler::invalidType(name); }
+	container = data.fval;
+}
+
+void VariableRecord::getValue(string &container) {
+	if (type != T_CHAR) { ErrorHandler::invalidType(name); }
+	container = data.sval;
+}
+
+void VariableRecord::setValue(int value) {
+	if (type != T_ENTERO) { ErrorHandler::invalidType(name); }
+	data.ival = value;
+}
+
+void VariableRecord::setValue(double value) {
+	if (type != T_REAL) { ErrorHandler::invalidType(name); }
+	data.fval = value;
+}
+
+void VariableRecord::setValue(string value) {
+	if (type != T_CHAR) { ErrorHandler::invalidType(name); }
+	data.sval = value;
 }

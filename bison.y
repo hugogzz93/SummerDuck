@@ -15,18 +15,20 @@
 	void yyerror(const char *s);
 
 	// compiler code
+	DataHolder dataHolder;
 	ProcedureDirectory directory;
 	ProcDirHandler procedureDirectoryHandler(&directory);
-	QuadrupleGenerator quadrupleGenerator(&directory, &procedureDirectoryHandler);
-
+	QuadrupleGenerator quadrupleGenerator(&directory, &procedureDirectoryHandler, &dataHolder);
 
 	// var declaration aux
 	string name_aux;
 	int dimensions_aux, sizes_aux[2];
 
+	// var_cte aux
+
 	inline void resetAux() {
 		name_aux = "undefined";
-		dimensions_aux = -1;
+		dimensions_aux = 0;
 		size_t size = sizeof(sizes_aux) / sizeof(int);
 		for (size_t i = 0; i < size; ++i)
 		{
@@ -43,6 +45,14 @@
 		printf("accepted\n");
 		procedureDirectoryHandler.registerProcedure();
 		directory.listDirectory(true);
+	}
+
+	inline void dataHolderSetAuxs() {
+		dataHolder.sval = name_aux;
+		dataHolder.dimensions = dimensions_aux;
+		dataHolder.sizes[0] = sizes_aux[0];
+		dataHolder.sizes[1] = sizes_aux[1];
+		// printf("parsing %s with dimensions: %d, and sizes %d, %d\n", name_aux.c_str(), dimensions_aux, sizes_aux[0], sizes_aux[1]);
 	}
 
 
@@ -117,6 +127,7 @@
 
 
 %type<ival> tipo
+%type<ival> var_cte
 
 %%
 
@@ -146,9 +157,8 @@
 		tipo { procedureDirectoryHandler.setVariableType($1); } COLON lista_ids SEMI_COLON ;
 
 	expresion: 
-		expresion_a exp expresion_b;
-		 // exp expresion_a exp
-		// | exp ;
+		expresion_a exp expresion_b ;
+
 	expresion_a:
 		O_NOT
 		| ;
@@ -175,16 +185,16 @@
 
 	factor:
 		LEFT_PAREN expresion RIGHT_PAREN
-		| var_cte
-		| O_SUMA var_cte
-		| O_RESTA var_cte ;
+		| var_cte 			{ quadrupleGenerator.pushOperand(); resetAux(); } 
+		| O_SUMA var_cte 	{ quadrupleGenerator.pushOperand(); resetAux(); }
+		| O_RESTA var_cte 	{ quadrupleGenerator.pushOperand(); resetAux(); } ;
 
 	var_cte:
-		dim_id
-		| CTE_ENTERO
-		| CTE_REAL
-		| CTE_CHAR
-		| llamada_func ;
+		dim_id			{  dataHolderSetAuxs();  quadrupleGenerator.setFlag(QuadrupleGenerator::C_ID); 			}
+		| CTE_ENTERO	{  dataHolder.ival = $1; quadrupleGenerator.setFlag(QuadrupleGenerator::C_ENTERO); 		}
+		| CTE_REAL		{  dataHolder.fval = $1; quadrupleGenerator.setFlag(QuadrupleGenerator::C_REAL); 		}
+		| CTE_CHAR		{  dataHolder.sval = $1; quadrupleGenerator.setFlag(QuadrupleGenerator::C_CHAR); 		}
+		| llamada_func 	{  						 quadrupleGenerator.setFlag(QuadrupleGenerator::C_FUNC_CALL); 	} ; /* result will be in stack */
 
 
 	dec_func:

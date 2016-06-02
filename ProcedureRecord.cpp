@@ -83,7 +83,7 @@ VariableRecord *ProcedureRecord::getVariableByName(string name) {
 		}
 	}
 
-	throw invalid_argument("No variable with the name " + name + " found for function " + this->name + ".");
+	throw invalid_argument("No variable with the name " + name + " found.");
 }
 
 string ProcedureRecord::getName() {

@@ -12,7 +12,7 @@ programa Main;
 	}
 
 	modulo char modDos(real a, entero b); {
-		regresa 2 * ((uno / 50) - 3);
+		regresa 2 * ((a / 50) - 3);
 	}
 
 	modulo real modTres(real x[2][3], real y); {
@@ -40,13 +40,15 @@ programa Main;
 		real : realUno[2][3], realDos[2][3];
 	
 		modUno();
+		dos = 1;
+		matrix[0][1] = 1;
 		modDos(realUno, realDos);
 		realUno = 2.0;
 		realDos[0][0] = (realUno - 5.2) * 6;
 		strUno = "hola mundo";
 		
 		mientraz( realUno > realDos ) haz {
-			si( (realUno - matriz[1][2])/2 <> 3) entonces {
+			si( (realUno - matrix[1][2])/2 <> 3) entonces {
 				lee(strUno);
 			} sino {
 				escribe("dos", strDos);
@@ -56,6 +58,6 @@ programa Main;
 				si(modUno() > modDos(realUno, realDos) ) entonces {
 					escribe("Mod uno");
 				}
-			} hasta( modUno() < modDos(realUno, modTres(realDos) ) || strUno <> strDos && dos > matriz );
+			} hasta( modUno() < modDos(realUno, modTres(realDos) ) || strUno <> strDos && dos > matrix );
 		}
 	}

@@ -52,6 +52,13 @@ void ProcDirHandler::registerProcedure() {
 	local = ProcedureRecord();
 }
 
+int ProcDirHandler::getScope(){
+	return scope;
+}
+
+ProcedureRecord* ProcDirHandler::getRecord(int scope) {
+	return scope == GLOBAL ? &global : &local ;
+}
 
 void ProcDirHandler::cleanLocal() {
 	parameters.clear();

@@ -4,235 +4,240 @@
 
 #include <iostream>
 #include <unordered_map>
+#include "Quadruple.h"
 
 
 class SemanticCube
 {
 
-  typedef std::unordered_map<std::string,std::string> dimThree;
-  typedef std::unordered_map<std::string, dimThree> dimTwo;
-  typedef std::unordered_map<std::string, dimTwo> dimOne;
+  typedef std::unordered_map<int,int> dimThree;
+  typedef std::unordered_map<int, dimThree> dimTwo;
+  typedef std::unordered_map<int, dimTwo> dimOne;
 
 public:
 	dimOne getMatrix();
-  std::string getResult(std::string op, std::string lOp, std::string rOp);
+  int getResult(int op, int lOp, int rOp);
+
+  const enum {
+    T_ENTERO, T_REAL, T_CHAR, T_BOOL, T_INVALID
+  };
 
 private:
 
   //int
   dimThree intInt = {
-  	{"+", "INT"},
-  	{"-", "INT"},
-  	{"/", "INT"},
-  	{"*", "INT"},
-    {">", "BOOL"},
-    {">=", "BOOL"},
-    {"<", "BOOL"},
-    {"<=", "BOOL"},
-    {"!=", "BOOL"},
-    {"==", "BOOL"}
+  	{ Quadruple::I_SUMA, T_ENTERO},
+  	{ Quadruple::I_RESTA, T_ENTERO},
+  	{ Quadruple::I_DIV, T_ENTERO},
+  	{ Quadruple::I_MULT, T_ENTERO},
+    { Quadruple::I_MAYOR_QUE, T_BOOL},
+    { Quadruple::I_MENOR_IGUAL_QUE, T_BOOL},
+    { Quadruple::I_MENOR_QUE, T_BOOL},
+    { Quadruple::I_MENOR_IGUAL_QUE, T_BOOL},
+    { Quadruple::I_NO_IGUAL, T_BOOL},
+    { Quadruple::I_IGUAL, T_BOOL}
   };
 
   dimThree intDouble = {
-  	{"+", "FLOAT"},
-  	{"-", "FLOAT"},
-  	{"/", "FLOAT"},
-  	{"*", "FLOAT"},
-    {">", "BOOL"},
-    {">=", "BOOL"},
-    {"<", "BOOL"},
-    {"<=", "BOOL"},
-    {"!=", "BOOL"},
-    {"==", "BOOL"}
+  	{ Quadruple::I_SUMA, T_REAL},
+  	{ Quadruple::I_RESTA, T_REAL},
+  	{ Quadruple::I_DIV, T_REAL},
+  	{ Quadruple::I_MULT, T_REAL},
+    { Quadruple::I_MAYOR_QUE, T_BOOL},
+    { Quadruple::I_MENOR_IGUAL_QUE, T_BOOL},
+    { Quadruple::I_MENOR_QUE, T_BOOL},
+    { Quadruple::I_MENOR_IGUAL_QUE, T_BOOL},
+    { Quadruple::I_NO_IGUAL, T_BOOL},
+    { Quadruple::I_IGUAL, T_BOOL}
   };
 
   dimThree intBool = {
-  	{"+", "error"},
-  	{"-", "error"},
-  	{"/", "error"},
-  	{"*", "error"}	
+  	{ Quadruple::I_SUMA, T_INVALID},
+  	{ Quadruple::I_RESTA, T_INVALID},
+  	{ Quadruple::I_DIV, T_INVALID},
+  	{ Quadruple::I_MULT, T_INVALID}	
   };
 
   dimThree intString = {
-  	{"+", "STRING"},
-  	{"-", "STRING"},
-  	{"/", "STRING"},
-  	{"*", "STRING"},
-    {">", "error"},
-    {">=", "error"},
-    {"<", "error"},
-    {"<=", "error"},
-    {"!=", "error"},
-    {"==", "error"}
+  	{ Quadruple::I_SUMA, T_CHAR},
+  	{ Quadruple::I_RESTA, T_CHAR},
+  	{ Quadruple::I_DIV, T_CHAR},
+  	{ Quadruple::I_MULT, T_CHAR},
+    { Quadruple::I_MAYOR_QUE, T_INVALID},
+    { Quadruple::I_MENOR_IGUAL_QUE, T_INVALID},
+    { Quadruple::I_MENOR_QUE, T_INVALID},
+    { Quadruple::I_MENOR_IGUAL_QUE, T_INVALID},
+    { Quadruple::I_NO_IGUAL, T_INVALID},
+    { Quadruple::I_IGUAL, T_INVALID}
   };
 
   //double
 
   dimThree doubleInt = {
-  	{"+", "FLOAT"},
-  	{"-", "FLOAT"},
-  	{"/", "FLOAT"},
-  	{"*", "FLOAT"},
-    {">", "BOOL"},
-    {">=", "BOOL"},
-    {"<", "BOOL"},
-    {"<=", "BOOL"},
-    {"!=", "BOOL"},
-    {"==", "BOOL"}
+  	{ Quadruple::I_SUMA, T_REAL},
+  	{ Quadruple::I_RESTA, T_REAL},
+  	{ Quadruple::I_DIV, T_REAL},
+  	{ Quadruple::I_MULT, T_REAL},
+    { Quadruple::I_MAYOR_QUE, T_BOOL},
+    { Quadruple::I_MENOR_IGUAL_QUE, T_BOOL},
+    { Quadruple::I_MENOR_QUE, T_BOOL},
+    { Quadruple::I_MENOR_IGUAL_QUE, T_BOOL},
+    { Quadruple::I_NO_IGUAL, T_BOOL},
+    { Quadruple::I_IGUAL, T_BOOL}
   };
 
   dimThree doubleDouble = {
-  	{"+", "FLOAT"},
-  	{"-", "FLOAT"},
-  	{"/", "FLOAT"},
-  	{"*", "FLOAT"},
-    {">", "BOOL"},
-    {">=", "BOOL"},
-    {"<", "BOOL"},
-    {"<=", "BOOL"},
-    {"!=", "BOOL"},
-    {"==", "BOOL"}
+  	{ Quadruple::I_SUMA, T_REAL},
+  	{ Quadruple::I_RESTA, T_REAL},
+  	{ Quadruple::I_DIV, T_REAL},
+  	{ Quadruple::I_MULT, T_REAL},
+    { Quadruple::I_MAYOR_QUE, T_BOOL},
+    { Quadruple::I_MENOR_IGUAL_QUE, T_BOOL},
+    { Quadruple::I_MENOR_QUE, T_BOOL},
+    { Quadruple::I_MENOR_IGUAL_QUE, T_BOOL},
+    { Quadruple::I_NO_IGUAL, T_BOOL},
+    { Quadruple::I_IGUAL, T_BOOL}
   };
 
   dimThree doubleBool = {
-  	{"+", "error"},
-  	{"-", "error"},
-  	{"/", "error"},
-  	{"*", "error"}	
+  	{ Quadruple::I_SUMA, T_INVALID},
+  	{ Quadruple::I_RESTA, T_INVALID},
+  	{ Quadruple::I_DIV, T_INVALID},
+  	{ Quadruple::I_MULT, T_INVALID}	
   };
 
   dimThree doubleString = {
-  	{"+", "STRING"},
-  	{"-", "STRING"},
-  	{"/", "STRING"},
-  	{"*", "STRING"},
-    {">", "error"},
-    {">=", "error"},
-    {"<", "error"},
-    {"<=", "error"},
-    {"!=", "error"},
-    {"==", "error"}
+  	{ Quadruple::I_SUMA, T_CHAR},
+  	{ Quadruple::I_RESTA, T_CHAR},
+  	{ Quadruple::I_DIV, T_CHAR},
+  	{ Quadruple::I_MULT, T_CHAR},
+    { Quadruple::I_MAYOR_QUE, T_INVALID},
+    { Quadruple::I_MENOR_IGUAL_QUE, T_INVALID},
+    { Quadruple::I_MENOR_QUE, T_INVALID},
+    { Quadruple::I_MENOR_IGUAL_QUE, T_INVALID},
+    { Quadruple::I_NO_IGUAL, T_INVALID},
+    { Quadruple::I_IGUAL, T_INVALID}
   };
 
   //string
   dimThree stringInt = {
-  	{"+", "STRING"},
-  	{"-", "STRING"},
-  	{"/", "STRING"},
-  	{"*", "STRING"},
-    {">", "error"},
-    {">=", "error"},
-    {"<", "error"},
-    {"<=", "error"},
-    {"!=", "error"},
-    {"==", "error"}
+  	{ Quadruple::I_SUMA, T_CHAR},
+  	{ Quadruple::I_RESTA, T_CHAR},
+  	{ Quadruple::I_DIV, T_CHAR},
+  	{ Quadruple::I_MULT, T_CHAR},
+    { Quadruple::I_MAYOR_QUE, T_INVALID},
+    { Quadruple::I_MENOR_IGUAL_QUE, T_INVALID},
+    { Quadruple::I_MENOR_QUE, T_INVALID},
+    { Quadruple::I_MENOR_IGUAL_QUE, T_INVALID},
+    { Quadruple::I_NO_IGUAL, T_INVALID},
+    { Quadruple::I_IGUAL, T_INVALID}
   };
 
   dimThree stringDouble = {
-  	{"+", "STRING"},
-  	{"-", "STRING"},
-  	{"/", "STRING"},
-  	{"*", "STRING"},
-    {">", "error"},
-    {">=", "error"},
-    {"<", "error"},
-    {"<=", "error"},
-    {"!=", "error"},
-    {"==", "error"}
+  	{ Quadruple::I_SUMA, T_CHAR},
+  	{ Quadruple::I_RESTA, T_CHAR},
+  	{ Quadruple::I_DIV, T_CHAR},
+  	{ Quadruple::I_MULT, T_CHAR},
+    { Quadruple::I_MAYOR_QUE, T_INVALID},
+    { Quadruple::I_MENOR_IGUAL_QUE, T_INVALID},
+    { Quadruple::I_MENOR_QUE, T_INVALID},
+    { Quadruple::I_MENOR_IGUAL_QUE, T_INVALID},
+    { Quadruple::I_NO_IGUAL, T_INVALID},
+    { Quadruple::I_IGUAL, T_INVALID}
   };
 
   dimThree stringBool = {
-  	{"+", "error"},
-  	{"-", "error"},
-  	{"/", "error"},
-  	{"*", "error"}	
+  	{ Quadruple::I_SUMA, T_INVALID},
+  	{ Quadruple::I_RESTA, T_INVALID},
+  	{ Quadruple::I_DIV, T_INVALID},
+  	{ Quadruple::I_MULT, T_INVALID}	
   };
 
   dimThree stringString = {
-  	{"+", "STRING"},
-  	{"-", "STRING"},
-  	{"/", "STRING"},
-  	{"*", "STRING"},
-    {">", "BOOL"},
-    {">=", "BOOL"},
-    {"<", "BOOL"},
-    {"<=", "BOOL"},
-    {"!=", "BOOL"},
-    {"==", "BOOL"}
+  	{ Quadruple::I_SUMA, T_CHAR},
+  	{ Quadruple::I_RESTA, T_CHAR},
+  	{ Quadruple::I_DIV, T_CHAR},
+  	{ Quadruple::I_MULT, T_CHAR},
+    { Quadruple::I_MAYOR_QUE, T_BOOL},
+    { Quadruple::I_MENOR_IGUAL_QUE, T_BOOL},
+    { Quadruple::I_MENOR_QUE, T_BOOL},
+    { Quadruple::I_MENOR_IGUAL_QUE, T_BOOL},
+    { Quadruple::I_NO_IGUAL, T_BOOL},
+    { Quadruple::I_IGUAL, T_BOOL}
   };
 
   //bool
 
   dimThree boolInt = {
-  	{"+", "error"},
-  	{"-", "error"},
-  	{"/", "error"},
-  	{"*", "error"}
+  	{ Quadruple::I_SUMA, T_INVALID},
+  	{ Quadruple::I_RESTA, T_INVALID},
+  	{ Quadruple::I_DIV, T_INVALID},
+  	{ Quadruple::I_MULT, T_INVALID}
   };
 
   dimThree boolDouble = {
-  	{"+", "error"},
-  	{"-", "error"},
-  	{"/", "error"},
-  	{"*", "error"}
+  	{ Quadruple::I_SUMA, T_INVALID},
+  	{ Quadruple::I_RESTA, T_INVALID},
+  	{ Quadruple::I_DIV, T_INVALID},
+  	{ Quadruple::I_MULT, T_INVALID}
   };
 
   dimThree boolBool = {
-  	{"+", "BOOL"},
-  	{"-", "BOOL"},
-  	{"/", "BOOL"},
-  	{"*", "BOOL"},
-    {">", "BOOL"},
-    {">=", "BOOL"},
-    {"<", "BOOL"},
-    {"<=", "BOOL"},
-    {"!=", "BOOL"},
-    {"==", "BOOL"}
+  	{ Quadruple::I_SUMA, T_INVALID},
+  	{ Quadruple::I_RESTA, T_INVALID},
+  	{ Quadruple::I_DIV, T_INVALID},
+  	{ Quadruple::I_MULT, T_INVALID},
+    { Quadruple::I_MAYOR_QUE, T_INVALID},
+    { Quadruple::I_MENOR_IGUAL_QUE, T_INVALID},
+    { Quadruple::I_MENOR_QUE, T_INVALID},
+    { Quadruple::I_MENOR_IGUAL_QUE, T_INVALID},
+    { Quadruple::I_NO_IGUAL, T_INVALID},
+    { Quadruple::I_IGUAL, T_INVALID}
   };
 
   dimThree boolString = {
-  	{"+", "error"},
-  	{"-", "error"},
-  	{"/", "error"},
-  	{"*", "error"}
+  	{ Quadruple::I_SUMA, T_INVALID},
+  	{ Quadruple::I_RESTA, T_INVALID},
+  	{ Quadruple::I_DIV, T_INVALID},
+  	{ Quadruple::I_MULT, T_INVALID}
   };
 
 
 
   dimTwo intDim = {
-  	{"INT", intInt},
-  	{"FLOAT", intDouble},
-  	{"BOOL", intBool},
-  	{"STRING", intString}
+  	{T_ENTERO, intInt},
+  	{T_REAL, intDouble},
+  	{T_BOOL, intBool},
+  	{T_CHAR, intString}
   };
 
   dimTwo doubleDim = {
-  	{"INT", doubleInt},
-  	{"FLOAT", doubleDouble},
-  	{"BOOL", doubleBool},
-  	{"STRING", doubleString}
+  	{T_ENTERO, doubleInt},
+  	{T_REAL, doubleDouble},
+  	{T_BOOL, doubleBool},
+  	{T_CHAR, doubleString}
   };
 
   dimTwo boolDim = {
-  	{"INT", boolInt},
-  	{"FLOAT", boolDouble},
-  	{"BOOL", boolBool},
-  	{"STRING", boolString}
+  	{T_ENTERO, boolInt},
+  	{T_REAL, boolDouble},
+  	{T_BOOL, boolBool},
+  	{T_CHAR, boolString}
   };
 
   dimTwo stringDim = {
-  	{"INT", stringInt},
-  	{"FLOAT", stringDouble},
-  	{"BOOL", stringBool},
-  	{"STRING", stringString}
+  	{T_ENTERO, stringInt},
+  	{T_REAL, stringDouble},
+  	{T_BOOL, stringBool},
+  	{T_CHAR, stringString}
   };
 
 
    dimOne matrix = {
-  	{"INT", intDim},
-  	{"FLOAT", doubleDim},
-  	{"BOOL", boolDim},
-  	{"STRING", stringDim}
+  	{T_ENTERO, intDim},
+  	{T_REAL, doubleDim},
+  	{T_BOOL, boolDim},
+  	{T_CHAR, stringDim}
   };
 };
 #endif

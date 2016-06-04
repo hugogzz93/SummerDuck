@@ -1,5 +1,5 @@
 all: flex
-	g++ -w -std=c++11 bison.tab.c lex.yy.c  ErrorHandler.o QuadrupleGenerator.o ProcDirHandler.o ProcedureDirectory.o ProcedureRecord.o VariableRecord.o SemanticCube.o -o out
+	g++ -w -std=c++11 bison.tab.c lex.yy.c  Memory.o Quadruple.o ErrorHandler.o QuadrupleGenerator.o ProcDirHandler.o ProcedureDirectory.o ProcedureRecord.o VariableRecord.o SemanticCube.o -o out
 	./out
 
 flex: bison 
@@ -14,7 +14,7 @@ procDirHandler: errorHandler procedureDirectory
 errorHandler:
 	g++ -w -std=c++11 -c ErrorHandler.cpp
 
-quadrupleGenerator: procedureDirectory quadruple semanticCube procDirHandler
+quadrupleGenerator: procedureDirectory quadruple semanticCube procDirHandler quadruple
 	g++ -w -std=c++11 -c QuadrupleGenerator.cpp	
 
 procedureDirectory: variableRecord procedureRecord
@@ -26,8 +26,11 @@ procedureRecord: variableRecord quadruple
 variableRecord: errorHandler
 	g++ -w -std=c++11 -c VariableRecord.cpp	
 
-quadruple:
+semanticCube: quadruple
+	g++ -w -std=c++11 -c SemanticCube.cpp
+	
+quadruple: memory
 	g++ -w -std=c++11 -c Quadruple.cpp	
 
-semanticCube:
-	g++ -w -std=c++11 -c SemanticCube.cpp
+memory: semanticCube
+	g++ -w -std=c++11 -c Memory.cpp	

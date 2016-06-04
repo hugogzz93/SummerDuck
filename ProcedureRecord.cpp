@@ -94,10 +94,14 @@ string ProcedureRecord::getType() {
 	return type;
 }
 
-vector<VariableRecord> ProcedureRecord::getParameters() {
-	return parameters;
+vector<Quadruple>* ProcedureRecord::getQuadruples() {
+	return &this->quadruples;
 }
 
-vector<VariableRecord> ProcedureRecord::getVariables() {
-	return variables;
+vector<VariableRecord>* ProcedureRecord::getParameters() {
+	return &this->parameters;
+}
+
+vector<VariableRecord>* ProcedureRecord::getVariables() {
+	return &this->variables;
 }

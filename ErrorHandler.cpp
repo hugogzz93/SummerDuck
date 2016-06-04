@@ -27,7 +27,8 @@ void ErrorHandler::invalidAccess(string msg) {
 	throw msg;	
 }
 
-void ErrorHandler::invalidType(string name) {
-	printf("%s se le ha asignado el tipo equivocado\n", name.c_str());
+void ErrorHandler::invalidType() {
+	// printf("%s se le ha asignado el tipo equivocado\n", name.c_str());
+	printf("Datos incompatibles.\n");
 	throw "";
 }

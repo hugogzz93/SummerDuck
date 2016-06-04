@@ -15,10 +15,11 @@
 	void yyerror(const char *s);
 
 	// compiler code
+	Memory memory;
 	DataHolder dataHolder;
 	ProcedureDirectory directory;
 	ProcDirHandler procedureDirectoryHandler(&directory);
-	QuadrupleGenerator quadrupleGenerator(&directory, &procedureDirectoryHandler, &dataHolder);
+	QuadrupleGenerator quadrupleGenerator(&directory, &procedureDirectoryHandler, &dataHolder, &memory);
 
 	// var declaration aux
 	string name_aux;
@@ -145,9 +146,9 @@
 		| ;
 
 	tipo:
-		ENTERO { $$ = VariableRecord::T_ENTERO;	}
-		| REAL { $$ = VariableRecord::T_REAL; 	}
-		| CHAR { $$ = VariableRecord::T_CHAR;	} ;
+		ENTERO { $$ = SemanticCube::T_ENTERO;	}
+		| REAL { $$ = SemanticCube::T_REAL; 	}
+		| CHAR { $$ = SemanticCube::T_CHAR;	} ;
 
 	vars:
 		dec_var vars
@@ -164,27 +165,27 @@
 		| ;
 
 	expresion_b:
-		 IGUAL_A expresion
-		| NO_IGUAL_A expresion
-		| MAYOR_QUE expresion
-		| MENOR_QUE expresion
+		 IGUAL_A 		{ quadrupleGenerator.pushOperator(Quadruple::I_IGUAL); 		} expresion
+		| NO_IGUAL_A	{ quadrupleGenerator.pushOperator(Quadruple::I_NO_IGUAL); 	} expresion
+		| MAYOR_QUE 	{ quadrupleGenerator.pushOperator(Quadruple::I_MAYOR_QUE);	} expresion
+		| MENOR_QUE 	{ quadrupleGenerator.pushOperator(Quadruple::I_MENOR_QUE);	} expresion
 		| ;
 
 	exp:
-		termino
-		| termino O_SUMA exp
-		| termino O_RESTA exp
-		| termino O_OR exp ;
+		termino		{quadrupleGenerator.testForOperation(1); }
+		| termino	{quadrupleGenerator.testForOperation(1); } O_SUMA 	{ quadrupleGenerator.pushOperator(Quadruple::I_SUMA); }  	exp
+		| termino	{quadrupleGenerator.testForOperation(1); } O_RESTA 	{ quadrupleGenerator.pushOperator(Quadruple::I_RESTA);}  	exp
+		| termino	{quadrupleGenerator.testForOperation(1); } O_OR 	{ quadrupleGenerator.pushOperator(Quadruple::I_OR); 	}  	exp ;
 
 
 	termino:
-		factor
-		| factor O_MULT termino
-		| factor O_DIVISION termino 
-		| factor O_AND termino ;
+		factor 	 { quadrupleGenerator.testForOperation(0); }
+		| factor { quadrupleGenerator.testForOperation(0); } O_MULT 	 { quadrupleGenerator.pushOperator(Quadruple::I_MULT);} termino
+		| factor { quadrupleGenerator.testForOperation(0); } O_DIVISION  { quadrupleGenerator.pushOperator(Quadruple::I_DIV); } termino 
+		| factor { quadrupleGenerator.testForOperation(0); } O_AND 		 { quadrupleGenerator.pushOperator(Quadruple::I_AND); } termino ;
 
 	factor:
-		LEFT_PAREN expresion RIGHT_PAREN
+		LEFT_PAREN { quadrupleGenerator.addLimit(); } expresion  {quadrupleGenerator.removeLimit(); } RIGHT_PAREN
 		| var_cte 			{ quadrupleGenerator.pushOperand(); resetAux(); } 
 		| O_SUMA var_cte 	{ quadrupleGenerator.pushOperand(); resetAux(); }
 		| O_RESTA var_cte 	{ quadrupleGenerator.pushOperand(); resetAux(); } ;

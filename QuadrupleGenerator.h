@@ -4,16 +4,7 @@
 #include <stack>
 #include "ProcedureDirectory.h"
 #include "ProcDirHandler.h"
-#include "Quadruple.h"
 #include "SemanticCube.h"
-
-struct DataHolder {
-	string sval;
-	int ival;
-	double fval;
-	int dimensions;
-	int sizes[2];
-};
 
 using namespace std;
 class QuadrupleGenerator
@@ -24,25 +15,34 @@ public:
 		C_ID, C_ENTERO, C_REAL, C_CHAR, C_FUNC_CALL
 	};
 
-	QuadrupleGenerator(ProcedureDirectory* ProcedureDirectory, ProcDirHandler* handler, DataHolder* data);
+	QuadrupleGenerator(ProcedureDirectory* ProcedureDirectory, ProcDirHandler* handler, DataHolder* data, Memory* memory);
 
 	void pushOperand();
+	void pushOperator(int);
+	void testForOperation(int);
 	void setFlag(int);
+
+	void addLimit();
+	void removeLimit();
+
 
 
 private:
+	vector<int> operatorStackLimit; //fondo falso
 	stack<int> jumpStack, operatorStack;
 	stack<VariableRecord> operandStack;
 
-	ProcedureDirectory* directory;
+	Memory* memory;
 	ProcDirHandler* handler;
 	SemanticCube semanticCube;
+	ProcedureDirectory* directory;
 
 	unordered_map<string, Quadruple> instructions;
 
 	int flag; //indicates the type of operand about to be received
 	DataHolder *data;
 
-
+	void generateQuadruple(int, int, int, int);
+	void executeOperation();
 };
 #endif

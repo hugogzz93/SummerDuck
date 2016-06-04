@@ -31,12 +31,14 @@ public:
 	//  getters
 	string getName();
 	string getType();
-	vector<VariableRecord> getParameters();
-	vector<VariableRecord> getVariables();
+	vector<Quadruple>* getQuadruples();
+	vector<VariableRecord>* getParameters();
+	vector<VariableRecord>* getVariables();
 	VariableRecord *getVariableByName(string name);
 
 private:
 	string name, type;
+	vector<Quadruple> quadruples;
 	vector<VariableRecord> parameters;
 	vector<VariableRecord> variables;
 };

@@ -29,7 +29,6 @@ public:
 
 	int getScope();
 	ProcedureRecord* getRecord(int scope);
-	ProcedureRecord* getProcedure(int);
 
 private:
 	ProcedureDirectory *directory;

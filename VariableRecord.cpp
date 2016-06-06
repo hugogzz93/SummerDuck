@@ -59,9 +59,9 @@ int VariableRecord::arrayAccess(int coordinates[]) {
 
 string VariableRecord::getTypeAsString() {
 	string msg;
-	if (type == SemanticCube::T_ENTERO) { msg = "ENTERO"; } 
-	else if(type == SemanticCube::T_REAL) { msg =  "REAL"; }
-	else if(type == SemanticCube::T_CHAR) { msg = "CHAR"; }
+	if (type == Quadruple::T_ENTERO) { msg = "ENTERO"; } 
+	else if(type == Quadruple::T_REAL) { msg =  "REAL"; }
+	else if(type == Quadruple::T_CHAR) { msg = "CHAR"; }
 	else { msg = "BOOL"; }
 	return msg;
 }
@@ -95,42 +95,42 @@ void VariableRecord::setConstant(bool constant) {
 }
 
 void VariableRecord::getValue(int &container) {
-	if (type != SemanticCube::T_ENTERO) { ErrorHandler::invalidType(); }
+	if (type != Quadruple::T_ENTERO) { ErrorHandler::invalidType(); }
 	container = data.ival;
 }
 
 void VariableRecord::getValue(double &container) {
-	if (type != SemanticCube::T_REAL) { ErrorHandler::invalidType(); }
+	if (type != Quadruple::T_REAL) { ErrorHandler::invalidType(); }
 	container = data.fval;
 }
 
 void VariableRecord::getValue(string &container) {
-	if (type != SemanticCube::T_CHAR) { ErrorHandler::invalidType(); }
+	if (type != Quadruple::T_CHAR) { ErrorHandler::invalidType(); }
 	container = data.sval;
 }
 
 void VariableRecord::getValue(bool &container) {
-	if (type != SemanticCube::T_BOOL) { ErrorHandler::invalidType(); }
+	if (type != Quadruple::T_BOOL) { ErrorHandler::invalidType(); }
 	container = data.bval;
 }
 
 void VariableRecord::setValue(int value) {
-	if (type != SemanticCube::T_ENTERO) { ErrorHandler::invalidType(); }
+	if (type != Quadruple::T_ENTERO) { ErrorHandler::invalidType(); }
 	data.ival = value;
 }
 
 void VariableRecord::setValue(double value) {
-	if (type != SemanticCube::T_REAL) { ErrorHandler::invalidType(); }
+	if (type != Quadruple::T_REAL) { ErrorHandler::invalidType(); }
 	data.fval = value;
 }
 
 void VariableRecord::setValue(string value) {
-	if (type != SemanticCube::T_CHAR) { ErrorHandler::invalidType(); }
+	if (type != Quadruple::T_CHAR) { ErrorHandler::invalidType(); }
 	data.sval = value;
 }
 
 void VariableRecord::setValue(bool value) {
-	if (type != SemanticCube::T_BOOL) { ErrorHandler::invalidType(); }
+	if (type != Quadruple::T_BOOL) { ErrorHandler::invalidType(); }
 	data.bval = value;
 }
 

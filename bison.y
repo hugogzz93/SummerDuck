@@ -46,6 +46,7 @@
 		printf("accepted\n");
 		procedureDirectoryHandler.registerProcedure();
 		directory.listDirectory(true);
+		directory.listInstructions();
 	}
 
 	inline void dataHolderSetAuxs() {
@@ -146,9 +147,9 @@
 		| ;
 
 	tipo:
-		ENTERO { $$ = SemanticCube::T_ENTERO;	}
-		| REAL { $$ = SemanticCube::T_REAL; 	}
-		| CHAR { $$ = SemanticCube::T_CHAR;	} ;
+		ENTERO { $$ = Quadruple::T_ENTERO;	}
+		| REAL { $$ = Quadruple::T_REAL; 	}
+		| CHAR { $$ = Quadruple::T_CHAR;	} ;
 
 	vars:
 		dec_var vars
@@ -158,7 +159,7 @@
 		tipo { procedureDirectoryHandler.setVariableType($1); } COLON lista_ids SEMI_COLON ;
 
 	expresion: 
-		expresion_a exp expresion_b ;
+		expresion_a exp expresion_b {  quadrupleGenerator.testForOperation(2); } ;
 
 	expresion_a:
 		O_NOT

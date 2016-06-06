@@ -14,7 +14,7 @@ procDirHandler: errorHandler procedureDirectory
 errorHandler:
 	g++ -w -std=c++11 -c ErrorHandler.cpp
 
-quadrupleGenerator: procedureDirectory quadruple semanticCube procDirHandler quadruple
+quadrupleGenerator: procedureDirectory quadruple semanticCube procDirHandler quadruple memory
 	g++ -w -std=c++11 -c QuadrupleGenerator.cpp	
 
 procedureDirectory: variableRecord procedureRecord
@@ -29,7 +29,7 @@ variableRecord: errorHandler
 semanticCube: quadruple
 	g++ -w -std=c++11 -c SemanticCube.cpp
 	
-quadruple: memory
+quadruple:
 	g++ -w -std=c++11 -c Quadruple.cpp	
 
 memory: semanticCube

@@ -38,6 +38,15 @@ void ProcedureRecord::showSignature(bool verbose) {
 	}
 }
 
+void ProcedureRecord::showInstructions() {
+	printf("Instructions: %s\n", name.c_str() );
+	for (std::vector<Quadruple>::iterator i = quadruples.begin(); i != quadruples.end(); ++i)
+	{
+		cout << *i << endl;;
+	}
+}
+
+
 void ProcedureRecord::addVariable(VariableRecord record) {
 	// check for redeclaration
 	try {

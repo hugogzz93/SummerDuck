@@ -8,9 +8,9 @@ ProcDirHandler::ProcDirHandler(ProcedureDirectory *directory) {
 	this->global = ProcedureRecord("global");
 	this->local = ProcedureRecord();
 	unordered_map<int, int> new_virtual_addresses = { 
-		{ SemanticCube::T_ENTERO, 0 }, 
-		{ SemanticCube::T_REAL, 1000 }, 
-		{ SemanticCube::T_CHAR, 2000}
+		{ Quadruple::T_ENTERO, 0 }, 
+		{ Quadruple::T_REAL, 1000 }, 
+		{ Quadruple::T_CHAR, 2000}
 	};
 	globalVariableIndex = new_virtual_addresses;
 	localVariableIndex = new_virtual_addresses;
@@ -63,9 +63,9 @@ ProcedureRecord* ProcDirHandler::getRecord(int scope) {
 void ProcDirHandler::cleanLocal() {
 	parameters.clear();
 	localVariableIndex = { 
-		{ SemanticCube::T_ENTERO, 0 }, 
-		{ SemanticCube::T_REAL, 1000 }, 
-		{ SemanticCube::T_CHAR, 2000}
+		{ Quadruple::T_ENTERO, 0 }, 
+		{ Quadruple::T_REAL, 1000 }, 
+		{ Quadruple::T_CHAR, 2000}
 	};
 }
 
@@ -86,7 +86,7 @@ int ProcDirHandler::assignVirtualAddress(int type, int dimensions, int sizes[]) 
 
 	int virtualAddress = (*virtualAddresses)[type];
 	(*virtualAddresses)[type] += units;
-	int MEM_MAX = type == SemanticCube::T_ENTERO ? ENTERO_MAX : type == SemanticCube::T_REAL ? REAL_MAX : CHAR_MAX ;
+	int MEM_MAX = type == Quadruple::T_ENTERO ? ENTERO_MAX : type == Quadruple::T_REAL ? REAL_MAX : CHAR_MAX ;
 	if ((*virtualAddresses)[type] >= MEM_MAX) { ErrorHandler::memoryLimitExceeded(); }
 	return virtualAddress;
 }

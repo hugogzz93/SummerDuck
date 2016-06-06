@@ -32,3 +32,8 @@ void ErrorHandler::invalidType() {
 	printf("Datos incompatibles.\n");
 	throw "";
 }
+
+void ErrorHandler::badSyntax(string msg) {
+	printf("%s\n", msg.c_str());
+	throw msg;
+}

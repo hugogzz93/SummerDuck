@@ -1,5 +1,5 @@
 #include "Memory.h"
-#define AVAIL_OFFSET 4000
+#define AVAIL_OFFSET 10000
 
 int Memory::getInt(int address) {
 	return memory[address].ival;
@@ -18,18 +18,25 @@ bool Memory::getBool(int address) {
 }
 
 int Memory::requestAvailMemory() {
+	MemoryBlock block;
+	avail.push_back(block);
 	return AVAIL_OFFSET + avail.size();
 }
 
 int Memory::saveConstant(int type, DataHolder data) {
-		MemoryBlock block;
-		if(type == SemanticCube::T_ENTERO) {
-			block.ival = data.ival;
-		} else if(type == SemanticCube::T_REAL) {
-			block.fval = data.fval;
-		} else if(type == SemanticCube::T_CHAR){
-			block.sval = data.sval;
-		} else if(type == SemanticCube::T_BOOL){}
-		constants.push_back(block);
+	MemoryBlock block;
+	printf("Constant saved: val: ");
+	if(type == Quadruple::T_ENTERO) {
+		block.ival = data.ival;
+		printf("%d ", block.ival);
+	} else if(type == Quadruple::T_REAL) {
+		block.fval = data.fval;
+		printf("%lf ", block.fval);
+	} else if(type == Quadruple::T_CHAR){
+		block.sval = data.sval;
+		printf("%s ", block.sval.c_str());
+	} else if(type == Quadruple::T_BOOL) {}
+	constants.push_back(block);
+	printf("Mem: %d\n", constants.size());
 	return constants.size();
 }

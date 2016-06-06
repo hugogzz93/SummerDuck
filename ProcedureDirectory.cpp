@@ -9,12 +9,17 @@
 
 
 	void ProcedureDirectory::listDirectory(bool verbose) {
-		ProcedureRecord record;
-		
 		for (std::vector<ProcedureRecord>::iterator functionRecord = procedures.begin(); 
 										functionRecord != procedures.end(); ++functionRecord) {
 			functionRecord->showSignature(verbose);
 		}
+	}
+
+	void ProcedureDirectory::listInstructions() {
+		for (std::vector<ProcedureRecord>::iterator functionRecord = procedures.begin(); 
+										functionRecord != procedures.end(); ++functionRecord) {
+			functionRecord->showInstructions();
+		}	
 	}
 
 	void ProcedureDirectory::addRecord(ProcedureRecord record) {

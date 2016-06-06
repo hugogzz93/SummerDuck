@@ -17,6 +17,13 @@ programa Main;
 
 	modulo real modTres(real x[2][3], real y); {
 		real : realUno[2][3], realDos[2][3];
+
+		si(y == 1 && (y == 0 || y <> 2.5) && realUno[1][2] < 5) entonces {
+			regresa 1;
+		} sino {
+			regresa y;
+		}
+
 		regresa x[0][0];
 	}
 

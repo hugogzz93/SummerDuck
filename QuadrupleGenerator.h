@@ -5,6 +5,7 @@
 #include "ProcedureDirectory.h"
 #include "ProcDirHandler.h"
 #include "SemanticCube.h"
+#include "Memory.h"
 
 using namespace std;
 class QuadrupleGenerator
@@ -28,7 +29,6 @@ public:
 
 
 private:
-	vector<int> operatorStackLimit; //fondo falso
 	stack<int> jumpStack, operatorStack;
 	stack<VariableRecord> operandStack;
 

@@ -20,6 +20,7 @@ public:
 	// void addVariable(string type, string name, int vAddress, string scope);
 	// void addVariable(VariableRecord record);
 	void showSignature(bool verbose = false);
+	void showInstructions();
 
 	void addVariable(VariableRecord);
 	void addParameter(VariableRecord);

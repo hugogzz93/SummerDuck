@@ -31,17 +31,17 @@ void QuadrupleGenerator::pushOperand() {
 	} else if (flag != C_FUNC_CALL) {
 		VariableRecord record;
 		if (flag == C_ENTERO) {
-			record.setType(SemanticCube::T_ENTERO);
+			record.setType(Quadruple::T_ENTERO);
 			record.setValue(data->ival);
 		} else if(flag == C_REAL) {
-			record.setType(SemanticCube::T_REAL);
+			record.setType(Quadruple::T_REAL);
 			record.setValue(data->fval);
 		} else if(flag == C_CHAR){
-			record.setType(SemanticCube::T_CHAR);
+			record.setType(Quadruple::T_CHAR);
 			record.setValue(data->sval);
 		}
 		record.setConstant(true);
-		record.setVAddress(memory.saveConstant(record.setType(), *data))
+		record.setVAddress(memory->saveConstant(record.getType(), *data));
 		operandStack.push(record);
 	}
 }
@@ -51,12 +51,15 @@ void QuadrupleGenerator::pushOperator(int op) {
 }
 
 void QuadrupleGenerator::testForOperation(int type) {
-	if ( !operatorStackLimit.empty() && operatorStackLimit[-1] == operatorStack.size() || operatorStack.size() < 2) { return ; }
+	if ( operatorStack.empty() || operatorStack.top() == Quadruple::I_LIMIT || operandStack.size() < 2 || operatorStack.empty()) { return ; }
 	if (type == 1 && operatorStack.top() == Quadruple::I_SUMA || operatorStack.top() == Quadruple::I_RESTA 
 													|| operatorStack.top() == Quadruple::I_OR) {
 		executeOperation();
 	} else if(type == 0 && operatorStack.top() == Quadruple::I_MULT || operatorStack.top() == Quadruple::I_DIV
 													|| operatorStack.top() == Quadruple::I_AND) {
+		executeOperation();
+	} else if(type == 2 && operatorStack.top() == Quadruple::I_IGUAL || operatorStack.top() == Quadruple::I_NO_IGUAL
+													|| operatorStack.top() == Quadruple::I_MAYOR_QUE || operatorStack.top() == Quadruple::I_MENOR_QUE) {
 		executeOperation();
 	}
 }
@@ -70,8 +73,7 @@ void QuadrupleGenerator::executeOperation() {
 	int resultType = semanticCube.getResult(op, leftOperand.getType(), rightOperand.getType());
 	if (resultType == -1) { ErrorHandler::invalidType(); }
 
-	generateQuadruple(operatorStack.top(), leftOperand.getVAddress(), rightOperand.getVAddress(), memory->requestAvailMemory());
-	operatorStack.pop();
+	generateQuadruple(op, leftOperand.getVAddress(), rightOperand.getVAddress(), memory->requestAvailMemory());
 }
 
 void QuadrupleGenerator::generateQuadruple(int op, int lo, int ro, int res) {
@@ -88,9 +90,14 @@ void QuadrupleGenerator::generateQuadruple(int op, int lo, int ro, int res) {
 
 
 void QuadrupleGenerator::addLimit() {
-	operatorStackLimit.push_back(operatorStack.size());
+	operatorStack.push(Quadruple::I_LIMIT);
 }
 
 void QuadrupleGenerator::removeLimit() {
-	operatorStackLimit.pop_back();
+	if (operatorStack.top() == Quadruple::I_LIMIT)
+	{
+		operatorStack.pop();
+	} else {
+		ErrorHandler::badSyntax("Missing left parenthesis");
+	}
 }

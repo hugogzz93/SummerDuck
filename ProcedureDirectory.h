@@ -12,6 +12,7 @@ public:
 	ProcedureDirectory();
 
 	void listDirectory(bool verbose = false);
+	void listInstructions();
 	void addRecord(ProcedureRecord);
 
 	VariableRecord* getVariableByName(string name, string scope); //throws invalid_argument exception

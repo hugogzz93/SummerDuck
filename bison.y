@@ -159,31 +159,42 @@
 		tipo { procedureDirectoryHandler.setVariableType($1); } COLON lista_ids SEMI_COLON ;
 
 	expresion: 
-		expresion_a exp expresion_b {  quadrupleGenerator.testForOperation(2); } ;
+		expresion_a expresion_b {  quadrupleGenerator.testForOperation(2); } ;
 
 	expresion_a:
 		O_NOT
 		| ;
 
 	expresion_b:
-		 IGUAL_A 		{ quadrupleGenerator.pushOperator(Quadruple::I_IGUAL); 		} expresion
-		| NO_IGUAL_A	{ quadrupleGenerator.pushOperator(Quadruple::I_NO_IGUAL); 	} expresion
-		| MAYOR_QUE 	{ quadrupleGenerator.pushOperator(Quadruple::I_MAYOR_QUE);	} expresion
-		| MENOR_QUE 	{ quadrupleGenerator.pushOperator(Quadruple::I_MENOR_QUE);	} expresion
-		| ;
+		comparacion_and	{quadrupleGenerator.testForOperation(5); }
+		| comparacion_and	{quadrupleGenerator.testForOperation(5); } O_OR { quadrupleGenerator.pushOperator(Quadruple::I_OR); } expresion;
+
+	comparacion_and:
+		igualdad	{quadrupleGenerator.testForOperation(4); }
+		| igualdad	{quadrupleGenerator.testForOperation(4); } O_AND { quadrupleGenerator.pushOperator(Quadruple::I_AND); } comparacion_and;
+
+	igualdad: 
+		relacion	{quadrupleGenerator.testForOperation(3); }
+		| relacion	{quadrupleGenerator.testForOperation(3); } IGUAL_A 		{ quadrupleGenerator.pushOperator(Quadruple::I_IGUAL); 		}  	igualdad
+		| relacion	{quadrupleGenerator.testForOperation(3); } NO_IGUAL_A 	{ quadrupleGenerator.pushOperator(Quadruple::I_NO_IGUAL);	}  	igualdad;
+
+	relacion: 
+		exp		{quadrupleGenerator.testForOperation(2); }
+		| exp	{quadrupleGenerator.testForOperation(2); } MENOR_QUE 	{ quadrupleGenerator.pushOperator(Quadruple::I_MENOR_QUE); }  	relacion
+		| exp	{quadrupleGenerator.testForOperation(2); } MAYOR_QUE 	{ quadrupleGenerator.pushOperator(Quadruple::I_MAYOR_QUE);}  	relacion;
 
 	exp:
 		termino		{quadrupleGenerator.testForOperation(1); }
 		| termino	{quadrupleGenerator.testForOperation(1); } O_SUMA 	{ quadrupleGenerator.pushOperator(Quadruple::I_SUMA); }  	exp
-		| termino	{quadrupleGenerator.testForOperation(1); } O_RESTA 	{ quadrupleGenerator.pushOperator(Quadruple::I_RESTA);}  	exp
-		| termino	{quadrupleGenerator.testForOperation(1); } O_OR 	{ quadrupleGenerator.pushOperator(Quadruple::I_OR); 	}  	exp ;
+		| termino	{quadrupleGenerator.testForOperation(1); } O_RESTA 	{ quadrupleGenerator.pushOperator(Quadruple::I_RESTA);}  	exp;
+		// | termino	{quadrupleGenerator.testForOperation(1); } O_OR 	{ quadrupleGenerator.pushOperator(Quadruple::I_OR); 	}  	exp ;
 
 
 	termino:
 		factor 	 { quadrupleGenerator.testForOperation(0); }
 		| factor { quadrupleGenerator.testForOperation(0); } O_MULT 	 { quadrupleGenerator.pushOperator(Quadruple::I_MULT);} termino
 		| factor { quadrupleGenerator.testForOperation(0); } O_DIVISION  { quadrupleGenerator.pushOperator(Quadruple::I_DIV); } termino 
-		| factor { quadrupleGenerator.testForOperation(0); } O_AND 		 { quadrupleGenerator.pushOperator(Quadruple::I_AND); } termino ;
+		// | factor { quadrupleGenerator.testForOperation(0); } O_AND 		 { quadrupleGenerator.pushOperator(Quadruple::I_AND); } termino ;
 
 	factor:
 		LEFT_PAREN { quadrupleGenerator.addLimit(); } expresion  {quadrupleGenerator.removeLimit(); } RIGHT_PAREN
@@ -249,7 +260,7 @@
 		dim_id EQUALS expresion ;
 
 	llamada_func:
-		ID LEFT_PAREN llamada_func_a RIGHT_PAREN ;
+		ID LEFT_PAREN { quadrupleGenerator.addLimit(); } llamada_func_a { quadrupleGenerator.removeLimit(); } RIGHT_PAREN ;
 
 	llamada_func_a:
 		llamada_func_b 

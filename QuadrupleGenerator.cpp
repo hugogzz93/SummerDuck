@@ -43,6 +43,13 @@ void QuadrupleGenerator::pushOperand() {
 		record.setConstant(true);
 		record.setVAddress(memory->saveConstant(record.getType(), *data));
 		operandStack.push(record);
+	} else {
+		// pending implementatino so just pushing stub to stack
+		VariableRecord record;
+		record.setType(Quadruple::T_ENTERO);
+		record.setConstant(true);
+		record.setVAddress(-1);
+		operandStack.push(record);
 	}
 }
 
@@ -52,16 +59,20 @@ void QuadrupleGenerator::pushOperator(int op) {
 
 void QuadrupleGenerator::testForOperation(int type) {
 	if ( operatorStack.empty() || operatorStack.top() == Quadruple::I_LIMIT || operandStack.size() < 2 || operatorStack.empty()) { return ; }
-	if (type == 1 && operatorStack.top() == Quadruple::I_SUMA || operatorStack.top() == Quadruple::I_RESTA 
-													|| operatorStack.top() == Quadruple::I_OR) {
+	if(type == 0 && operatorStack.top() == Quadruple::I_MULT || operatorStack.top() == Quadruple::I_DIV ) {
 		executeOperation();
-	} else if(type == 0 && operatorStack.top() == Quadruple::I_MULT || operatorStack.top() == Quadruple::I_DIV
-													|| operatorStack.top() == Quadruple::I_AND) {
+	} else if(type == 1 && operatorStack.top() == Quadruple::I_RESTA || operatorStack.top() == Quadruple::I_SUMA) {
 		executeOperation();
-	} else if(type == 2 && operatorStack.top() == Quadruple::I_IGUAL || operatorStack.top() == Quadruple::I_NO_IGUAL
-													|| operatorStack.top() == Quadruple::I_MAYOR_QUE || operatorStack.top() == Quadruple::I_MENOR_QUE) {
+	} else if(type == 2 && operatorStack.top() == Quadruple::I_MENOR_QUE || operatorStack.top() == Quadruple::I_MAYOR_QUE) {
 		executeOperation();
-	}
+	} else if(type == 3 && operatorStack.top() == Quadruple::I_IGUAL || operatorStack.top() == Quadruple::I_NO_IGUAL) {
+		executeOperation();
+	} else if(type == 4 && operatorStack.top() == Quadruple::I_AND) {
+		executeOperation();
+	} else if(type == 5 && operatorStack.top() == Quadruple::I_OR) {
+		executeOperation();
+	}  
+	
 }
 
 void QuadrupleGenerator::executeOperation() {

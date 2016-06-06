@@ -20,7 +20,7 @@ bool Memory::getBool(int address) {
 int Memory::requestAvailMemory() {
 	MemoryBlock block;
 	avail.push_back(block);
-	return AVAIL_OFFSET + avail.size();
+	return -1 * (AVAIL_OFFSET + avail.size());
 }
 
 int Memory::saveConstant(int type, DataHolder data) {

@@ -84,19 +84,20 @@ void QuadrupleGenerator::executeOperation() {
 	int resultType = semanticCube.getResult(op, leftOperand.getType(), rightOperand.getType());
 	if (resultType == -1) { ErrorHandler::invalidType(); }
 
-	generateQuadruple(op, leftOperand.getVAddress(), rightOperand.getVAddress(), memory->requestAvailMemory());
-}
+	int res = memory->requestAvailMemory();
+	generateQuadruple(op, leftOperand.getVAddress(), rightOperand.getVAddress(), res);
 
-void QuadrupleGenerator::generateQuadruple(int op, int lo, int ro, int res) {
-	Quadruple instruction(op, lo, ro, res);
-	// Quadruple instruction(op, lo, ro, res);
-	ProcedureRecord* procedure = handler->getRecord(ProcDirHandler::LOCAL);
-	vector<Quadruple>* quadruples = procedure->getQuadruples();
-	quadruples->push_back(instruction);
 	VariableRecord result;
 	result.setVAddress(res);
 	result.setConstant(true);
 	operandStack.push(result);
+}
+
+void QuadrupleGenerator::generateQuadruple(int op, int lo, int ro, int res) {
+	Quadruple instruction(op, lo, ro, res);
+	ProcedureRecord* procedure = handler->getRecord(ProcDirHandler::LOCAL);
+	vector<Quadruple>* quadruples = procedure->getQuadruples();
+	quadruples->push_back(instruction);
 }
 
 
@@ -111,4 +112,11 @@ void QuadrupleGenerator::removeLimit() {
 	} else {
 		ErrorHandler::badSyntax("Missing left parenthesis");
 	}
+}
+
+
+void QuadrupleGenerator::loadFunction(string id) {
+	int index = directory->getIdentifier(id);
+	if (index == -1) { ErrorHandler::unidentifiedProcedure(id); }
+	generateQuadruple(Quadruple::I_ERA, index, 0, 0);
 }

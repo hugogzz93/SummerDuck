@@ -23,6 +23,8 @@ public:
 	void testForOperation(int);
 	void setFlag(int);
 
+	void loadFunction(string);
+
 	void addLimit();
 	void removeLimit();
 

@@ -9,6 +9,11 @@
 
 
 	void ProcedureDirectory::listDirectory(bool verbose) {
+		printf("Function Identifiers\n");
+		for(auto kv : identifiers) {
+		    printf("%s: %d\n", kv.first.c_str(), kv.second);
+		}
+
 		for (std::vector<ProcedureRecord>::iterator functionRecord = procedures.begin(); 
 										functionRecord != procedures.end(); ++functionRecord) {
 			functionRecord->showSignature(verbose);
@@ -59,4 +64,9 @@
 
 	ProcedureRecord* ProcedureDirectory::getGlobalRecord() {
 		return &procedures[0];
+	}
+
+	int ProcedureDirectory::getIdentifier(string id) {
+		if (identifiers.find(id) == identifiers.end()) { identifiers[id] = identifiersIndex++; }
+		return identifiers[id];
 	}

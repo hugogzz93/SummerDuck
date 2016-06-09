@@ -37,3 +37,8 @@ void ErrorHandler::badSyntax(string msg) {
 	printf("%s\n", msg.c_str());
 	throw msg;
 }
+
+void ErrorHandler::unidentifiedProcedure(string id) {
+	printf("No se pudo encontrar el procedimiento %s\n", id.c_str());
+	throw "";
+}

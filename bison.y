@@ -260,14 +260,14 @@
 		dim_id EQUALS expresion ;
 
 	llamada_func:
-		ID LEFT_PAREN { quadrupleGenerator.addLimit(); } llamada_func_a { quadrupleGenerator.removeLimit(); } RIGHT_PAREN ;
+		ID LEFT_PAREN { quadrupleGenerator.loadFunction(string($1)); quadrupleGenerator.addLimit(); } llamada_func_a { quadrupleGenerator.removeLimit(); } RIGHT_PAREN ;
 
 	llamada_func_a:
 		llamada_func_b 
 		| ;
 
 	llamada_func_b:
-		expresion
+		expresion { }
 		| expresion COMA llamada_func_a ;
 
 	decision:

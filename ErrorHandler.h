@@ -13,6 +13,7 @@ public:
 	static void moduleRedefinition(string);
 	static void invalidAccess(string msg);
 	static void unidentifiedId(string, string);
+	static void unidentifiedProcedure(string);
 	static void invalidType();
 	static void badSyntax(string);
 };

@@ -19,7 +19,11 @@ public:
 	ProcedureRecord* getFunctionByName(string name); //throws invalid_argument exception
 	ProcedureRecord* getGlobalRecord();
 
+	int getIdentifier(string);
+
 private:
 	vector<ProcedureRecord> procedures;
+	int identifiersIndex = 0;
+	stringInt identifiers;
 };
 #endif

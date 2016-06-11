@@ -23,7 +23,15 @@ public:
 	void testForOperation(int);
 	void setFlag(int);
 
+// function calls
 	void loadFunction(string);
+	void setParameter();
+	void gosub(string);
+
+// conditionals
+	void setGotoF();
+	void completeGoto();
+	void ifElse();
 
 	void addLimit();
 	void removeLimit();

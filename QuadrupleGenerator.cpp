@@ -48,7 +48,7 @@ void QuadrupleGenerator::pushOperand() {
 		VariableRecord record;
 		record.setType(Quadruple::T_ENTERO);
 		record.setConstant(true);
-		record.setVAddress(-1);
+		record.setVAddress(555);
 		operandStack.push(record);
 	}
 }
@@ -119,4 +119,52 @@ void QuadrupleGenerator::loadFunction(string id) {
 	int index = directory->getIdentifier(id);
 	if (index == -1) { ErrorHandler::unidentifiedProcedure(id); }
 	generateQuadruple(Quadruple::I_ERA, index, 0, 0);
+}
+
+void QuadrupleGenerator::setParameter() {
+	VariableRecord parameter = operandStack.top(); operandStack.pop();
+	generateQuadruple(Quadruple::I_PARAM, parameter.getVAddress(), 0, 0);
+}
+
+void QuadrupleGenerator::gosub(string id) {
+	int index = directory->getIdentifier(id);
+	if (index == -1) { ErrorHandler::unidentifiedProcedure(id); }
+	generateQuadruple(Quadruple::I_GOSUB, index, 0, 0);
+}
+
+void QuadrupleGenerator::setGotoF() {
+	ProcedureRecord* record = handler->getRecord(ProcDirHandler::LOCAL);
+	vector<Quadruple>* quadruples = record->getQuadruples();
+	VariableRecord condition = operandStack.top(); operandStack.pop();
+	generateQuadruple(Quadruple::I_GOTOF, condition.getVAddress(), 0, -1);
+	jumpStack.push(quadruples->size() - 1);
+}
+
+void QuadrupleGenerator::completeGoto() {
+	ProcedureRecord* record = handler->getRecord(ProcDirHandler::LOCAL);
+	vector<Quadruple>* quadruples = record->getQuadruples();
+	int instructionIndex = jumpStack.top(); jumpStack.pop();
+	Quadruple jump = (*quadruples)[instructionIndex];
+	jump.setResult(quadruples->size());
+	printf("complete @@@@@@@@@@@@@@@@@@@@@@@@@@\n");
+	cout << jump << endl;
+	(*quadruples)[instructionIndex] = jump;
+
+}
+
+void QuadrupleGenerator::ifElse() {
+	ProcedureRecord* record = handler->getRecord(ProcDirHandler::LOCAL);
+	vector<Quadruple>* quadruples = record->getQuadruples();
+	generateQuadruple(Quadruple::I_GOTO, 0,0,-1);
+	
+	// completa el GotoF inicial del if
+	int instructionIndex = jumpStack.top(); jumpStack.pop();
+	Quadruple jump = (*quadruples)[instructionIndex];
+	jump.setResult(quadruples->size());
+	printf("else @@@@@@@@@@@@@@@@@@@@@@@@@@\n");
+	cout << jump << endl;
+	(*quadruples)[instructionIndex] = jump;
+
+	// push new goto to jumpstack
+	jumpStack.push(quadruples->size() - 1);
 }

@@ -260,21 +260,21 @@
 		dim_id EQUALS expresion ;
 
 	llamada_func:
-		ID LEFT_PAREN { quadrupleGenerator.loadFunction(string($1)); quadrupleGenerator.addLimit(); } llamada_func_a { quadrupleGenerator.removeLimit(); } RIGHT_PAREN ;
+		ID LEFT_PAREN { quadrupleGenerator.loadFunction(string($1)); quadrupleGenerator.addLimit(); } llamada_func_a { quadrupleGenerator.removeLimit(); } RIGHT_PAREN {quadrupleGenerator.gosub(string($1)); } ;
 
 	llamada_func_a:
 		llamada_func_b 
 		| ;
 
 	llamada_func_b:
-		expresion { }
-		| expresion COMA llamada_func_a ;
+		expresion { quadrupleGenerator.setParameter(); }
+		| expresion { quadrupleGenerator.setParameter(); } COMA llamada_func_a ;
 
 	decision:
-		SI LEFT_PAREN expresion RIGHT_PAREN ENTONCES LEFT_BRACKET estatutos RIGHT_BRACKET decision_b ;
+		SI LEFT_PAREN expresion { quadrupleGenerator.setGotoF(); } RIGHT_PAREN ENTONCES LEFT_BRACKET estatutos RIGHT_BRACKET decision_b { quadrupleGenerator.completeGoto(); };
 	
 	decision_b:
-		SINO LEFT_BRACKET estatutos RIGHT_BRACKET 
+		SINO LEFT_BRACKET { quadrupleGenerator.ifElse(); } estatutos RIGHT_BRACKET 
 		| ;
 
 	ciclo_while:

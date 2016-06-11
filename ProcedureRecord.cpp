@@ -40,8 +40,11 @@ void ProcedureRecord::showSignature(bool verbose) {
 
 void ProcedureRecord::showInstructions() {
 	printf("Instructions: %s\n", name.c_str() );
+	int x = 0;
 	for (std::vector<Quadruple>::iterator i = quadruples.begin(); i != quadruples.end(); ++i)
 	{
+		cout << x << " ";
+		x++;
 		cout << *i << endl;;
 	}
 }

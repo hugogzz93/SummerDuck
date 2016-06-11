@@ -109,6 +109,10 @@ string Quadruple::asString(int op) {
 	    case  I_INVERSA:
 	    	return "&";
 	    	break;
+
+	    case I_PARAM:
+	    	return "PARAM";
+	    	break;
 	}
 
 	    return "invalid";

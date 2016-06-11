@@ -7,7 +7,7 @@ programa Main;
 		si(a < 1) entonces {
 			regresa 4.0;
 		} sino {
-			modUno(a - 1);
+			regresa modUno(a - 1);
 		}
 	}
 

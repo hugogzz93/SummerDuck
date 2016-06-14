@@ -278,10 +278,10 @@
 		| ;
 
 	ciclo_while:
-		MIENTRAZ LEFT_PAREN expresion RIGHT_PAREN HAZ LEFT_BRACKET estatutos RIGHT_BRACKET ;
+		MIENTRAZ LEFT_PAREN { quadrupleGenerator.startWhile(); } expresion { quadrupleGenerator.setGotoF(); } RIGHT_PAREN HAZ LEFT_BRACKET estatutos { quadrupleGenerator.endWhile(); }RIGHT_BRACKET ;
 
 	ciclo_do_while:
-		REPITE LEFT_BRACKET estatutos RIGHT_BRACKET HASTA LEFT_PAREN expresion RIGHT_PAREN ;
+		REPITE LEFT_BRACKET { quadrupleGenerator.doWhile(); } estatutos RIGHT_BRACKET HASTA LEFT_PAREN expresion { quadrupleGenerator.setGotoV(); }RIGHT_PAREN ;
 
 	estatuto:
 		asignacion SEMI_COLON

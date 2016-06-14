@@ -32,6 +32,10 @@ public:
 	void setGotoF();
 	void completeGoto();
 	void ifElse();
+	void startWhile();
+	void endWhile();
+	void setGotoV();
+	void doWhile();
 
 	void addLimit();
 	void removeLimit();

@@ -168,3 +168,31 @@ void QuadrupleGenerator::ifElse() {
 	// push new goto to jumpstack
 	jumpStack.push(quadruples->size() - 1);
 }
+
+void QuadrupleGenerator::startWhile() {
+	ProcedureRecord* record = handler->getRecord(ProcDirHandler::LOCAL);
+	vector<Quadruple>* quadruples = record->getQuadruples();
+	jumpStack.push(quadruples->size());
+}
+
+void QuadrupleGenerator::endWhile() {
+	ProcedureRecord* record = handler->getRecord(ProcDirHandler::LOCAL);
+	vector<Quadruple>* quadruples = record->getQuadruples();
+	completeGoto();
+	generateQuadruple(Quadruple::I_GOTO,0,0,jumpStack.top());
+	jumpStack.pop();
+}
+
+void QuadrupleGenerator::setGotoV() {
+	ProcedureRecord* record = handler->getRecord(ProcDirHandler::LOCAL);
+	vector<Quadruple>* quadruples = record->getQuadruples();
+	VariableRecord condition = operandStack.top(); operandStack.pop();
+	generateQuadruple(Quadruple::I_GOTOV, condition.getVAddress(), 0, jumpStack.top());
+	jumpStack.pop();
+}
+
+void QuadrupleGenerator::doWhile() {
+	ProcedureRecord* record = handler->getRecord(ProcDirHandler::LOCAL);
+	vector<Quadruple>* quadruples = record->getQuadruples();
+	jumpStack.push(quadruples->size());
+}

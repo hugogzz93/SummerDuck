@@ -53,6 +53,7 @@ programa Main;
 		realUno = 2.0;
 		realDos[0][0] = (realUno - 5.2) * 6;
 		strUno = "hola mundo";
+
 		
 		mientraz( realUno > realDos ) haz {
 			si( (realUno - matrix[1][2])/2 <> 3) entonces {

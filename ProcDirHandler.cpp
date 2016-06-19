@@ -77,9 +77,6 @@ int ProcDirHandler::assignVirtualAddress(int type, int dimensions, int sizes[]) 
 	} else {
 		units = sizes[0]*sizes[1];
 	}
-	// for (int i = 0; i < dimensions; ++i) { units += }
-	// int units = dimensions == 0 ? 1 : 0;
-
 
 	int virtualAddress = (*virtualAddresses)[type];
 	(*virtualAddresses)[type] += units;

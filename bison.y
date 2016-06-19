@@ -49,6 +49,7 @@
 		procedureDirectoryHandler.registerProcedure();
 		directory.listDirectory(true);
 		directory.listInstructions();
+		vm.run();
 		memory.debugMemory();
 	}
 
@@ -216,7 +217,7 @@
 	dec_func:
 		{ procedureDirectoryHandler.setScope(ProcDirHandler::LOCAL); } 
 		MODULO tipo ID { procedureDirectoryHandler.setReturnType($3); procedureDirectoryHandler.setName(string($4)); } 
-		LEFT_PAREN dec_func_a RIGHT_PAREN SEMI_COLON LEFT_BRACKET vars estatutos RIGHT_BRACKET 
+		LEFT_PAREN dec_func_a RIGHT_PAREN SEMI_COLON LEFT_BRACKET vars estatutos RIGHT_BRACKET { quadrupleGenerator.ret(); }
 		{ procedureDirectoryHandler.registerProcedure(); procedureDirectoryHandler.setScope(ProcDirHandler::GLOBAL) ;} ;
 
 	dec_func_a:

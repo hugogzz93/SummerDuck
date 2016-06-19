@@ -52,3 +52,8 @@ void ErrorHandler::InvalidInstruction(int instruction) {
 	printf("No existe la funcion con el codigo %d\n", instruction);
 	throw "";
 }
+
+void ErrorHandler::MissingArguments(string name) {
+	printf("Faltan argumentos para la funcion %s\n", name.c_str());
+	throw "";
+}

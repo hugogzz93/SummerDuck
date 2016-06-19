@@ -3,6 +3,7 @@
 
 #include "ProcedureDirectory.h"
 #include "Memory.h"
+#include <vector>
 
 using namespace std;
 class VirtualMachine
@@ -10,13 +11,19 @@ class VirtualMachine
 public:
 	VirtualMachine(ProcedureDirectory* directory, Memory* memory);
 
-	void callProcedure(int id);
 	void executeInstruction(Quadruple);
+	void era(int);
+	void callProcedure(int id);
+	void param(int);
+	void ret();
+	void run();
 
 private:
 	ProcedureDirectory* directory;
+	ProcedureRecord* procedure;
+	vector<int> parameters;
 	Memory* memory;
-	int basePointer, globalLimit, instructionPointer;
+	int prevBasePointer, basePointer, stackPointer, globalLimit, instructionPointer, prevInstructionPointer;
 
 };
 #endif

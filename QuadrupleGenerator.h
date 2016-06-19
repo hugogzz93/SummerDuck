@@ -29,6 +29,7 @@ public:
 	void loadFunction(string);
 	void setParameter();
 	void gosub(string);
+	void retParam();
 	void ret();
 
 // conditionals

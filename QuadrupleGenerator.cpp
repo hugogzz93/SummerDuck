@@ -46,6 +46,7 @@ void QuadrupleGenerator::pushOperand() {
 	} else {
 		// pending implementatino so just pushing stub to stack
 		VariableRecord record;
+		
 		record.setType(Quadruple::T_ENTERO);
 		record.setConstant(true);
 		record.setVAddress(555);
@@ -128,6 +129,8 @@ void QuadrupleGenerator::setParameter() {
 void QuadrupleGenerator::gosub(string id) {
 	int index = directory->getIdentifier(id);
 	if (index == -1) { ErrorHandler::unidentifiedProcedure(id); }
+	ProcedureRecord* procedure = handler->getRecord(ProcDirHandler::LOCAL);
+	vector<Quadruple>* quadruples = procedure->getQuadruples();
 	generateQuadruple(Quadruple::I_GOSUB, index, 0, 0);
 }
 

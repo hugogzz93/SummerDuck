@@ -2,17 +2,55 @@
 
 VirtualMachine::VirtualMachine(ProcedureDirectory* directory, Memory* memory): directory(directory), memory(memory) {
 	memory->allocateSpace(MEM_REQ);//allocate global space
-	globalLimit = MEM_REQ;
+	prevBasePointer = stackPointer = basePointer = globalLimit = MEM_REQ;
+
+}
+
+void VirtualMachine::run() {
+
+}
+
+void VirtualMachine::era(int id) {
+	procedure = directory->getProcedure(id);
+}
+
+void VirtualMachine::param(int address) {
+	parameters.push_back(address);
 }
 
 void VirtualMachine::callProcedure(int id) {
-	basePointer = memory->getMemory()->size();
-	ProcedureRecord* record = directory->getProcedure(id);
-	memory->allocateSpace(MEM_REQ);
+	prevBasePointer = basePointer;
+	basePointer = stackPointer;
+	prevInstructionPointer = instructionPointer;
+	if (stackPointer + MEM_REQ > memory->getMemory()->size()) {
+		memory->allocateSpace(MEM_REQ);
+		stackPointer = memory->getMemory()->size();
+	} else {
+		stackPointer += MEM_REQ;
+	}
+
+	vector<VariableRecord> funcParameters = *procedure->getParameters();
+	if (funcParameters.size() != parameters.size()) {
+		ErrorHandler::MissingArguments(procedure->getName());
+	}
+
+	for (int i = 0; i < funcParameters.size(); ++i) {
+		memory->setMemory(prevBasePointer, parameters[i], basePointer, funcParameters[i].getVAddress());
+	}
+}
+
+void VirtualMachine::ret() {
+// !!!!! Recuerda limpiar el avail, la siguiente funcion va a tener el mismo basepointer
+
+	memory->clearAvail(basePointer);
+	stackPointer = basePointer;
+	basePointer = prevBasePointer;
+	instructionPointer = prevInstructionPointer;
 }
 
 
 void VirtualMachine::executeInstruction(Quadruple instruction) {
+	printf("@@@@@ %s\n", Quadruple::asString(instruction.getOperation()).c_str());
 	switch(instruction.getOperation()) {
 		case Quadruple::I_WRITE:
 			
@@ -31,7 +69,7 @@ void VirtualMachine::executeInstruction(Quadruple instruction) {
 			break;
 
 		case Quadruple::I_RET:
-			
+			ret();
 			break;
 
 		case Quadruple::I_GOTO:
@@ -47,11 +85,10 @@ void VirtualMachine::executeInstruction(Quadruple instruction) {
 			break;
 
 		case Quadruple::I_GOSUB:
-			
 			break;
 
 		case Quadruple::I_ERA:
-			
+			era(instruction.getLeftOperand());
 			break;
 
 		case Quadruple::I_AND:
@@ -103,8 +140,7 @@ void VirtualMachine::executeInstruction(Quadruple instruction) {
 	    	break;
 
 	    case Quadruple::I_ASIGN:
-
-	    	// memory->setMemory(instruction.getResult());
+	    	memory->setMemory(basePointer, instruction.getLeftOperand(), instruction.getResult());
 	    	break;
 
 	    case Quadruple::I_DETERMINANTE:
@@ -116,7 +152,7 @@ void VirtualMachine::executeInstruction(Quadruple instruction) {
 	    	break;
 
 	    case Quadruple::I_PARAM:
-	    	
+	    	param(instruction.getLeftOperand());
 	    	break;
 
 	    default:
@@ -128,7 +164,7 @@ void VirtualMachine::executeInstruction(Quadruple instruction) {
 
 
 //instruction handlers
-// void Memory::assignMemory(int address, VariableRecord record) {
+// void VirtualMachine::assignMemory(Quadruple instruction) {
 
 // }
 

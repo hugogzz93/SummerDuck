@@ -17,9 +17,11 @@ public:
 
 	VariableRecord* getVariableByName(string name, string scope); //throws invalid_argument exception
 	ProcedureRecord* getFunctionByName(string name); //throws invalid_argument exception
+	ProcedureRecord* getProcedure(int id); //throws invalid_argument exception
 	ProcedureRecord* getGlobalRecord();
 
 	int getIdentifier(string);
+
 
 private:
 	vector<ProcedureRecord> procedures;

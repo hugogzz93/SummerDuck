@@ -14,7 +14,10 @@ public:
 	static void invalidAccess(string msg);
 	static void unidentifiedId(string, string);
 	static void unidentifiedProcedure(string);
+	static void unidentifiedProcedure(int);
 	static void invalidType();
 	static void badSyntax(string);
+	static void InvalidInstruction(int);
+
 };
 #endif

@@ -11,7 +11,7 @@
 	void ProcedureDirectory::listDirectory(bool verbose) {
 		printf("Function Identifiers\n");
 		for(auto kv : identifiers) {
-		    printf("%s: %d\n", kv.first.c_str(), kv.second);
+		    printf("\t%d: %s\n",kv.second, kv.first.c_str());
 		}
 
 		for (std::vector<ProcedureRecord>::iterator functionRecord = procedures.begin(); 
@@ -60,6 +60,14 @@
 		}
 
 		throw invalid_argument("Function " + name + " not found");
+	}
+
+	ProcedureRecord* ProcedureDirectory::getProcedure(int id) {
+		for(auto kv : identifiers) {
+			if (kv.second == id)
+				return getFunctionByName(kv.first);
+		}
+		ErrorHandler::unidentifiedProcedure(id);
 	}
 
 	ProcedureRecord* ProcedureDirectory::getGlobalRecord() {

@@ -23,10 +23,13 @@ public:
 	void testForOperation(int);
 	void setFlag(int);
 
+	void assignment();
+
 // function calls
 	void loadFunction(string);
 	void setParameter();
 	void gosub(string);
+	void ret();
 
 // conditionals
 	void setGotoF();
@@ -39,8 +42,6 @@ public:
 
 	void addLimit();
 	void removeLimit();
-
-
 
 private:
 	stack<int> jumpStack, operatorStack;

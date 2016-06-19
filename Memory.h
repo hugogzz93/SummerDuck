@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "SemanticCube.h"
+#include "ErrorHandler.h"
 using namespace std;
 
 struct DataHolder {
@@ -19,20 +20,33 @@ struct MemoryBlock
 	double fval;
 	string sval;
 	bool bval;
+	int type = Quadruple::T_NULL;
 };
 
 class Memory
 {
 public:
-	
+
 	Memory() = default;
 
 	int getInt(int);
-	double getDouble(int);
-	string getChar(int);
 	bool getBool(int);
+	string getChar(int);
+	double getDouble(int);
+	vector<MemoryBlock>* getMemory();
+
+	void allocateSpace(int);
 	int requestAvailMemory();
 	int saveConstant(int, DataHolder);
+
+	int setMemory(int, int);
+	int setMemory(int, double);
+	int setMemory(int, string);
+	int setMemory(int, bool);
+
+	// debug
+	void debugMemory();
+
 
 private:
 	vector<MemoryBlock> memory;

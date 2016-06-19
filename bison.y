@@ -2,6 +2,7 @@
 	#include <cstdio>
 	#include "ProcDirHandler.h"
 	#include "QuadrupleGenerator.h"
+	#include "VirtualMachine.h"
 	using namespace std;
 
 	// stuff from flex that bison needs to know about:
@@ -20,9 +21,10 @@
 	ProcedureDirectory directory;
 	ProcDirHandler procedureDirectoryHandler(&directory);
 	QuadrupleGenerator quadrupleGenerator(&directory, &procedureDirectoryHandler, &dataHolder, &memory);
+	VirtualMachine vm(&directory, &memory);
 
 	// var declaration aux
-	string name_aux;
+	string name_aux, name_auxT;
 	int dimensions_aux, sizes_aux[2];
 
 	// var_cte aux
@@ -47,6 +49,7 @@
 		procedureDirectoryHandler.registerProcedure();
 		directory.listDirectory(true);
 		directory.listInstructions();
+		memory.debugMemory();
 	}
 
 	inline void dataHolderSetAuxs() {
@@ -116,7 +119,7 @@
 // general
 %token<sval> ID
 %token<ival> CTE_ENTERO
-%token<ival> CTE_REAL
+%token<fval> CTE_REAL
 %token<sval> CTE_CHAR
 
 
@@ -221,8 +224,8 @@
 		| ;
 
 	regresa:
-		REGRESA expresion
-		| REGRESA ;
+		REGRESA expresion { quadrupleGenerator.ret(); }
+		| REGRESA { quadrupleGenerator.ret(); } ;
 
 	params:
 		tipo dim_id { procedureDirectoryHandler.setVariableType($1); addVariable(ProcDirHandler::PARAMETER); } 
@@ -241,7 +244,7 @@
 		| ;
 
 	dim_id:
-		ID { name_aux = string($1); }
+		ID { name_auxT = name_aux = string($1);}
 		| vector_id
 		| matriz_id ;
 
@@ -257,7 +260,7 @@
 			| ;		
 
 	asignacion:
-		dim_id EQUALS expresion ;
+		dim_id EQUALS expresion { dataHolder.sval = name_auxT; quadrupleGenerator.assignment(); };
 
 	llamada_func:
 		ID LEFT_PAREN { quadrupleGenerator.loadFunction(string($1)); quadrupleGenerator.addLimit(); } llamada_func_a { quadrupleGenerator.removeLimit(); } RIGHT_PAREN {quadrupleGenerator.gosub(string($1)); } ;

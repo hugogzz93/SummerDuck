@@ -42,3 +42,13 @@ void ErrorHandler::unidentifiedProcedure(string id) {
 	printf("No se pudo encontrar el procedimiento %s\n", id.c_str());
 	throw "";
 }
+
+void ErrorHandler::unidentifiedProcedure(int id) {
+	printf("No se pudo encontrar el procedimiento %d\n", id);
+	throw "";
+}
+
+void ErrorHandler::InvalidInstruction(int instruction) {
+	printf("No existe la funcion con el codigo %d\n", instruction);
+	throw "";
+}

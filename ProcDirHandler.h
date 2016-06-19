@@ -25,6 +25,7 @@ public:
 
 	//context: whether parameter or variable
 	void addVariable(int context, string name, int dimensions, int sizes[]); 
+	VariableRecord getVariable(string);
 	void registerProcedure();
 
 	int getScope();

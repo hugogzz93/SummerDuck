@@ -3,6 +3,12 @@
 
 #include "VariableRecord.h"
 #include "Quadruple.h"
+#include <unordered_map>
+
+#define ENTERO_MAX 999
+#define REAL_MAX 1999
+#define CHAR_MAX 2999
+#define MEM_REQ 3000
 
 using namespace std;
 class ProcedureRecord
@@ -13,12 +19,6 @@ public:
 	ProcedureRecord(string name);
 	ProcedureRecord();
 
-	// void setReturnType(string type);
-
-	// void addParameter(string type, string name);
-	// void addVariable(string type, string name);
-	// void addVariable(string type, string name, int vAddress, string scope);
-	// void addVariable(VariableRecord record);
 	void showSignature(bool verbose = false);
 	void showInstructions();
 
@@ -36,6 +36,7 @@ public:
 	vector<VariableRecord>* getParameters();
 	vector<VariableRecord>* getVariables();
 	VariableRecord *getVariableByName(string name);
+	unordered_map<int, int> getMemoryRequirements();
 
 private:
 	string name, type;

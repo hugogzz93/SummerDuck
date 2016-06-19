@@ -117,3 +117,58 @@ vector<VariableRecord>* ProcedureRecord::getParameters() {
 vector<VariableRecord>* ProcedureRecord::getVariables() {
 	return &this->variables;
 }
+
+// int ProcedureRecord::getMemSize() {
+// 	int size = 0;
+// 	if (!variables.empty()) {
+// 		size = variables[-1].getVAddress();
+// 	} else if(!parameters.empty()) {
+// 		size = parameters[-1].getVAddress();
+// 	}
+
+// 	return size;
+
+// }
+
+unordered_map<int, int> ProcedureRecord::getMemoryRequirements() {
+	int maxInt = 0, maxFloat = 0, maxChar = 0;
+	for (std::vector<VariableRecord>::iterator i = parameters.begin(); i != parameters.end(); ++i)
+	{
+		switch(i->getType()) {
+			case Quadruple::T_ENTERO:
+				maxInt = maxInt < i->getVAddress() ? i->getVAddress() : maxInt;
+				break;
+			case Quadruple::T_REAL:
+				maxFloat = maxFloat < i->getVAddress() ? i->getVAddress() : maxFloat;
+				break;
+			case Quadruple::T_CHAR:
+				maxChar = maxChar < i->getVAddress() ? i->getVAddress() : maxChar;
+				break;
+		}
+	}
+
+	for (std::vector<VariableRecord>::iterator i = variables.begin(); i != variables.end(); ++i)
+	{
+		switch(i->getType()) {
+			case Quadruple::T_ENTERO:
+				maxInt = maxInt < i->getVAddress() ? i->getVAddress() : maxInt;
+				break;
+			case Quadruple::T_REAL:
+				maxFloat = maxFloat < i->getVAddress() ? i->getVAddress() : maxFloat;
+				break;
+			case Quadruple::T_CHAR:
+				maxChar = maxChar < i->getVAddress() ? i->getVAddress() : maxChar;
+				break;
+		}
+	}	
+
+	unordered_map<int, int> requirements = { 
+		{ Quadruple::T_ENTERO, maxInt }, 
+		{ Quadruple::T_REAL, maxFloat }, 
+		{ Quadruple::T_CHAR, maxChar}
+	};
+
+	return requirements;
+
+
+}

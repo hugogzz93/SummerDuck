@@ -1,0 +1,214 @@
+g++ -w -std=c++11 -c ErrorHandler.cpp
+g++ -w -std=c++11 -c VariableRecord.cpp	
+g++ -w -std=c++11 -c Quadruple.cpp	
+g++ -w -std=c++11 -c ProcedureRecord.cpp	
+g++ -w -std=c++11 -c ProcedureDirectory.cpp
+g++ -w -std=c++11 -c ProcDirHandler.cpp
+g++ -w -std=c++11 -c SemanticCube.cpp
+g++ -w -std=c++11 -c Memory.cpp	
+g++ -w -std=c++11 -c QuadrupleGenerator.cpp	
+g++ -w -std=c++11 -c VirtualMachine.cpp
+bison -d bison.y
+flex flex.l
+g++ -w -std=c++11 bison.tab.c lex.yy.c  VirtualMachine.o Memory.o Quadruple.o ErrorHandler.o QuadrupleGenerator.o ProcDirHandler.o ProcedureDirectory.o ProcedureRecord.o VariableRecord.o SemanticCube.o -o out
+./out
+Constant saved: val: 1 Mem: 1
+Constant saved: val: 1082130432.000000 Mem: 2
+Constant saved: val: 1 Mem: 3
+Constant saved: val: 2 Mem: 4
+Constant saved: val: 50 Mem: 5
+Constant saved: val: 3 Mem: 6
+Constant saved: val: 1 Mem: 7
+Constant saved: val: 0 Mem: 8
+Constant saved: val: 1075838976.000000 Mem: 9
+array access for realUno is 4
+Constant saved: val: 5 Mem: 10
+Constant saved: val: 1 Mem: 11
+array access for x is 0
+Constant saved: val: 1 Mem: 12
+Constant saved: val: 0 Mem: 13
+Constant saved: val: 1 Mem: 14
+Constant saved: val: 1 Mem: 15
+Constant saved: val: 2 Mem: 16
+Constant saved: val: 2 Mem: 17
+Constant saved: val: 2 Mem: 18
+Constant saved: val: 1 Mem: 19
+Constant saved: val: 1 Mem: 20
+looking for dos
+realUno
+realDos
+globals
+dos
+Constant saved: val: 1 Mem: 21
+looking for dos
+realUno
+realDos
+globals
+dos
+Constant saved: val: 1073741824.000000 Mem: 22
+looking for realUno
+realUno
+array access for realUno is 0
+Constant saved: val: 1084647014.000000 Mem: 23
+Constant saved: val: 6 Mem: 24
+looking for realUno
+realUno
+Constant saved: val: "hola mundo" Mem: 25
+looking for strUno
+realUno
+realDos
+globals
+dos
+matrix
+matrixDos
+vec
+tres
+realUno
+realDos
+strUno
+array access for matrix is 3
+Constant saved: val: 2 Mem: 26
+Constant saved: val: 3 Mem: 27
+Constant saved: val: "dos" Mem: 28
+Constant saved: val: "Mod uno" Mem: 29
+accepted
+Function Identifiers
+modTres: 6
+escribe: 5
+modDos: 3
+factorial: 2
+lee: 4
+fibonacci: 1
+modUno: 0
+ global ()
+	ENTERO dos (0)
+	ENTERO matrix (1)
+	ENTERO matrixDos (3)
+	ENTERO vec (18)
+	ENTERO tres (20)
+	REAL realUno (1000)
+	REAL realDos (1001)
+	CHAR strUno (2000)
+	CHAR strDos (2001)
+ modUno (CHAR a (2000), )
+ modDos (REAL a (1000), ENTERO b (0), )
+ modTres (REAL x (1000), REAL y (1006), )
+	REAL realUno (1007)
+	REAL realDos (1013)
+ fibonacci (REAL a (1000), )
+ factorial (REAL a (1000), )
+ principal ()
+	REAL realUno (1000)
+	REAL realDos (1006)
+Instructions: global
+Instructions: modUno
+0 [ <, 2000, 1, -10001 ]
+1 [ GOTOF, -10001, 0, 4 ]
+2 [ RET, 0, 0, 0 ]
+3 [ GOTO, 0, 0, 9 ]
+4 [ ERA, 0, 0, 0 ]
+5 [ -, 2000, 3, -10002 ]
+6 [ PARAM, -10002, 0, 0 ]
+7 [ GOSUB, 0, 0, 0 ]
+8 [ RET, 0, 0, 0 ]
+Instructions: modDos
+0 [ /, 1000, 5, -10003 ]
+1 [ -, -10003, 6, -10004 ]
+2 [ *, 4, -10004, -10005 ]
+3 [ RET, 0, 0, 0 ]
+Instructions: modTres
+0 [ ==, 1006, 7, -10006 ]
+1 [ ==, 1006, 8, -10007 ]
+2 [ !=, 1006, 9, -10008 ]
+3 [ OR, -10007, -10008, -10009 ]
+4 [ AND, -10006, -10009, -10010 ]
+5 [ <, 4, 10, -10011 ]
+6 [ AND, -10010, -10011, -10012 ]
+7 [ GOTOF, -10012, 0, 10 ]
+8 [ RET, 0, 0, 0 ]
+9 [ GOTO, 0, 0, 11 ]
+10 [ RET, 0, 0, 0 ]
+11 [ RET, 0, 0, 0 ]
+Instructions: fibonacci
+0 [ ==, 1000, 12, -10013 ]
+1 [ ==, 1000, 13, -10014 ]
+2 [ OR, -10013, -10014, -10015 ]
+3 [ GOTOF, -10015, 0, 6 ]
+4 [ RET, 0, 0, 0 ]
+5 [ GOTO, 0, 0, 16 ]
+6 [ ERA, 1, 0, 0 ]
+7 [ -, 1000, 15, -10016 ]
+8 [ PARAM, -10016, 0, 0 ]
+9 [ GOSUB, 1, 0, 0 ]
+10 [ ERA, 1, 0, 0 ]
+11 [ -, 1000, 16, -10017 ]
+12 [ PARAM, -10017, 0, 0 ]
+13 [ GOSUB, 1, 0, 0 ]
+14 [ +, 555, 555, -10018 ]
+15 [ RET, 0, 0, 0 ]
+Instructions: factorial
+0 [ ==, 1000, 17, -10019 ]
+1 [ GOTOF, -10019, 0, 4 ]
+2 [ RET, 0, 0, 0 ]
+3 [ GOTO, 0, 0, 10 ]
+4 [ ERA, 2, 0, 0 ]
+5 [ -, 1000, 19, -10020 ]
+6 [ PARAM, -10020, 0, 0 ]
+7 [ GOSUB, 2, 0, 0 ]
+8 [ *, 1000, 555, -10021 ]
+9 [ RET, 0, 0, 0 ]
+Instructions: principal
+0 [ ERA, 0, 0, 0 ]
+1 [ GOSUB, 0, 0, 0 ]
+2 [ =, 20, 0, 0 ]
+3 [ =, 21, 0, 0 ]
+4 [ ERA, 3, 0, 0 ]
+5 [ PARAM, 1000, 0, 0 ]
+6 [ PARAM, 1006, 0, 0 ]
+7 [ GOSUB, 3, 0, 0 ]
+8 [ =, 22, 0, 1000 ]
+9 [ -, 0, 23, -10022 ]
+10 [ *, -10022, 24, -10023 ]
+11 [ =, -10023, 0, 1000 ]
+12 [ =, 25, 0, 2000 ]
+13 [ >, 1000, 1006, -10024 ]
+14 [ GOTOF, -10024, 0, 53 ]
+15 [ -, 1000, 3, -10025 ]
+16 [ /, -10025, 26, -10026 ]
+17 [ !=, -10026, 27, -10027 ]
+18 [ GOTOF, -10027, 0, 23 ]
+19 [ ERA, 4, 0, 0 ]
+20 [ PARAM, 2000, 0, 0 ]
+21 [ GOSUB, 4, 0, 0 ]
+22 [ GOTO, 0, 0, 27 ]
+23 [ ERA, 5, 0, 0 ]
+24 [ PARAM, 28, 0, 0 ]
+25 [ PARAM, 2001, 0, 0 ]
+26 [ GOSUB, 5, 0, 0 ]
+27 [ ERA, 0, 0, 0 ]
+28 [ GOSUB, 0, 0, 0 ]
+29 [ ERA, 3, 0, 0 ]
+30 [ PARAM, 1000, 0, 0 ]
+31 [ PARAM, 1006, 0, 0 ]
+32 [ GOSUB, 3, 0, 0 ]
+33 [ >, 555, 555, -10028 ]
+34 [ GOTOF, -10028, 0, 38 ]
+35 [ ERA, 5, 0, 0 ]
+36 [ PARAM, 29, 0, 0 ]
+37 [ GOSUB, 5, 0, 0 ]
+38 [ ERA, 0, 0, 0 ]
+39 [ GOSUB, 0, 0, 0 ]
+40 [ ERA, 3, 0, 0 ]
+41 [ PARAM, 1000, 0, 0 ]
+42 [ ERA, 6, 0, 0 ]
+43 [ PARAM, 1006, 0, 0 ]
+44 [ GOSUB, 6, 0, 0 ]
+45 [ PARAM, 555, 0, 0 ]
+46 [ GOSUB, 3, 0, 0 ]
+47 [ <, 555, 555, -10029 ]
+48 [ !=, 2000, 2001, -10030 ]
+49 [ >, 0, 1, -10031 ]
+50 [ AND, -10030, -10031, -10032 ]
+51 [ OR, -10029, -10032, -10033 ]
+52 [ GOTOV, -10033, 0, 27 ]
+53 [ GOTO, 0, 0, 13 ]

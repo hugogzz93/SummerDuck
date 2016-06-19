@@ -46,6 +46,10 @@ string Quadruple::asString(int op) {
 			return "GOTOF";
 			break;
 
+		case I_GOTOV:
+			return "GOTOV";
+			break;
+
 		case I_GOSUB:
 			return "GOSUB";
 			break;
@@ -102,6 +106,10 @@ string Quadruple::asString(int op) {
 	    	return "==";
 	    	break;
 
+	    case I_ASIGN:
+	    	return "=";
+	    	break;
+
 	    case  I_DETERMINANTE:
 	    	return "?";
 	    	break;
@@ -116,4 +124,17 @@ string Quadruple::asString(int op) {
 	}
 
 	    return "invalid";
+}
+
+int Quadruple::getOperation() {
+	return this->operation;
+}
+int Quadruple::getLeftOperand() {
+	return this->left_operand;
+}
+int Quadruple::getRightOperand() {
+	return this->right_operand;
+}
+int Quadruple::getResult() {
+	return this->result;
 }

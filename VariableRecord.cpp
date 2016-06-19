@@ -53,7 +53,7 @@ int VariableRecord::arrayAccess(int coordinates[]) {
 		{
 			ErrorHandler::invalidAccess("Accesso fuera de limites");
 		}
-		return coordinates[0]*sizes[0] + coordinates[1];
+		return coordinates[1]*sizes[0] + coordinates[1];
 	}
 }
 

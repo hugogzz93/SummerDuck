@@ -1,7 +1,4 @@
 #include "ProcDirHandler.h"
-#define ENTERO_MAX 1000
-#define REAL_MAX 3000
-#define CHAR_MAX 4000
 
 ProcDirHandler::ProcDirHandler(ProcedureDirectory *directory) { 
 	this->directory = directory;
@@ -89,4 +86,20 @@ int ProcDirHandler::assignVirtualAddress(int type, int dimensions, int sizes[]) 
 	int MEM_MAX = type == Quadruple::T_ENTERO ? ENTERO_MAX : type == Quadruple::T_REAL ? REAL_MAX : CHAR_MAX ;
 	if ((*virtualAddresses)[type] >= MEM_MAX) { ErrorHandler::memoryLimitExceeded(); }
 	return virtualAddress;
+}
+
+
+VariableRecord ProcDirHandler::getVariable(string name) {
+	for (auto record : *local.getVariables())
+	{
+		if (record.getName() == name)
+			return record;
+	}
+	for (auto record : *global.getVariables()) 
+	{
+		if (record.getName() == name)
+			return record;
+	}
+
+	ErrorHandler::unidentifiedId(name, local.getName());
 }

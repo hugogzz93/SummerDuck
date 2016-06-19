@@ -23,7 +23,7 @@ void QuadrupleGenerator::pushOperand() {
 
 		if (data->dimensions >= 1) {
 			arrayAccessRecord = *record;
-			arrayAccessRecord.setVAddress(arrayAccessRecord.arrayAccess(data->sizes));
+			arrayAccessRecord.setVAddress(arrayAccessRecord.arrayAccess(data->sizes) + arrayAccessRecord.getVAddress());
 			operandStack.push(arrayAccessRecord);
 		} else {
 			operandStack.push(*record);
@@ -106,8 +106,7 @@ void QuadrupleGenerator::addLimit() {
 }
 
 void QuadrupleGenerator::removeLimit() {
-	if (operatorStack.top() == Quadruple::I_LIMIT)
-	{
+	if (operatorStack.top() == Quadruple::I_LIMIT) {
 		operatorStack.pop();
 	} else {
 		ErrorHandler::badSyntax("Missing left parenthesis");
@@ -146,8 +145,6 @@ void QuadrupleGenerator::completeGoto() {
 	int instructionIndex = jumpStack.top(); jumpStack.pop();
 	Quadruple jump = (*quadruples)[instructionIndex];
 	jump.setResult(quadruples->size());
-	printf("complete @@@@@@@@@@@@@@@@@@@@@@@@@@\n");
-	cout << jump << endl;
 	(*quadruples)[instructionIndex] = jump;
 
 }
@@ -161,8 +158,6 @@ void QuadrupleGenerator::ifElse() {
 	int instructionIndex = jumpStack.top(); jumpStack.pop();
 	Quadruple jump = (*quadruples)[instructionIndex];
 	jump.setResult(quadruples->size());
-	printf("else @@@@@@@@@@@@@@@@@@@@@@@@@@\n");
-	cout << jump << endl;
 	(*quadruples)[instructionIndex] = jump;
 
 	// push new goto to jumpstack
@@ -195,4 +190,16 @@ void QuadrupleGenerator::doWhile() {
 	ProcedureRecord* record = handler->getRecord(ProcDirHandler::LOCAL);
 	vector<Quadruple>* quadruples = record->getQuadruples();
 	jumpStack.push(quadruples->size());
+}
+
+void QuadrupleGenerator::assignment() {
+	// ProcedureRecord* procedure = handler->getRecord(ProcDirHandler::LOCAL);
+	// VariableRecord* variable = directory->getVariableByName(data->sval, procedure->getName());
+	VariableRecord variable = handler->getVariable(data->sval);
+	VariableRecord operand = operandStack.top(); operandStack.pop();
+	generateQuadruple(Quadruple::I_ASIGN, operand.getVAddress(), 0, variable.getVAddress() );
+}
+
+void QuadrupleGenerator::ret() {
+	generateQuadruple(Quadruple::I_RET, 0,0,0);
 }

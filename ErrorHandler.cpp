@@ -57,3 +57,8 @@ void ErrorHandler::MissingArguments(string name) {
 	printf("Faltan argumentos para la funcion %s\n", name.c_str());
 	throw "";
 }
+
+void ErrorHandler::InvalidOperation(string msg) {
+	printf("%s\n", msg.c_str());
+	throw "";
+}

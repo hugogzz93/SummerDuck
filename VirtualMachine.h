@@ -25,5 +25,7 @@ private:
 	Memory* memory;
 	int prevBasePointer, basePointer, stackPointer, globalLimit, instructionPointer, prevInstructionPointer;
 
+	void arithmetic(Quadruple, int);
+
 };
 #endif

@@ -100,32 +100,32 @@ void VirtualMachine::executeInstruction(Quadruple instruction) {
 			break;
 
 		case Quadruple::I_SUMA:
-			
+			arithmetic(instruction, instruction.getOperation());
 			break;
 
 		case Quadruple::I_RESTA:
-			
+			arithmetic(instruction, instruction.getOperation());
 			break;
 
 		case Quadruple::I_MULT:
-			
+			arithmetic(instruction, instruction.getOperation());
 			break;
 
 		case Quadruple::I_DIV:
-			
+			arithmetic(instruction, instruction.getOperation());
 			break;
 
 		case Quadruple::I_MAYOR_QUE:
-			
+			arithmetic(instruction, instruction.getOperation());
 			break;
+
+	    case Quadruple::I_MENOR_QUE:
+	    	arithmetic(instruction, instruction.getOperation());
+	    	break;
 
 		 case Quadruple::I_MAYOR_IGUAL_QUE:
 		 	
 		 	break;
-
-	    case Quadruple::I_MENOR_QUE:
-	    	
-	    	break;
 
 	    case Quadruple::I_MENOR_IGUAL_QUE:
 	    	
@@ -164,6 +164,27 @@ void VirtualMachine::executeInstruction(Quadruple instruction) {
 
 
 //instruction handlers
+
+void VirtualMachine::arithmetic(Quadruple instruction, int operation) {
+	MemoryBlock* lBlock, *rBlock, result;
+	lBlock = memory->getBlock(basePointer, instruction.getLeftOperand());
+	rBlock = memory->getBlock(basePointer, instruction.getRightOperand());
+	if (operation =  Quadruple::I_SUMA) {
+		result = *lBlock + *rBlock;
+	} else if (operation =  Quadruple::I_RESTA) {
+		result = *lBlock - *rBlock;
+	} else if (operation =  Quadruple::I_MULT) {
+		result = *lBlock * *rBlock;
+	} else if (operation =  Quadruple::I_DIV) {
+		result = *lBlock / *rBlock;
+	} else if (operation =  Quadruple::I_MAYOR_QUE) {
+		result = *lBlock > *rBlock;
+	} else if (operation =  Quadruple::I_MENOR_QUE) {
+		result = *lBlock < *rBlock;
+	}
+	memory->setMemory(basePointer, instruction.getResult(), result);
+	
+}
 // void VirtualMachine::assignMemory(Quadruple instruction) {
 
 // }

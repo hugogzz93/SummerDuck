@@ -32,6 +32,11 @@ void Memory::setMemory(int bP1, int lO, int bP2, int rO) {
 	*rBlock = *lBlock;
 }
 
+void Memory::setMemory(int bP, int address, MemoryBlock data) {
+	MemoryBlock* destination = getBlock(bP, address);
+	*destination = data;
+}
+
 // int Memory::getAvailAddress(int bP, int address) {
 	// return avail[bP]
 // }

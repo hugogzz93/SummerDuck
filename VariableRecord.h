@@ -36,6 +36,7 @@ public:
 	void setName(string name);
 	void setScope(string scope);
 	void setConstant(bool constant);
+	int getDimensions();
 
 	void getValue(int&);
 	void getValue(double&);

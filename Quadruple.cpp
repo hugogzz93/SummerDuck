@@ -26,14 +26,6 @@ string Quadruple::asString(int op) {
 			return "READ";
 			break;
 
-		case I_VER:
-			return "VER";
-			break;
-
-		case I_CALL:
-			return "CALL";
-			break;
-
 		case I_RET:
 			return "RET";
 			break;

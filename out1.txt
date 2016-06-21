@@ -1,0 +1,4 @@
+g++ -w -std=c++11 -c ErrorHandler.cpp
+g++ -w -std=c++11 -c VariableRecord.cpp	
+g++ -w -std=c++11 -c Quadruple.cpp	
+g++ -w -std=c++11 -c ProcedureRecord.cpp	

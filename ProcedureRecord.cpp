@@ -6,7 +6,7 @@
 using namespace std;
 
 // ProcedureRecord::ProcedureRecord(string type, string name, vector<VariableRecord> parameters): type(type), name(name), parameters(parameters) {}
-ProcedureRecord::ProcedureRecord(string type, string name, vector<VariableRecord> parameters, vector<VariableRecord> variables): 
+ProcedureRecord::ProcedureRecord(int type, string name, vector<VariableRecord> parameters, vector<VariableRecord> variables): 
 	type(type), name(name), parameters(parameters), variables(variables) {}
 	
 ProcedureRecord::ProcedureRecord(string name): name(name) {}
@@ -15,7 +15,7 @@ ProcedureRecord::ProcedureRecord() {}
 
 
 void ProcedureRecord::showSignature(bool verbose) {
-	printf("%s %s (", type.c_str(), name.c_str());
+	printf("%d %s (", type, name.c_str());
 	for (std::vector<VariableRecord>::iterator i = parameters.begin(); i != parameters.end(); ++i)
 	{
 		if (verbose)
@@ -102,7 +102,7 @@ string ProcedureRecord::getName() {
 	return name;
 }
 
-string ProcedureRecord::getType() {
+int ProcedureRecord::getType() {
 	return type;
 }
 

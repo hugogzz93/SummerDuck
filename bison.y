@@ -16,6 +16,7 @@
 	void yyerror(const char *s);
 
 	// compiler code
+	bool regBool = false;
 	Memory memory;
 	DataHolder dataHolder;
 	ProcedureDirectory directory;
@@ -25,7 +26,7 @@
 
 	// var declaration aux
 	string name_aux, name_auxT;
-	int dimensions_aux, sizes_aux[2];
+	int dimensions_aux, dimensions_auxT, sizes_aux[2], sizes_auxT[2];
 
 	// var_cte aux
 
@@ -49,8 +50,8 @@
 		procedureDirectoryHandler.registerProcedure();
 		directory.listDirectory(true);
 		directory.listInstructions();
-		vm.run();
 		memory.debugMemory();
+		vm.run();
 	}
 
 	inline void dataHolderSetAuxs() {
@@ -59,6 +60,26 @@
 		dataHolder.sizes[0] = sizes_aux[0];
 		dataHolder.sizes[1] = sizes_aux[1];
 		// printf("parsing %s with dimensions: %d, and sizes %d, %d\n", name_aux.c_str(), dimensions_aux, sizes_aux[0], sizes_aux[1]);
+	}
+
+	inline void transferAuxs() {
+		name_aux = name_auxT;
+		dimensions_aux = dimensions_auxT;
+		sizes_aux[0] = sizes_auxT[0];
+		sizes_aux[1] = sizes_auxT[1];
+
+		name_auxT = "";
+		dimensions_auxT = 0;
+		sizes_auxT[0] = 0;
+		sizes_auxT[1] = 0;
+	}
+
+	inline void checkRegBool() {
+		if (!regBool) {
+			ErrorHandler::badSyntax("Faltó la expresión 'regresa' en una función.");
+		} else {
+			regBool = false;
+		}
 	}
 
 
@@ -129,6 +150,7 @@
 %token ENTERO
 %token REAL
 %token CHAR 
+%token NULO
 
 
 
@@ -139,7 +161,7 @@
 
 	programa: 
 		PROGRAMA ID SEMI_COLON vars { procedureDirectoryHandler.registerProcedure(); } 
-		programa_a PRINCIPAL { procedureDirectoryHandler.setScope(ProcDirHandler::LOCAL);  procedureDirectoryHandler.setName("principal"); }
+		programa_a PRINCIPAL { procedureDirectoryHandler.setScope(ProcDirHandler::LOCAL);  procedureDirectoryHandler.setName("principal"); procedureDirectoryHandler.setReturnType(Quadruple::T_ENTERO); }
 		LEFT_PAREN RIGHT_PAREN LEFT_BRACKET vars estatutos RIGHT_BRACKET { finish(); } ;
 
 	programa_a:
@@ -153,7 +175,8 @@
 	tipo:
 		ENTERO { $$ = Quadruple::T_ENTERO;	}
 		| REAL { $$ = Quadruple::T_REAL; 	}
-		| CHAR { $$ = Quadruple::T_CHAR;	} ;
+		| CHAR { $$ = Quadruple::T_CHAR;	}
+		| NULO { $$ = Quadruple::T_NULL;	} ;
 
 	vars:
 		dec_var vars
@@ -216,17 +239,17 @@
 
 	dec_func:
 		{ procedureDirectoryHandler.setScope(ProcDirHandler::LOCAL); } 
-		MODULO tipo ID { procedureDirectoryHandler.setReturnType($3); procedureDirectoryHandler.setName(string($4)); } 
-		LEFT_PAREN dec_func_a RIGHT_PAREN SEMI_COLON LEFT_BRACKET vars estatutos RIGHT_BRACKET { quadrupleGenerator.ret(); }
-		{ procedureDirectoryHandler.registerProcedure(); procedureDirectoryHandler.setScope(ProcDirHandler::GLOBAL) ;} ;
+		MODULO tipo ID { procedureDirectoryHandler.setReturnType($3); procedureDirectoryHandler.setName(string($4)); printf("%s\n", $4); } 
+		LEFT_PAREN dec_func_a RIGHT_PAREN SEMI_COLON LEFT_BRACKET vars estatutos RIGHT_BRACKET
+		{ procedureDirectoryHandler.registerProcedure(); procedureDirectoryHandler.setScope(ProcDirHandler::GLOBAL); checkRegBool(); } ;
 
 	dec_func_a:
 		params
 		| ;
 
 	regresa:
-		REGRESA expresion { quadrupleGenerator.ret(); }
-		| REGRESA { quadrupleGenerator.ret(); } ;
+		REGRESA expresion 	{ quadrupleGenerator.ret(); regBool = true; } ;
+		| REGRESA 			{ quadrupleGenerator.ret(); regBool = true; } ;
 
 	params:
 		tipo dim_id { procedureDirectoryHandler.setVariableType($1); addVariable(ProcDirHandler::PARAMETER); } 
@@ -245,15 +268,15 @@
 		| ;
 
 	dim_id:
-		ID { name_auxT = name_aux = string($1);}
+		ID { name_auxT = name_aux = string($1); dimensions_auxT = dimensions_aux = 0; }
 		| vector_id
 		| matriz_id ;
 
 	vector_id:
-		ID LEFT_SQRBRACKET CTE_ENTERO RIGHT_SQRBRACKET { name_aux = string($1);  dimensions_aux = 1; sizes_aux[0] = $3; } ;
+		ID LEFT_SQRBRACKET CTE_ENTERO RIGHT_SQRBRACKET { name_auxT = name_aux = string($1);  dimensions_auxT = dimensions_aux = 1; sizes_auxT[0] = sizes_aux[0] = $3; } ;
 
 	matriz_id:
-		vector_id LEFT_SQRBRACKET CTE_ENTERO RIGHT_SQRBRACKET matriz_id_a { dimensions_aux = 2; sizes_aux[1] = $3; } ;
+		vector_id LEFT_SQRBRACKET CTE_ENTERO RIGHT_SQRBRACKET matriz_id_a { dimensions_auxT = dimensions_aux = 2; sizes_auxT[1] = sizes_aux[1] = $3; } ;
 
 	matriz_id_a:
 			O_INV
@@ -261,7 +284,7 @@
 			| ;		
 
 	asignacion:
-		dim_id EQUALS expresion { dataHolder.sval = name_auxT; quadrupleGenerator.assignment(); };
+		dim_id EQUALS expresion { transferAuxs(); dataHolderSetAuxs(); quadrupleGenerator.assignment(); };
 
 	llamada_func:
 		ID LEFT_PAREN { quadrupleGenerator.loadFunction(string($1)); quadrupleGenerator.addLimit(); } llamada_func_a { quadrupleGenerator.removeLimit(); } RIGHT_PAREN {quadrupleGenerator.gosub(string($1)); } ;

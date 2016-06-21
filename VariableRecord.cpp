@@ -53,6 +53,7 @@ int VariableRecord::arrayAccess(int coordinates[]) {
 		{
 			ErrorHandler::invalidAccess("Accesso fuera de limites");
 		}
+		printf(" sizes[%d][%d] [%d][%d] = %d\n", sizes[0], sizes[1], coordinates[0], coordinates[1], coordinates[1]*sizes[0] + coordinates[1]);
 		return coordinates[1]*sizes[0] + coordinates[1];
 	}
 }
@@ -138,3 +139,6 @@ void VariableRecord::setData(Data data) {
 	this->data = data;
 }
 
+int VariableRecord::getDimensions() {
+	return this->dimensions;
+}

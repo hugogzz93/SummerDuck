@@ -174,6 +174,37 @@ struct MemoryBlock
 		return result;
 	}
 
+	MemoryBlock operator>=(const MemoryBlock& rhs) const {
+		MemoryBlock result;
+		if (type == Quadruple::T_ENTERO) {
+			if (rhs.type == Quadruple::T_ENTERO) {
+				result.bval = ival >= rhs.ival;
+			} else if (rhs.type == Quadruple::T_REAL) {
+				result.bval = ival >= rhs.fval;
+			} else {
+				ErrorHandler::invalidType();
+			}
+		} else if (type == Quadruple::T_REAL) {
+			if (rhs.type == Quadruple::T_ENTERO) {
+				result.bval = fval >= rhs.ival;
+			} else if (rhs.type == Quadruple::T_REAL) {
+				result.bval = fval >= rhs.fval;
+			} else {
+				ErrorHandler::invalidType();
+			}
+		} else if (type == Quadruple::T_CHAR) {
+			if (rhs.type == Quadruple::T_CHAR) {
+				result.bval = sval >= rhs.sval;
+			} else {
+				ErrorHandler::invalidType();
+			}
+			
+		} else if (type == Quadruple::T_BOOL) {
+			ErrorHandler::InvalidOperation("No se pueden hacer operaciones aritmeticas con bools");
+		}
+		return result;
+	}
+
 	MemoryBlock operator<(const MemoryBlock& rhs) const {
 		MemoryBlock result;
 		if (type == Quadruple::T_ENTERO) {
@@ -204,6 +235,115 @@ struct MemoryBlock
 		}
 		return result;
 	}
+
+	MemoryBlock operator<=(const MemoryBlock& rhs) const {
+		MemoryBlock result;
+		if (type == Quadruple::T_ENTERO) {
+			if (rhs.type == Quadruple::T_ENTERO) {
+				result.bval = ival <= rhs.ival;
+			} else if (rhs.type == Quadruple::T_REAL) {
+				result.bval = ival <= rhs.fval;
+			} else {
+				ErrorHandler::invalidType();
+			}
+		} else if (type == Quadruple::T_REAL) {
+			if (rhs.type == Quadruple::T_ENTERO) {
+				result.bval = fval <= rhs.ival;
+			} else if (rhs.type == Quadruple::T_REAL) {
+				result.bval = fval <= rhs.fval;
+			} else {
+				ErrorHandler::invalidType();
+			}
+		} else if (type == Quadruple::T_CHAR) {
+			if (rhs.type == Quadruple::T_CHAR) {
+				result.bval = sval <= rhs.sval;
+			} else {
+				ErrorHandler::invalidType();
+			}
+			
+		} else if (type == Quadruple::T_BOOL) {
+			ErrorHandler::InvalidOperation("No se pueden hacer operaciones aritmeticas con bools");
+		}
+		return result;
+	}
+
+	MemoryBlock operator!=(const MemoryBlock& rhs) const {
+		MemoryBlock result;
+		if (type == Quadruple::T_ENTERO) {
+			if (rhs.type == Quadruple::T_ENTERO) {
+				result.bval = ival != rhs.ival;
+			} else if (rhs.type == Quadruple::T_REAL) {
+				result.bval = ival != rhs.fval;
+			} else {
+				ErrorHandler::invalidType();
+			}
+		} else if (type == Quadruple::T_REAL) {
+			if (rhs.type == Quadruple::T_ENTERO) {
+				result.bval = fval != rhs.ival;
+			} else if (rhs.type == Quadruple::T_REAL) {
+				result.bval = fval != rhs.fval;
+			} else {
+				ErrorHandler::invalidType();
+			}
+		} else if (type == Quadruple::T_CHAR) {
+			if (rhs.type == Quadruple::T_CHAR) {
+				result.bval = sval != rhs.sval;
+			} else {
+				ErrorHandler::invalidType();
+			}
+			
+		} else if (type == Quadruple::T_BOOL && rhs.type == Quadruple::T_BOOL) {
+			result.bval = bval != rhs.bval;
+		} else {
+			ErrorHandler::invalidType();
+		}
+		return result;
+	}
+
+	MemoryBlock operator==(const MemoryBlock& rhs) const {
+		MemoryBlock result;
+		if (type == Quadruple::T_ENTERO) {
+			if (rhs.type == Quadruple::T_ENTERO) {
+				result.bval = ival == rhs.ival;
+			} else if (rhs.type == Quadruple::T_REAL) {
+				result.bval = ival == rhs.fval;
+			} else {
+				ErrorHandler::invalidType();
+			}
+		} else if (type == Quadruple::T_REAL) {
+			if (rhs.type == Quadruple::T_ENTERO) {
+				result.bval = fval == rhs.ival;
+			} else if (rhs.type == Quadruple::T_REAL) {
+				result.bval = fval == rhs.fval;
+			} else {
+				ErrorHandler::invalidType();
+			}
+		} else if (type == Quadruple::T_CHAR) {
+			if (rhs.type == Quadruple::T_CHAR) {
+				result.bval = sval == rhs.sval;
+			} else {
+				ErrorHandler::invalidType();
+			}
+			
+		} else if (type == Quadruple::T_BOOL && rhs.type == Quadruple::T_BOOL) {
+			result.bval = bval == rhs.bval;
+		} else {
+			ErrorHandler::invalidType();
+		}
+		return result;
+	}
+
+	MemoryBlock operator||(const MemoryBlock& rhs) const {
+		MemoryBlock result;
+		result.bval = bval || rhs.bval;
+		return result;
+	}
+
+	MemoryBlock operator&&(const MemoryBlock& rhs) const {
+		MemoryBlock result;
+		result.bval = bval && rhs.bval;
+		return result;
+	}
 };
 
 class Memory
@@ -212,11 +352,11 @@ public:
 
 	Memory() = default;
 
-	int getInt(int);
-	int getType(int);
-	bool getBool(int);
-	string getChar(int);
-	double getDouble(int);
+	// int getInt(int);
+	// int getType(int);
+	// bool getBool(int);
+	// string getChar(int);
+	// double getDouble(int);
 	MemoryBlock* getBlock(int, int);
 	vector<MemoryBlock>* getMemory();
 

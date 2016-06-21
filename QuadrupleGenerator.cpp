@@ -9,9 +9,9 @@ void QuadrupleGenerator::setFlag(int flag) {
 
 void QuadrupleGenerator::pushOperand() {
 	// VariableRecord operand;
+	ProcedureRecord* procedure = handler->getRecord(handler->getScope());
 	if (flag == C_ID) {
 		string id(data->sval);
-		ProcedureRecord* procedure = handler->getRecord(handler->getScope());
 		VariableRecord *record, arrayAccessRecord;
 		
 		try {
@@ -44,13 +44,10 @@ void QuadrupleGenerator::pushOperand() {
 		record.setVAddress(memory->saveConstant(record.getType(), *data));
 		operandStack.push(record);
 	} else {
-		// pending implementatino so just pushing stub to stack
-		VariableRecord record;
-		
-		record.setType(Quadruple::T_ENTERO);
-		record.setConstant(true);
-		record.setVAddress(555);
-		operandStack.push(record);
+		// VariableRecord record;
+		// record.setType(procedure->getType());
+		// record.setVAddress(memory->requestAvailMemory());
+		// operandStack.push(record);
 	}
 }
 
@@ -131,7 +128,13 @@ void QuadrupleGenerator::gosub(string id) {
 	if (index == -1) { ErrorHandler::unidentifiedProcedure(id); }
 	ProcedureRecord* procedure = handler->getRecord(ProcDirHandler::LOCAL);
 	vector<Quadruple>* quadruples = procedure->getQuadruples();
-	generateQuadruple(Quadruple::I_GOSUB, index, 0, 0);
+
+	VariableRecord record;
+	record.setType(procedure->getType());
+	record.setVAddress(memory->requestAvailMemory());
+	operandStack.push(record);
+
+	generateQuadruple(Quadruple::I_GOSUB, index, 0, record.getVAddress());
 }
 
 void QuadrupleGenerator::setGotoF() {
@@ -198,11 +201,23 @@ void QuadrupleGenerator::doWhile() {
 void QuadrupleGenerator::assignment() {
 	// ProcedureRecord* procedure = handler->getRecord(ProcDirHandler::LOCAL);
 	// VariableRecord* variable = directory->getVariableByName(data->sval, procedure->getName());
-	VariableRecord variable = handler->getVariable(data->sval);
+	VariableRecord variable = handler->getVariable(data->sval), arrayAccessRecord;
 	VariableRecord operand = operandStack.top(); operandStack.pop();
+	// printf("dimensions: %d for %s -- %d\n", data->dimensions, variable.getName().c_str(), variable.getDimensions());
+	if (data->dimensions >= 1) {
+		printf("[%d][%d]\n", data->sizes[0], data->sizes[1]);
+		variable.setVAddress(variable.arrayAccess(data->sizes) + variable.getVAddress());
+		printf("address for %s is %d\n", variable.getName().c_str(), variable.getVAddress());
+	}
 	generateQuadruple(Quadruple::I_ASIGN, operand.getVAddress(), 0, variable.getVAddress() );
 }
 
 void QuadrupleGenerator::ret() {
-	generateQuadruple(Quadruple::I_RET, 0,0,0);
+	ProcedureRecord* procedure = handler->getRecord(handler->getScope());
+	if (procedure->getType() != Quadruple::T_NULL) {
+		VariableRecord record = operandStack.top(); operandStack.pop();
+		generateQuadruple(Quadruple::I_RET, 0,0,record.getVAddress());
+	} else {
+		generateQuadruple(Quadruple::I_RET, 0,0,0);
+	}
 }

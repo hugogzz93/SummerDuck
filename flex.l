@@ -51,6 +51,7 @@
 "entero" 				{ return ENTERO ; }
 "real" 					{ return REAL ; }
 "char" 					{ return CHAR ; } 
+"nulo" 					{ return NULO ; } 
 
 
 

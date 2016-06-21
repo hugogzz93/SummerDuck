@@ -13,17 +13,18 @@ public:
 
 	void executeInstruction(Quadruple);
 	void era(int);
-	void callProcedure(int id);
+	void callProcedure(int, int);
 	void param(int);
-	void ret();
+	void ret(Quadruple);
 	void run();
+	void gotoJ(Quadruple);
 
 private:
 	ProcedureDirectory* directory;
 	ProcedureRecord* procedure;
-	vector<int> parameters;
+	vector<int> parameters, callStack, retAddresses, basePointers, instructionPointers;
 	Memory* memory;
-	int prevBasePointer, basePointer, stackPointer, globalLimit, instructionPointer, prevInstructionPointer;
+	int basePointer, stackPointer, globalLimit, instructionPointer;
 
 	void arithmetic(Quadruple, int);
 

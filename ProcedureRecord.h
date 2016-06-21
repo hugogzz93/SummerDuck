@@ -15,7 +15,7 @@ class ProcedureRecord
 {
 public:
 	// ProcedureRecord(string type, string name, vector<VariableRecord> parameters);
-	ProcedureRecord(string type, string name, vector<VariableRecord> parameters, vector<VariableRecord> variables);
+	ProcedureRecord(int type, string name, vector<VariableRecord> parameters, vector<VariableRecord> variables);
 	ProcedureRecord(string name);
 	ProcedureRecord();
 
@@ -30,8 +30,8 @@ public:
 	void setType(int type);
 
 	//  getters
+	int getType();
 	string getName();
-	string getType();
 	vector<Quadruple>* getQuadruples();
 	vector<VariableRecord>* getParameters();
 	vector<VariableRecord>* getVariables();
@@ -39,7 +39,8 @@ public:
 	unordered_map<int, int> getMemoryRequirements();
 
 private:
-	string name, type;
+	string name;
+	int type;
 	vector<Quadruple> quadruples;
 	vector<VariableRecord> parameters;
 	vector<VariableRecord> variables;

@@ -11,6 +11,11 @@ programa Main;
 		}
 	}
 
+	modulo nulo nulMod(real b); {
+		escribe(b);
+		regresa;
+	}
+
 	modulo char modDos(real a, entero b); {
 		regresa 2 * ((a / 50) - 3);
 	}
@@ -46,9 +51,9 @@ programa Main;
 	principal() {
 		real : realUno[2][3], realDos[2][3];
 	
-		modUno();
 		dos = 1;
 		matrix[0][1] = 1;
+		modUno();
 		modDos(realUno, realDos);
 		realUno = 2.0;
 		realDos[0][0] = (realUno - 5.2) * 6;

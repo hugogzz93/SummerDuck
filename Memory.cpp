@@ -65,14 +65,6 @@ MemoryBlock* Memory::getAvailBlock(int bP, int address) {
 	return &avail[bP][address];
 }
 
-int Memory::getType(int address) {
-	if (isTemp(address)) {
-		
-	} else {
-		return memory[address].type;
-	}
-}
-
 int Memory::requestAvailMemory() {
 	return -1 * (AVAIL_OFFSET + availIndex++);
 }

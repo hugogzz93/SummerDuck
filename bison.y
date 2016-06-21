@@ -59,7 +59,6 @@
 		dataHolder.dimensions = dimensions_aux;
 		dataHolder.sizes[0] = sizes_aux[0];
 		dataHolder.sizes[1] = sizes_aux[1];
-		// printf("parsing %s with dimensions: %d, and sizes %d, %d\n", name_aux.c_str(), dimensions_aux, sizes_aux[0], sizes_aux[1]);
 	}
 
 	inline void transferAuxs() {

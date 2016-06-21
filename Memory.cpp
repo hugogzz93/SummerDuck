@@ -21,20 +21,26 @@
 void Memory::setMemory(int bP, int lO, int rO) {
 	MemoryBlock *lBlock = getBlock(bP, lO), *rBlock = getBlock(bP, rO);
 	*rBlock = *lBlock;
-	printf("Assigned - %d to %d\n", lO, rO);
+	printf("Assigned - %d to %d ", lO, rO);
+	cout << "(" << *lBlock << ")" << endl;
 }
 
 void Memory::setMemory(int bP1, int lO, int bP2, int rO) {
 	MemoryBlock *lBlock = getBlock(bP1, lO), *rBlock = getBlock(bP2, rO);
-	if (rBlock->type != Quadruple::T_NULL || rBlock->type != lBlock->type) {
+	if (rBlock->type != Quadruple::T_NULL && rBlock->type != lBlock->type) {
 		ErrorHandler::invalidType();
 	}
+	printf("Assigned - %d to %d ", lO, rO);
+	cout << "(" << *lBlock << ")" << endl;
 	*rBlock = *lBlock;
 }
 
 void Memory::setMemory(int bP, int address, MemoryBlock data) {
 	MemoryBlock* destination = getBlock(bP, address);
 	*destination = data;
+	printf("Assigned data to %d as type %d", address, data.type);
+	cout << " " << data << endl;
+
 }
 
 // int Memory::getAvailAddress(int bP, int address) {
@@ -45,9 +51,9 @@ MemoryBlock* Memory::getBlock(int bP, int address) {
 	if (isTemp(address)) {
 		return getAvailBlock(bP, address);
 	} else if (isConstant(address)) {
-		return &constants[address];
+		return &constants[address - CONSTANT_OFFSET];
 	} else {
-		return &memory[bP + address];
+		return &memory[bP][address];
 	}
 }
 
@@ -84,11 +90,11 @@ int Memory::saveConstant(int type, DataHolder data) {
 	return CONSTANT_OFFSET + constants.size();
 }
 
-void Memory::allocateSpace(int size) {
-	memory.reserve(size);
-}
+// void Memory::allocateSpace(int size) {
+// 	memory.reserve(size);
+// }
 
-vector<MemoryBlock>* Memory::getMemory() {
+unordered_map<int, unordered_map<int, MemoryBlock>>* Memory::getMemory() {
 	return &memory;
 }
 
@@ -121,18 +127,18 @@ vector<MemoryBlock>* Memory::getMemory() {
 // }
 
 void Memory::debugMemory() {
-	printf("variables\n");
-	for (int i = 0; i < memory.size(); ++i) {
-		if (memory[i].type != Quadruple::T_ENTERO) {
-			printf("%d: %d\n", i, memory[i].ival);
-		} else if (memory[i].type != Quadruple::T_REAL) {
-			printf("%d: %4.2f\n", i, memory[i].fval);
-		} else if (memory[i].type != Quadruple::T_CHAR) {
-			printf("%d: %s\n", i, memory[i].sval.c_str());
-		} else if (memory[i].type != Quadruple::T_BOOL) {
-			printf("%d: %d\n", i, memory[i].bval);
-		}
-	}
+	// printf("variables\n");
+	// for (int i = 0; i < memory.size(); ++i) {
+	// 	if (memory[i].type != Quadruple::T_ENTERO) {
+	// 		printf("%d: %d\n", i, memory[i].ival);
+	// 	} else if (memory[i].type != Quadruple::T_REAL) {
+	// 		printf("%d: %4.2f\n", i, memory[i].fval);
+	// 	} else if (memory[i].type != Quadruple::T_CHAR) {
+	// 		printf("%d: %s\n", i, memory[i].sval.c_str());
+	// 	} else if (memory[i].type != Quadruple::T_BOOL) {
+	// 		printf("%d: %d\n", i, memory[i].bval);
+	// 	}
+	// }
 
 	printf("constants\n");
 	for (int i = 0; i < constants.size(); ++i) {
@@ -147,29 +153,29 @@ void Memory::debugMemory() {
 		}
 	}
 
-	printf("Avail\n");
-	for (auto map = avail.begin(); map != avail.end(); map++) {
-		printf("basePointer: %d\n", map->first);
-		auto mMap = map->second;
-		for (auto it = mMap.begin(); it != mMap.end(); it++) {
-			MemoryBlock block = it->second;
-			printf("%d\n", it->first);
-			switch(block.type) {
-				case Quadruple::T_ENTERO:
-					printf("%d\n", block.ival);
-					break;
-				case Quadruple::T_REAL:
-					printf("%f\n", block.fval);
-					break;
-				case Quadruple::T_CHAR:
-					printf("%s\n", block.sval.c_str());
-					break;
-				case Quadruple::T_BOOL:
-					printf("%d\n", block.bval);
-					break;
-			}
-		}
-	}
+	// printf("Avail\n");
+	// for (auto map = avail.begin(); map != avail.end(); map++) {
+	// 	printf("basePointer: %d\n", map->first);
+	// 	auto mMap = map->second;
+	// 	for (auto it = mMap.begin(); it != mMap.end(); it++) {
+	// 		MemoryBlock block = it->second;
+	// 		printf("%d\n", it->first);
+	// 		switch(block.type) {
+	// 			case Quadruple::T_ENTERO:
+	// 				printf("%d\n", block.ival);
+	// 				break;
+	// 			case Quadruple::T_REAL:
+	// 				printf("%f\n", block.fval);
+	// 				break;
+	// 			case Quadruple::T_CHAR:
+	// 				printf("%s\n", block.sval.c_str());
+	// 				break;
+	// 			case Quadruple::T_BOOL:
+	// 				printf("%d\n", block.bval);
+	// 				break;
+	// 		}
+	// 	}
+	// }
 }
 
 bool Memory::isTemp(int address) {

@@ -53,8 +53,8 @@ void ErrorHandler::InvalidInstruction(int instruction) {
 	throw "";
 }
 
-void ErrorHandler::MissingArguments(string name) {
-	printf("Faltan argumentos para la funcion %s\n", name.c_str());
+void ErrorHandler::MissingArguments(string name, int given, int needed) {
+	printf("Cantidad de parametros incorrecto para %s, %d de %d\n", name.c_str(), given, needed);
 	throw "";
 }
 

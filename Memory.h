@@ -23,6 +23,30 @@ struct MemoryBlock
 	bool bval;
 	int type = Quadruple::T_NULL;
 
+	friend ostream& operator<<(ostream& os, const MemoryBlock& block)
+	{
+	    switch(block.type) {
+	    	case Quadruple::T_ENTERO:
+	    		printf("int %d", block.ival);
+	    		break;
+	    	case Quadruple::T_REAL:
+	    		printf("float %f", block.fval);
+	    		break;
+	    	case Quadruple::T_CHAR:
+	    		printf("string %s", block.sval.c_str());
+	    		break;
+	    	case Quadruple::T_BOOL:
+	    		printf("bool %d", block.bval);
+	    		break;
+	    	case Quadruple::T_NULL:
+	    		printf("null" );
+	    		break;
+	    	default:
+	    		printf("invalid" );
+	    }
+	    return os;
+	}
+
 	MemoryBlock operator+(const MemoryBlock& rhs) const {
 		MemoryBlock result;
 			if (type == Quadruple::T_ENTERO) {
@@ -171,6 +195,8 @@ struct MemoryBlock
 		} else if (type == Quadruple::T_BOOL) {
 			ErrorHandler::InvalidOperation("No se pueden hacer operaciones aritmeticas con bools");
 		}
+		result.type = 
+		result.type = Quadruple::T_BOOL;Quadruple::T_BOOL;
 		return result;
 	}
 
@@ -202,6 +228,7 @@ struct MemoryBlock
 		} else if (type == Quadruple::T_BOOL) {
 			ErrorHandler::InvalidOperation("No se pueden hacer operaciones aritmeticas con bools");
 		}
+		result.type = Quadruple::T_BOOL;
 		return result;
 	}
 
@@ -233,6 +260,7 @@ struct MemoryBlock
 		} else if (type == Quadruple::T_BOOL) {
 			ErrorHandler::InvalidOperation("No se pueden hacer operaciones aritmeticas con bools");
 		}
+		result.type = Quadruple::T_BOOL;
 		return result;
 	}
 
@@ -264,6 +292,7 @@ struct MemoryBlock
 		} else if (type == Quadruple::T_BOOL) {
 			ErrorHandler::InvalidOperation("No se pueden hacer operaciones aritmeticas con bools");
 		}
+		result.type = Quadruple::T_BOOL;
 		return result;
 	}
 
@@ -297,6 +326,7 @@ struct MemoryBlock
 		} else {
 			ErrorHandler::invalidType();
 		}
+		result.type = Quadruple::T_BOOL;
 		return result;
 	}
 
@@ -330,6 +360,7 @@ struct MemoryBlock
 		} else {
 			ErrorHandler::invalidType();
 		}
+		result.type = Quadruple::T_BOOL;
 		return result;
 	}
 
@@ -358,7 +389,7 @@ public:
 	// string getChar(int);
 	// double getDouble(int);
 	MemoryBlock* getBlock(int, int);
-	vector<MemoryBlock>* getMemory();
+	unordered_map<int, unordered_map<int, MemoryBlock>>* getMemory();
 
 
 	void clearAvail(int);
@@ -383,9 +414,8 @@ public:
 
 private:
 	int availIndex = 0;
-	vector<MemoryBlock> memory;
 	vector<MemoryBlock> constants;
-	unordered_map<int, unordered_map<int, MemoryBlock>> avail; //bp -> address = block
+	unordered_map<int, unordered_map<int, MemoryBlock>> avail, memory; //bp -> address = block
 
 	// int getAvailAddress(int, int);
 	MemoryBlock* getAvailBlock(int, int);

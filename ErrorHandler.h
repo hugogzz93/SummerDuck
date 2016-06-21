@@ -18,7 +18,7 @@ public:
 	static void invalidType();
 	static void badSyntax(string);
 	static void InvalidInstruction(int);
-	static void MissingArguments(string);
+	static void MissingArguments(string, int, int);
 	static void InvalidOperation(string);
 
 };

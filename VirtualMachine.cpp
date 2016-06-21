@@ -1,7 +1,7 @@
 #include "VirtualMachine.h"
 
 VirtualMachine::VirtualMachine(ProcedureDirectory* directory, Memory* memory): directory(directory), memory(memory) {
-	memory->allocateSpace(MEM_REQ);//allocate global space
+	// memory->allocateSpace(MEM_REQ);//allocate global space
 	stackPointer = basePointer = globalLimit = MEM_REQ;
 
 }
@@ -12,8 +12,8 @@ void VirtualMachine::run() {
 	procedure = directory->getFunctionByName("principal");
 	instructionPointer = 0;
 	while(!(procedure->getName() == "principal" && instructionPointer >= procedure->getQuadruples()->size())) {
-		printf("Executing: %d of %s\n", instructionPointer, procedure->getName().c_str());
 		instruction = procedure->getQuadruples()->operator[](instructionPointer);
+		printf("Executing: %d of %s: %s\n", instructionPointer, procedure->getName().c_str(), Quadruple::asString(instruction.getOperation()).c_str());
 		executeInstruction(instruction);
 		instructionPointer++;
 	}
@@ -21,8 +21,6 @@ void VirtualMachine::run() {
 }
 
 void VirtualMachine::era(int id) {
-	callStack.push_back(directory->getIdentifier(procedure->getName()));
-	procedure = directory->getProcedure(id);
 }
 
 void VirtualMachine::param(int address) {
@@ -30,28 +28,36 @@ void VirtualMachine::param(int address) {
 }
 
 void VirtualMachine::callProcedure(int id, int retAddress) {
+	callStack.push_back(directory->getIdentifier(procedure->getName()));
+	procedure = directory->getProcedure(id);
+	
+	int prevBasePointer = basePointer;
 	basePointers.push_back(basePointer);
 	basePointer = stackPointer;
-	int prevBasePointer = basePointers.back();
 	instructionPointers.push_back(instructionPointer);
+
+
 	if (procedure->getType() != Quadruple::T_NULL) {
 		retAddresses.push_back(retAddress);
 	}
-	if (stackPointer + MEM_REQ > memory->getMemory()->size()) {
-		memory->allocateSpace(MEM_REQ);
-		stackPointer = memory->getMemory()->size();
-	} else {
+	// if (stackPointer + MEM_REQ > memory->getMemory()->size()) {
+	// 	memory->allocateSpace(MEM_REQ);
+	// 	stackPointer = memory->getMemory()->size();
+	// } else {
 		stackPointer += MEM_REQ;
-	}
+	// }
 
 	vector<VariableRecord> funcParameters = *procedure->getParameters();
 	if (funcParameters.size() != parameters.size()) {
-		ErrorHandler::MissingArguments(procedure->getName());
+		ErrorHandler::MissingArguments(procedure->getName(), parameters.size(), funcParameters.size());
 	}
 
 	for (int i = 0; i < funcParameters.size(); ++i) {
 		memory->setMemory(prevBasePointer, parameters[i], basePointer, funcParameters[i].getVAddress());
 	}
+
+	parameters.clear();
+	instructionPointer = -1;
 }
 
 void VirtualMachine::ret(Quadruple instruction) {
@@ -186,10 +192,13 @@ void VirtualMachine::gotoJ(Quadruple instruction) {
 	
 	if (instruction.getOperation() ==  Quadruple::I_GOTOV) {
 		condition = memory->getBlock(basePointer, instruction.getLeftOperand());
+		cout << "GOTOV checking: ";
+		cout << *condition;
 		if (condition->type != Quadruple::T_BOOL) { ErrorHandler::invalidType(); }
 		if (condition->bval) { instructionPointer = instruction.getResult() - 1; }
 	} else if (instruction.getOperation() == Quadruple::I_GOTOF) {
 		condition = memory->getBlock(basePointer, instruction.getLeftOperand());
+		cout << "GOTOF checking: " << *condition << endl;
 		if (condition->type != Quadruple::T_BOOL) { ErrorHandler::invalidType(); }
 		if (!condition->bval) { instructionPointer = instruction.getResult() - 1; }
 	} else if (instruction.getOperation() == Quadruple::I_GOTO) { 
@@ -201,29 +210,30 @@ void VirtualMachine::arithmetic(Quadruple instruction, int operation) {
 	MemoryBlock* lBlock, *rBlock, result;
 	lBlock = memory->getBlock(basePointer, instruction.getLeftOperand());
 	rBlock = memory->getBlock(basePointer, instruction.getRightOperand());
-	if (operation =  Quadruple::I_SUMA) {
+	if (operation ==  Quadruple::I_SUMA) {
 		result = *lBlock + *rBlock;
-	} else if (operation =  Quadruple::I_RESTA) {
+	} else if (operation ==  Quadruple::I_RESTA) {
 		result = *lBlock - *rBlock;
-	} else if (operation =  Quadruple::I_MULT) {
+	} else if (operation ==  Quadruple::I_MULT) {
 		result = *lBlock * *rBlock;
-	} else if (operation =  Quadruple::I_DIV) {
+	} else if (operation ==  Quadruple::I_DIV) {
 		result = *lBlock / *rBlock;
-	} else if (operation =  Quadruple::I_MAYOR_QUE) {
+	} else if (operation ==  Quadruple::I_MAYOR_QUE) {
 		result = *lBlock > *rBlock;
-	} else if (operation =  Quadruple::I_MENOR_QUE) {
+	} else if (operation ==  Quadruple::I_MENOR_QUE) {
 		result = *lBlock < *rBlock;
-	} else if (operation =  Quadruple::I_MENOR_IGUAL_QUE) {
+		cout << result << " = " << *lBlock << " < " << *rBlock << endl;
+	} else if (operation ==  Quadruple::I_MENOR_IGUAL_QUE) {
 		result = *lBlock <= *rBlock;
-	} else if (operation =  Quadruple::I_MAYOR_IGUAL_QUE) {
+	} else if (operation ==  Quadruple::I_MAYOR_IGUAL_QUE) {
 		result = *lBlock >= *rBlock;
-	} else if (operation =  Quadruple::I_NO_IGUAL) {
+	} else if (operation ==  Quadruple::I_NO_IGUAL) {
 		result = *lBlock != *rBlock;
-	} else if (operation =  Quadruple::I_IGUAL) {
+	} else if (operation ==  Quadruple::I_IGUAL) {
 		result = *lBlock == *rBlock;
-	} else if (operation =  Quadruple::I_OR) {
+	} else if (operation ==  Quadruple::I_OR) {
 		result = *lBlock || *rBlock;
-	} else if (operation =  Quadruple::I_AND) {
+	} else if (operation ==  Quadruple::I_AND) {
 		result = *lBlock && *rBlock;
 	}
 	memory->setMemory(basePointer, instruction.getResult(), result);

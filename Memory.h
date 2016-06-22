@@ -405,6 +405,7 @@ public:
 	void setMemory(int, int, int);
 	void setMemory(int, int, int, int);
 	void setMemory(int, int, MemoryBlock);
+	void setType(int, int, int);
 
 	// debug
 	void debugMemory();

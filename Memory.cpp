@@ -27,7 +27,8 @@ void Memory::setMemory(int bP, int lO, int rO) {
 
 void Memory::setMemory(int bP1, int lO, int bP2, int rO) {
 	MemoryBlock *lBlock = getBlock(bP1, lO), *rBlock = getBlock(bP2, rO);
-	if (rBlock->type != Quadruple::T_NULL && rBlock->type != lBlock->type) {
+	if (lBlock->type != Quadruple::T_NULL && rBlock->type != lBlock->type) {
+		printf("type 1: %d, type 2: %d\n", rBlock->type, lBlock->type);
 		ErrorHandler::invalidType();
 	}
 	printf("Assigned - %d to %d ", lO, rO);
@@ -87,7 +88,7 @@ int Memory::saveConstant(int type, DataHolder data) {
 	} else if(type == Quadruple::T_BOOL) {}
 	block.type = type;
 	constants.push_back(block);
-	return CONSTANT_OFFSET + constants.size();
+	return CONSTANT_OFFSET + constants.size()-1;
 }
 
 // void Memory::allocateSpace(int size) {
@@ -188,4 +189,9 @@ bool Memory::isConstant(int address) {
 
 void Memory::clearAvail(int bP) {
 	avail[bP].clear();
+}
+
+void Memory::setType(int bP, int address, int type) {
+	MemoryBlock* block = getBlock(bP, address);
+	block->type = type;
 }

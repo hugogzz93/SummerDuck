@@ -53,7 +53,10 @@ void VirtualMachine::callProcedure(int id, int retAddress) {
 	}
 
 	for (int i = 0; i < funcParameters.size(); ++i) {
+		memory->setType(basePointer, funcParameters[i].getVAddress(),  funcParameters[i].getType());
+		printf("type %d set\n", funcParameters[i].getType());
 		memory->setMemory(prevBasePointer, parameters[i], basePointer, funcParameters[i].getVAddress());
+		printf("lele\n");
 	}
 
 	parameters.clear();

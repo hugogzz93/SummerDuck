@@ -72,9 +72,23 @@ programa Main;
 		realDos[0][0] = (realUno - 5.2) * 6;
 		strUno = "hola mundo";
 
+		realUno[1][0] = 4.0;
+		realUno[0][1] = 2.0;
+		realUno[1][2] = 6.0;
+		realUno[0][0] = 1.0;
+		realUno[1][1] = 5.0;
+		realUno[0][2] = 3.0;
 
-		lee(fl);
-		escribe(fibonacci(fl));
+		escribe(realUno[0][0]);
+		escribe(realUno[0][1]);
+		escribe(realUno[0][2]);
+		escribe(realUno[1][0]);
+		escribe(realUno[1][1]);
+		escribe(realUno[1][2]);
+
+
+		lee(realUno[0][1]);
+		escribe(fibonacci(realUno[0][1]));
 		
 		
 	}

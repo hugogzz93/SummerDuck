@@ -13,7 +13,7 @@ void VirtualMachine::run() {
 
 	vector<VariableRecord> funcVariables = *procedure->getVariables();
 	for (int i = 0; i < funcVariables.size(); ++i) {
-		memory->setType(basePointer, funcVariables[i].getVAddress(),  funcVariables[i].getType());
+		memory->prepareBlocks(basePointer, funcVariables[i]);
 	}
 
 	instructionPointer = 0;
@@ -101,7 +101,6 @@ void VirtualMachine::callProcedure(int id, int retAddress) {
 
 	vector<VariableRecord> funcParameters = *procedure->getParameters();
 	vector<VariableRecord> funcVariables = *procedure->getVariables();
-	printf("callig %s\n", procedure->getName().c_str());
 	if (funcParameters.size() != parameters.size()) {
 		ErrorHandler::MissingArguments(procedure->getName(), parameters.size(), funcParameters.size());
 	}

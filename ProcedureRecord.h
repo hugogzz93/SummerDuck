@@ -8,7 +8,7 @@
 #define ENTERO_MAX 999
 #define REAL_MAX 1999
 #define CHAR_MAX 2999
-#define MEM_REQ 3000
+#define MEM_REQ 3000 
 
 using namespace std;
 class ProcedureRecord

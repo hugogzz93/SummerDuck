@@ -179,9 +179,14 @@ void QuadrupleGenerator::startWhile() {
 void QuadrupleGenerator::endWhile() {
 	ProcedureRecord* record = handler->getRecord(ProcDirHandler::LOCAL);
 	vector<Quadruple>* quadruples = record->getQuadruples();
-	completeGoto();
+	int gotoFJump = jumpStack.top(); jumpStack.pop();
+	
 	generateQuadruple(Quadruple::I_GOTO,0,0,jumpStack.top());
 	jumpStack.pop();
+
+	Quadruple jump = (*quadruples)[gotoFJump];
+	jump.setResult(quadruples->size());
+	(*quadruples)[gotoFJump] = jump;
 }
 
 void QuadrupleGenerator::setGotoV() {

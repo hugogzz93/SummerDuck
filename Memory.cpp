@@ -1,6 +1,8 @@
 #include "Memory.h"
 #define AVAIL_OFFSET 10
-#define CONSTANT_OFFSET 4000
+#define CONSTANT_OFFSET 10000
+#define GLOBAL_LIM 3000 
+//MUST BE SAME AS PROC_REQ'S
 
 // int Memory::getInt(int address) {
 // 	return memory[address].ival;
@@ -20,18 +22,23 @@
 
 void Memory::setMemory(int bP, int lO, int rO) {
 	MemoryBlock *lBlock = getBlock(bP, lO), *rBlock = getBlock(bP, rO);
+	if (rBlock->type != Quadruple::T_NULL && rBlock->type != lBlock->type) {
+		printf("[%d]%d: %d -> [%d]%d: %d\n", bP, lO, lBlock->type, bP, rO, rBlock->type);
+		ErrorHandler::invalidType();
+	}
+
 	*rBlock = *lBlock;
-	printf("Assigned - %d to %d ", lO, rO);
+	printf("Assigned - [%d] %d (%d) to [%d] %d (%d) ", bP, lO, lBlock->type, bP, rO, rBlock->type);
 	cout << "(" << *lBlock << ")" << endl;
 }
 
 void Memory::setMemory(int bP1, int lO, int bP2, int rO) {
 	MemoryBlock *lBlock = getBlock(bP1, lO), *rBlock = getBlock(bP2, rO);
-	if (lBlock->type != Quadruple::T_NULL && rBlock->type != lBlock->type) {
-		printf("type 1: %d, type 2: %d\n", rBlock->type, lBlock->type);
+	if (rBlock->type != Quadruple::T_NULL && rBlock->type != lBlock->type) {
+		printf("[%d]%d: %d -> [%d]%d: %d\n", bP1, lO, lBlock->type, bP2, rO, rBlock->type);
 		ErrorHandler::invalidType();
 	}
-	printf("Assigned - %d to %d ", lO, rO);
+	printf("Assigned - [%d] %d (%d) to [%d]%d (%d) ", bP1, lO, lBlock->type,  bP2, rO, rBlock->type);
 	cout << "(" << *lBlock << ")" << endl;
 	*rBlock = *lBlock;
 }
@@ -39,7 +46,7 @@ void Memory::setMemory(int bP1, int lO, int bP2, int rO) {
 void Memory::setMemory(int bP, int address, MemoryBlock data) {
 	MemoryBlock* destination = getBlock(bP, address);
 	*destination = data;
-	printf("Assigned data to %d as type %d", address, data.type);
+	printf("Assigned data to [%d] %d as type %d", bP, address, data.type);
 	cout << " " << data << endl;
 
 }
@@ -53,6 +60,8 @@ MemoryBlock* Memory::getBlock(int bP, int address) {
 		return getAvailBlock(bP, address);
 	} else if (isConstant(address)) {
 		return &constants[address - CONSTANT_OFFSET];
+	} else if(isGlobal(address)) {
+		return &memory[-1][address];
 	} else {
 		return &memory[bP][address];
 	}
@@ -187,6 +196,10 @@ bool Memory::isConstant(int address) {
 	return address >= CONSTANT_OFFSET ? true : false ;
 }
 
+bool Memory::isGlobal(int address) {
+	return address < GLOBAL_LIM ? true : false ;
+}
+
 void Memory::clearAvail(int bP) {
 	avail[bP].clear();
 }
@@ -194,4 +207,5 @@ void Memory::clearAvail(int bP) {
 void Memory::setType(int bP, int address, int type) {
 	MemoryBlock* block = getBlock(bP, address);
 	block->type = type;
+	printf("[%d]%d set to %d\n", bP, address, block->type);
 }

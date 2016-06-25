@@ -47,6 +47,42 @@ struct MemoryBlock
 	    return os;
 	}
 
+	// MemoryBlock& operator=(const MemoryBlock& rhs) const {
+	// 		if (type == Quadruple::T_ENTERO) {
+	// 			if (rhs.type == Quadruple::T_ENTERO) {
+	// 				ival = rhs.ival;
+	// 			} else if (rhs.type == Quadruple::T_REAL) {
+	// 				ival = rhs.fval;
+	// 			} else {
+	// 				ErrorHandler::invalidType();
+	// 			}
+	// 		} else if (type == Quadruple::T_REAL) {
+	// 			if (rhs.type == Quadruple::T_ENTERO) {
+	// 				fval = rhs.ival;
+	// 			} else if (rhs.type == Quadruple::T_REAL) {
+	// 				fval = rhs.fval;
+	// 			} else {
+	// 				ErrorHandler::invalidType();
+	// 			}
+	// 		} else if (type == Quadruple::T_CHAR) {
+	// 			if (rhs.type == Quadruple::T_CHAR) {
+	// 				sval = rhs.sval;
+	// 			} else {
+	// 				ErrorHandler::invalidType();
+	// 			}
+	// 		} else if (type == Quadruple::T_BOOL) {
+	// 			if (rhs.type == Quadruple::T_BOOL) {
+	// 				bval = rhs.bval;
+	// 			} else { 
+	// 				ErrorHandler::invalidType();
+	// 			}
+	// 		} else if(type == Quadruple::T_NULL) {
+	// 			type = rhs.type;
+	// 			*this = rhs;
+	// 		}
+	// 	return *this;
+	// }
+
 	MemoryBlock operator+(const MemoryBlock& rhs) const {
 		MemoryBlock result;
 			if (type == Quadruple::T_ENTERO) {
@@ -55,7 +91,7 @@ struct MemoryBlock
 					result.type = type;
 				} else if (rhs.type == Quadruple::T_REAL) {
 					result.fval = ival + rhs.fval;
-					result.type == rhs.type;
+					result.type = rhs.type;
 				} else {
 					ErrorHandler::invalidType();
 				}
@@ -65,7 +101,7 @@ struct MemoryBlock
 					result.type = type;
 				} else if (rhs.type == Quadruple::T_REAL) {
 					result.fval = fval + rhs.fval;
-					result.type == rhs.type;
+					result.type = rhs.type;
 				} else {
 					ErrorHandler::invalidType();
 				}
@@ -85,7 +121,7 @@ struct MemoryBlock
 					result.type = type;
 				} else if (rhs.type == Quadruple::T_REAL) {
 					result.fval = ival - rhs.fval;
-					result.type == rhs.type;
+					result.type = rhs.type;
 				} else {
 					ErrorHandler::invalidType();
 				}
@@ -95,7 +131,7 @@ struct MemoryBlock
 					result.type = type;
 				} else if (rhs.type == Quadruple::T_REAL) {
 					result.fval = fval - rhs.fval;
-					result.type == rhs.type;
+					result.type = rhs.type;
 				} else {
 					ErrorHandler::invalidType();
 				}
@@ -115,7 +151,8 @@ struct MemoryBlock
 					result.type = type;
 				} else if (rhs.type == Quadruple::T_REAL) {
 					result.fval = ival * rhs.fval;
-					result.type == rhs.type;
+					result.type = rhs.type;
+					printf("MULTIPLICAITION %lf = %lf w type %d\n", ival * rhs.fval, result.fval, result.type);
 				} else {
 					ErrorHandler::invalidType();
 				}
@@ -125,7 +162,7 @@ struct MemoryBlock
 					result.type = type;
 				} else if (rhs.type == Quadruple::T_REAL) {
 					result.fval = fval * rhs.fval;
-					result.type == rhs.type;
+					result.type = rhs.type;
 				} else {
 					ErrorHandler::invalidType();
 				}
@@ -145,7 +182,7 @@ struct MemoryBlock
 					result.type = Quadruple::T_REAL;
 				} else if (rhs.type == Quadruple::T_REAL) {
 					result.fval = ival / rhs.fval;
-					result.type == rhs.type;
+					result.type = rhs.type;
 				} else {
 					ErrorHandler::invalidType();
 				}
@@ -155,7 +192,7 @@ struct MemoryBlock
 					result.type = type;
 				} else if (rhs.type == Quadruple::T_REAL) {
 					result.fval = fval / rhs.fval;
-					result.type == rhs.type;
+					result.type = rhs.type;
 				} else {
 					ErrorHandler::invalidType();
 				}
@@ -411,10 +448,11 @@ public:
 	void debugMemory();
 	bool isTemp(int);
 	bool isConstant(int);
+	bool isGlobal(int);
 
 
 private:
-	int availIndex = 0;
+	int availIndex = 0, globalLimit;
 	vector<MemoryBlock> constants;
 	unordered_map<int, unordered_map<int, MemoryBlock>> avail, memory; //bp -> address = block
 

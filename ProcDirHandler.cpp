@@ -69,6 +69,7 @@ void ProcDirHandler::cleanLocal() {
 
 int ProcDirHandler::assignVirtualAddress(int type, int dimensions, int sizes[]) {
 	unordered_map<int, int> *virtualAddresses = scope == GLOBAL ? &globalVariableIndex : &localVariableIndex;
+	int offset = scope == GLOBAL ?  0 : MEM_REQ ;
 
 	int units;
 	if(dimensions == 0) {
@@ -83,7 +84,7 @@ int ProcDirHandler::assignVirtualAddress(int type, int dimensions, int sizes[]) 
 	(*virtualAddresses)[type] += units;
 	int MEM_MAX = type == Quadruple::T_ENTERO ? ENTERO_MAX : type == Quadruple::T_REAL ? REAL_MAX : CHAR_MAX ;
 	if ((*virtualAddresses)[type] >= MEM_MAX) { ErrorHandler::memoryLimitExceeded(); }
-	return virtualAddress;
+	return virtualAddress + offset;
 }
 
 

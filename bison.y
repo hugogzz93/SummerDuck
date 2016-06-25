@@ -323,7 +323,7 @@
 int main(int, char**) {
 	// open a file handle to a particular file:
 	// yydebug = 1;
-	FILE *myfile = fopen("file", "r");
+	FILE *myfile = fopen("file2.txt", "r");
 	// make sure it is valid:
 	if (!myfile) {
 		cout << "I can't open file.txt!" << endl;

@@ -38,6 +38,7 @@ private:
 
 	vector<VariableRecord> parameters;
 
+	// type->index
 	unordered_map<int, int> localVariableIndex;
 	unordered_map<int, int> globalVariableIndex;
 

@@ -10,7 +10,14 @@ void VirtualMachine::run() {
 	printf("Starting Virtual Machine...\n");
 	Quadruple instruction;
 	procedure = directory->getFunctionByName("principal");
+
+	vector<VariableRecord> funcVariables = *procedure->getVariables();
+	for (int i = 0; i < funcVariables.size(); ++i) {
+		memory->setType(basePointer, funcVariables[i].getVAddress(),  funcVariables[i].getType());
+	}
+
 	instructionPointer = 0;
+	stackPointer += MEM_REQ;
 	while(!(procedure->getName() == "principal" && instructionPointer >= procedure->getQuadruples()->size())) {
 		instruction = procedure->getQuadruples()->operator[](instructionPointer);
 		printf("Executing: %d of %s: %s\n", instructionPointer, procedure->getName().c_str(), Quadruple::asString(instruction.getOperation()).c_str());
@@ -48,15 +55,20 @@ void VirtualMachine::callProcedure(int id, int retAddress) {
 	// }
 
 	vector<VariableRecord> funcParameters = *procedure->getParameters();
+	vector<VariableRecord> funcVariables = *procedure->getVariables();
+
 	if (funcParameters.size() != parameters.size()) {
 		ErrorHandler::MissingArguments(procedure->getName(), parameters.size(), funcParameters.size());
 	}
 
+	for (int i = 0; i < funcVariables.size(); ++i)
+	{
+		memory->setType(basePointer, funcVariables[i].getVAddress(),  funcVariables[i].getType());
+	}
+
 	for (int i = 0; i < funcParameters.size(); ++i) {
 		memory->setType(basePointer, funcParameters[i].getVAddress(),  funcParameters[i].getType());
-		printf("type %d set\n", funcParameters[i].getType());
 		memory->setMemory(prevBasePointer, parameters[i], basePointer, funcParameters[i].getVAddress());
-		printf("lele\n");
 	}
 
 	parameters.clear();
@@ -215,25 +227,34 @@ void VirtualMachine::arithmetic(Quadruple instruction, int operation) {
 	rBlock = memory->getBlock(basePointer, instruction.getRightOperand());
 	if (operation ==  Quadruple::I_SUMA) {
 		result = *lBlock + *rBlock;
+		cout << result << " = " << *lBlock << " + " << *rBlock << endl;
 	} else if (operation ==  Quadruple::I_RESTA) {
 		result = *lBlock - *rBlock;
+		cout << result << " = " << *lBlock << " - " << *rBlock << endl;
 	} else if (operation ==  Quadruple::I_MULT) {
 		result = *lBlock * *rBlock;
+		cout << result << " = " << *lBlock << " * " << *rBlock << endl;
 	} else if (operation ==  Quadruple::I_DIV) {
 		result = *lBlock / *rBlock;
+		cout << result << " = " << *lBlock << " / " << *rBlock << endl;
 	} else if (operation ==  Quadruple::I_MAYOR_QUE) {
 		result = *lBlock > *rBlock;
+		cout << result << " = " << *lBlock << " > " << *rBlock << endl;
 	} else if (operation ==  Quadruple::I_MENOR_QUE) {
 		result = *lBlock < *rBlock;
 		cout << result << " = " << *lBlock << " < " << *rBlock << endl;
 	} else if (operation ==  Quadruple::I_MENOR_IGUAL_QUE) {
 		result = *lBlock <= *rBlock;
+		cout << result << " = " << *lBlock << " <= " << *rBlock << endl;
 	} else if (operation ==  Quadruple::I_MAYOR_IGUAL_QUE) {
 		result = *lBlock >= *rBlock;
+		cout << result << " = " << *lBlock << " >= " << *rBlock << endl;
 	} else if (operation ==  Quadruple::I_NO_IGUAL) {
 		result = *lBlock != *rBlock;
+		cout << result << " = " << *lBlock << " != " << *rBlock << endl;
 	} else if (operation ==  Quadruple::I_IGUAL) {
 		result = *lBlock == *rBlock;
+		cout << result << " = " << *lBlock << " == " << *rBlock << endl;
 	} else if (operation ==  Quadruple::I_OR) {
 		result = *lBlock || *rBlock;
 	} else if (operation ==  Quadruple::I_AND) {

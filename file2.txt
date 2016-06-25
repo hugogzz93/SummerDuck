@@ -1,0 +1,71 @@
+programa Main;
+	entero :dos, matrix[1][2], matrixDos[3][5], vec[2], tres;
+	real : realUno, realDos[2][3];
+	char : strUno, strDos;
+
+	modulo real modUno(entero a); {
+		si(a < 1) entonces {
+			regresa 4.0;
+		} sino {
+			regresa modUno(a - 1);
+		}
+	}
+
+	modulo nulo nulMod(real b); {
+		escribe(b);
+		regresa;
+	}
+
+	modulo char modDos(real a, entero b); {
+		regresa 2 * ((a / 50) - 3);
+	}
+
+	modulo real modTres(real x[2][3], real y); {
+		real : realUno[2][3], realDos[2][3];
+
+		si(y == 1 && (y == 0 || y <> 2.5) && realUno[1][2] < 5) entonces {
+			regresa 1;
+		} sino {
+			regresa y;
+		}
+
+		regresa x[0][0];
+	}
+
+	modulo real fibonacci(real a); {
+		si(a == 1 || a == 0) entonces {
+			regresa 1;
+		} sino {
+			regresa fibonacci(a-1) + fibonacci(a-2);
+		}
+	}
+
+	modulo real factorial(real a); {
+		si(a == 2) entonces {
+			regresa 2;
+		} sino {
+			regresa a * factorial(a-1);
+		}
+	}
+
+	principal() {
+		real : realUno[2][3], realDos[2][3];
+		entero: xx, yy;
+		xx = 10;
+		yy = 20;
+		dos = 151;
+		matrix[0][1] = 161;
+		modUno(4);
+		realUno[0][3] = 2.0;
+		realUno[1][2] = 2.0;
+		realDos[0][2] = 3.0;
+		modDos(realUno[1][2], dos);
+		realUno = 3.0;
+		realDos[0][0] = (realUno - 5.2) * 6;
+		strUno = "hola mundo";
+
+		
+		mientraz( xx < yy ) haz {
+			xx = xx + 1;			
+		}
+	}

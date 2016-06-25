@@ -32,7 +32,7 @@ semanticCube: quadruple
 quadruple:
 	g++ -w -std=c++11 -c Quadruple.cpp	
 
-memory: semanticCube errorHandler
+memory: semanticCube errorHandler variableRecord
 	g++ -w -std=c++11 -c Memory.cpp	
 
 virtualMachine: procedureDirectory memory

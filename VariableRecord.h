@@ -19,6 +19,7 @@ struct Data {
 class VariableRecord
 {
 public:
+	int sizes[2];
 	
 	// VariableRecord(int type, string name, int dimensions, int vAddress, string scope);
 	VariableRecord(string name, string scope, int type, int dimensions, int vAddress, int sizes[]);
@@ -37,6 +38,7 @@ public:
 	void setScope(string scope);
 	void setConstant(bool constant);
 	int getDimensions();
+
 
 	void getValue(int&);
 	void getValue(double&);
@@ -64,7 +66,7 @@ public:
 
 private:
 	string name = "undefined_name", scope = "undefined_scope";
-	int type = -1, vAddress = -1, dimensions = 1, sizes[2];
+	int type = -1, vAddress = -1, dimensions = 1;
 	bool constant = false;
 	Data data;
 	SemanticCube cube;

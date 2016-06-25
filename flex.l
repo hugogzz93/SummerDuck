@@ -23,6 +23,8 @@
 "repite"				{ return REPITE ; }
 "hasta"					{ return HASTA ; }
 
+">=" 					{ return MAYOR_O_IGUAL_QUE ; }
+"<=" 					{ return MENOR_O_IGUAL_QUE ; }
 ">" 					{ return MAYOR_QUE ; }
 "<" 					{ return MENOR_QUE ; }
 "<>" 					{ return NO_IGUAL_A ; }

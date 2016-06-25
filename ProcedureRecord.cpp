@@ -79,22 +79,24 @@ void ProcedureRecord::setType(int type) {
 
 VariableRecord *ProcedureRecord::getVariableByName(string name) {
 
+	printf("getting %s by name\n", name.c_str());
+	printf("parameters size %d\n", parameters.size());
 	for (std::vector<VariableRecord>::iterator record = parameters.begin(); record != parameters.end(); ++record)
 	{
+		printf("looking at %s == %s, %d\n", record->getName().c_str(), name.c_str(), name == record->getName());
 		if (record->getName() == name)
 		{
 			return &(*record);
 		}
 	}
-
 	for (std::vector<VariableRecord>::iterator record = variables.begin(); record != variables.end(); ++record)
 	{
+		printf("looking at %s\n", record->getName().c_str());
 		if (record->getName() == name)
 		{
 			return &(*record);
 		}
 	}
-
 	throw invalid_argument("No variable with the name " + name + " found.");
 }
 

@@ -61,7 +61,14 @@
 		dataHolder.sizes[1] = sizes_aux[1];
 	}
 
-	inline void transferAuxs() {
+	inline void saveAux(){
+		name_auxT = name_aux;
+		dimensions_auxT = dimensions_aux;
+		sizes_auxT[0] = sizes_aux[0];
+		sizes_auxT[1] = sizes_aux[1];
+	}
+
+	inline void loadAux() {
 		name_aux = name_auxT;
 		dimensions_aux = dimensions_auxT;
 		sizes_aux[0] = sizes_auxT[0];
@@ -79,6 +86,13 @@
 		} else {
 			regBool = false;
 		}
+	}
+
+	inline void addDefaultSub() {
+		ProcedureRecord escribe("escribe");
+		ProcedureRecord lee("lee");
+		directory.addRecord(escribe);
+		directory.addRecord(lee);
 	}
 
 
@@ -125,6 +139,8 @@
 // operators
 %token MAYOR_QUE
 %token MENOR_QUE
+%token MAYOR_O_IGUAL_QUE
+%token MENOR_O_IGUAL_QUE
 %token NO_IGUAL_A
 %token IGUAL_A
 %token O_SUMA
@@ -159,7 +175,7 @@
 %%
 
 	programa: 
-		PROGRAMA ID SEMI_COLON vars { procedureDirectoryHandler.registerProcedure(); } 
+		PROGRAMA ID SEMI_COLON vars { procedureDirectoryHandler.registerProcedure(); addDefaultSub(); } 
 		programa_a PRINCIPAL { procedureDirectoryHandler.setScope(ProcDirHandler::LOCAL);  procedureDirectoryHandler.setName("principal"); procedureDirectoryHandler.setReturnType(Quadruple::T_ENTERO); }
 		LEFT_PAREN RIGHT_PAREN LEFT_BRACKET vars estatutos RIGHT_BRACKET { finish(); } ;
 
@@ -184,7 +200,7 @@
 	dec_var:
 		tipo { procedureDirectoryHandler.setVariableType($1); } COLON lista_ids SEMI_COLON ;
 
-	expresion: 
+	expresion:
 		expresion_a expresion_b {  quadrupleGenerator.testForOperation(2); } ;
 
 	expresion_a:
@@ -206,8 +222,10 @@
 
 	relacion: 
 		exp		{quadrupleGenerator.testForOperation(2); }
-		| exp	{quadrupleGenerator.testForOperation(2); } MENOR_QUE 	{ quadrupleGenerator.pushOperator(Quadruple::I_MENOR_QUE); }  	relacion
-		| exp	{quadrupleGenerator.testForOperation(2); } MAYOR_QUE 	{ quadrupleGenerator.pushOperator(Quadruple::I_MAYOR_QUE);}  	relacion;
+		| exp	{quadrupleGenerator.testForOperation(2); } MENOR_QUE 			{ quadrupleGenerator.pushOperator(Quadruple::I_MENOR_QUE); }  		relacion
+		| exp	{quadrupleGenerator.testForOperation(2); } MAYOR_QUE 			{ quadrupleGenerator.pushOperator(Quadruple::I_MAYOR_QUE); }  		relacion
+		| exp	{quadrupleGenerator.testForOperation(2); } MENOR_O_IGUAL_QUE 	{ quadrupleGenerator.pushOperator(Quadruple::I_MENOR_IGUAL_QUE); }  relacion
+		| exp	{quadrupleGenerator.testForOperation(2); } MAYOR_O_IGUAL_QUE 	{ quadrupleGenerator.pushOperator(Quadruple::I_MAYOR_IGUAL_QUE); }  relacion;
 
 	exp:
 		termino		{quadrupleGenerator.testForOperation(1); }
@@ -229,7 +247,7 @@
 		| O_RESTA var_cte 	{ quadrupleGenerator.pushOperand(); resetAux(); } ;
 
 	var_cte:
-		dim_id			{  dataHolderSetAuxs();  quadrupleGenerator.setFlag(QuadrupleGenerator::C_ID); 			}
+		dim_id			{  dataHolderSetAuxs();  quadrupleGenerator.setFlag(QuadrupleGenerator::C_ID);			}
 		| CTE_ENTERO	{  dataHolder.ival = $1; quadrupleGenerator.setFlag(QuadrupleGenerator::C_ENTERO); 		}
 		| CTE_REAL		{  dataHolder.fval = $1; quadrupleGenerator.setFlag(QuadrupleGenerator::C_REAL); 		}
 		| CTE_CHAR		{  dataHolder.sval = $1; quadrupleGenerator.setFlag(QuadrupleGenerator::C_CHAR); 		}
@@ -238,7 +256,7 @@
 
 	dec_func:
 		{ procedureDirectoryHandler.setScope(ProcDirHandler::LOCAL); } 
-		MODULO tipo ID { procedureDirectoryHandler.setReturnType($3); procedureDirectoryHandler.setName(string($4)); printf("%s\n", $4); } 
+		MODULO tipo ID { procedureDirectoryHandler.setReturnType($3); procedureDirectoryHandler.setName(string($4)); } 
 		LEFT_PAREN dec_func_a RIGHT_PAREN SEMI_COLON LEFT_BRACKET vars estatutos RIGHT_BRACKET
 		{ procedureDirectoryHandler.registerProcedure(); procedureDirectoryHandler.setScope(ProcDirHandler::GLOBAL); checkRegBool(); } ;
 
@@ -267,15 +285,15 @@
 		| ;
 
 	dim_id:
-		ID { name_auxT = name_aux = string($1); dimensions_auxT = dimensions_aux = 0; }
+		ID { name_aux = string($1); dimensions_aux = 0; }
 		| vector_id
 		| matriz_id ;
 
 	vector_id:
-		ID LEFT_SQRBRACKET CTE_ENTERO RIGHT_SQRBRACKET { name_auxT = name_aux = string($1);  dimensions_auxT = dimensions_aux = 1; sizes_auxT[0] = sizes_aux[0] = $3; } ;
+		ID LEFT_SQRBRACKET CTE_ENTERO RIGHT_SQRBRACKET { name_aux = string($1);  dimensions_aux = 1; sizes_aux[0] = $3; } ;
 
 	matriz_id:
-		vector_id LEFT_SQRBRACKET CTE_ENTERO RIGHT_SQRBRACKET matriz_id_a { dimensions_auxT = dimensions_aux = 2; sizes_auxT[1] = sizes_aux[1] = $3; } ;
+		vector_id LEFT_SQRBRACKET CTE_ENTERO RIGHT_SQRBRACKET matriz_id_a { dimensions_aux = 2; sizes_aux[1] = $3; } ;
 
 	matriz_id_a:
 			O_INV
@@ -283,7 +301,7 @@
 			| ;		
 
 	asignacion:
-		dim_id EQUALS expresion { transferAuxs(); dataHolderSetAuxs(); quadrupleGenerator.assignment(); };
+		dim_id { saveAux(); } EQUALS expresion { loadAux(); dataHolderSetAuxs(); quadrupleGenerator.assignment(); };
 
 	llamada_func:
 		ID LEFT_PAREN { quadrupleGenerator.loadFunction(string($1)); quadrupleGenerator.addLimit(); } llamada_func_a { quadrupleGenerator.removeLimit(); } RIGHT_PAREN {quadrupleGenerator.gosub(string($1)); } ;
@@ -307,7 +325,7 @@
 		MIENTRAZ LEFT_PAREN { quadrupleGenerator.startWhile(); } expresion { quadrupleGenerator.setGotoF(); } RIGHT_PAREN HAZ LEFT_BRACKET estatutos { quadrupleGenerator.endWhile(); }RIGHT_BRACKET ;
 
 	ciclo_do_while:
-		REPITE LEFT_BRACKET { quadrupleGenerator.doWhile(); } estatutos RIGHT_BRACKET HASTA LEFT_PAREN expresion { quadrupleGenerator.setGotoV(); }RIGHT_PAREN ;
+		REPITE LEFT_BRACKET { quadrupleGenerator.doWhile(); } estatutos RIGHT_BRACKET HASTA LEFT_PAREN expresion { quadrupleGenerator.setGotoV(); } RIGHT_PAREN ;
 
 	estatuto:
 		asignacion SEMI_COLON

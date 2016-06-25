@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include "SemanticCube.h"
 #include "ErrorHandler.h"
+#include "VariableRecord.h"
 using namespace std;
 
 struct DataHolder {
@@ -45,6 +46,30 @@ struct MemoryBlock
 	    		printf("invalid" );
 	    }
 	    return os;
+	}
+
+	friend istream &operator>>(istream &input, MemoryBlock &block )
+	{
+	    switch(block.type) {
+	    	case Quadruple::T_ENTERO:
+	    		cin >> block.ival;
+	    		break;
+	    	case Quadruple::T_REAL:
+	    		cin >> block.fval;
+	    		break;
+	    	case Quadruple::T_CHAR:
+	    		cin >> block.sval;
+	    		break;
+	    	case Quadruple::T_BOOL:
+	    		cin >> block.bval;
+	    		break;
+	    	case Quadruple::T_NULL:
+	    		ErrorHandler::invalidType();
+	    		break;
+	    	default:
+	    		ErrorHandler::invalidType();
+	    }
+	    return input;
 	}
 
 	// MemoryBlock& operator=(const MemoryBlock& rhs) const {
@@ -403,12 +428,20 @@ struct MemoryBlock
 
 	MemoryBlock operator||(const MemoryBlock& rhs) const {
 		MemoryBlock result;
+		result.type = Quadruple::T_BOOL;
+		if (type != Quadruple::T_BOOL || rhs.type != Quadruple::T_BOOL) {
+			ErrorHandler::invalidType();
+		}
 		result.bval = bval || rhs.bval;
 		return result;
 	}
 
 	MemoryBlock operator&&(const MemoryBlock& rhs) const {
 		MemoryBlock result;
+		result.type = Quadruple::T_BOOL;
+		if (type != Quadruple::T_BOOL || rhs.type != Quadruple::T_BOOL) {
+			ErrorHandler::invalidType();
+		}
 		result.bval = bval && rhs.bval;
 		return result;
 	}
@@ -442,7 +475,9 @@ public:
 	void setMemory(int, int, int);
 	void setMemory(int, int, int, int);
 	void setMemory(int, int, MemoryBlock);
+
 	void setType(int, int, int);
+	void prepareBlocks(int, VariableRecord);
 
 	// debug
 	void debugMemory();
@@ -458,6 +493,7 @@ private:
 
 	// int getAvailAddress(int, int);
 	MemoryBlock* getAvailBlock(int, int);
+
 
 };
 #endif

@@ -37,6 +37,51 @@ void VirtualMachine::param(int address) {
 void VirtualMachine::callProcedure(int id, int retAddress) {
 	callStack.push_back(directory->getIdentifier(procedure->getName()));
 	procedure = directory->getProcedure(id);
+	if (procedure->getName() == "lee") {
+		printf("@@@@@@@@@@@@@\n");
+		printf("lee\n");
+		for (int i = 0; i < parameters.size(); ++i) {
+			MemoryBlock *block = memory->getBlock(basePointer, parameters[i]);
+			cout << *block << endl;
+			cin >> *block;
+			printf("%d\n", 2);
+		}
+		parameters.clear();
+		procedure = directory->getProcedure(callStack.back()); callStack.pop_back();
+		return;
+	} else if (procedure->getName() == "escribe") {
+			printf("@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
+			printf("escribe\n");
+		for (int i = 0; i < parameters.size(); ++i) {
+			MemoryBlock *block = memory->getBlock(basePointer, parameters[i]);
+				switch(block->type) {
+		    	case Quadruple::T_ENTERO:
+		    		printf("%d", block->ival);
+		    		break;
+		    	case Quadruple::T_REAL:
+		    		printf("%f", block->fval);
+		    		break;
+		    	case Quadruple::T_CHAR:
+		    		printf("%s", block->sval.c_str());
+		    		break;
+		    	case Quadruple::T_BOOL:
+		    		printf("%d", block->bval);
+		    		break;
+		    	case Quadruple::T_NULL:
+		    		printf("null" );
+		    		break;
+		    	default:
+		    		printf("invalid" );
+		    }
+		    if (i == parameters.size() - 1)
+		    {
+		    	printf("\n");
+		    }
+		}
+		parameters.clear();
+		procedure = directory->getProcedure(callStack.back()); callStack.pop_back();
+		return;
+	}
 	
 	int prevBasePointer = basePointer;
 	basePointers.push_back(basePointer);
@@ -56,18 +101,20 @@ void VirtualMachine::callProcedure(int id, int retAddress) {
 
 	vector<VariableRecord> funcParameters = *procedure->getParameters();
 	vector<VariableRecord> funcVariables = *procedure->getVariables();
-
+	printf("callig %s\n", procedure->getName().c_str());
 	if (funcParameters.size() != parameters.size()) {
 		ErrorHandler::MissingArguments(procedure->getName(), parameters.size(), funcParameters.size());
 	}
 
+	// set type of variable in memory
 	for (int i = 0; i < funcVariables.size(); ++i)
 	{
-		memory->setType(basePointer, funcVariables[i].getVAddress(),  funcVariables[i].getType());
+		memory->prepareBlocks(basePointer, funcVariables[i]);
 	}
 
+	// set type of parameters in memory
 	for (int i = 0; i < funcParameters.size(); ++i) {
-		memory->setType(basePointer, funcParameters[i].getVAddress(),  funcParameters[i].getType());
+		memory->prepareBlocks(basePointer, funcParameters[i]);
 		memory->setMemory(prevBasePointer, parameters[i], basePointer, funcParameters[i].getVAddress());
 	}
 
@@ -257,8 +304,10 @@ void VirtualMachine::arithmetic(Quadruple instruction, int operation) {
 		cout << result << " = " << *lBlock << " == " << *rBlock << endl;
 	} else if (operation ==  Quadruple::I_OR) {
 		result = *lBlock || *rBlock;
+		cout << result << " = " << *lBlock << " || " << *rBlock << endl;
 	} else if (operation ==  Quadruple::I_AND) {
 		result = *lBlock && *rBlock;
+		cout << result << " = " << *lBlock << " && " << *rBlock << endl;
 	}
 	memory->setMemory(basePointer, instruction.getResult(), result);
 	

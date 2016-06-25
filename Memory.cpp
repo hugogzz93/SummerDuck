@@ -207,5 +207,27 @@ void Memory::clearAvail(int bP) {
 void Memory::setType(int bP, int address, int type) {
 	MemoryBlock* block = getBlock(bP, address);
 	block->type = type;
-	printf("[%d]%d set to %d\n", bP, address, block->type);
+}
+
+void Memory::prepareBlocks(int bP, VariableRecord record) {
+	int dimensions = record.getDimensions();
+	printf("\n\n\n");
+	printf("-----------------------------\n");
+	printf("dimensions %d\n", dimensions);
+	if( dimensions == 1) {
+		for (int i = 0; i < record.sizes[0]; ++i) {
+			printf("setting %d to type %d\n", record.getVAddress() + 1, record.getType());
+			setType(bP, record.getVAddress() + i,  record.getType());
+		}
+		
+	} else {
+		for (int i = 0; i < record.sizes[0]; ++i) {
+			for (int j = 0; j < record.sizes[1]; ++j) {
+				printf("setting %d to type %d\n", record.getVAddress() + (i * record.sizes[1] + j), record.getType());
+				printf("%d * %d + %d = %d\n", j, i, j, j * i + j);
+				setType(bP, record.getVAddress() + (i * record.sizes[1] + j),  record.getType());
+			}
+		}
+	}
+	printf("-----------------------------\n");
 }

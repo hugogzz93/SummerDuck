@@ -27,6 +27,6 @@ private:
 	int basePointer, stackPointer, globalLimit, instructionPointer;
 
 	void arithmetic(Quadruple, int);
-
+	void cleanParameters();
 };
 #endif

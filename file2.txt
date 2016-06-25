@@ -1,9 +1,11 @@
+
 programa Main;
 	entero :dos, matrix[1][2], matrixDos[3][5], vec[2], tres;
 	real : realUno, realDos[2][3];
 	char : strUno, strDos;
 
 	modulo real modUno(entero a); {
+		entero: mat[3][3], k;
 		si(a < 1) entonces {
 			regresa 4.0;
 		} sino {
@@ -33,8 +35,14 @@ programa Main;
 	}
 
 	modulo real fibonacci(real a); {
-		si(a == 1 || a == 0) entonces {
-			regresa 1;
+		real : uno, dos;
+
+		si(a <= 2) entonces {
+			si(a <= 0) entonces {
+				regresa 0;
+			} sino {
+				regresa 1;
+			}
 		} sino {
 			regresa fibonacci(a-1) + fibonacci(a-2);
 		}
@@ -49,23 +57,24 @@ programa Main;
 	}
 
 	principal() {
-		real : realUno[2][3], realDos[2][3];
+		real : realUno[2][3], realDos[2][3], fl;
 		entero: xx, yy;
-		xx = 10;
+		xx = 55;
 		yy = 20;
 		dos = 151;
 		matrix[0][1] = 161;
 		modUno(4);
-		realUno[0][3] = 2.0;
-		realUno[1][2] = 2.0;
-		realDos[0][2] = 3.0;
+		realUno[0][2] = 44.0;
+		realUno[1][2] = 55.0;
+		realDos[0][2] = 77.0;
 		modDos(realUno[1][2], dos);
-		realUno = 3.0;
+		realUno = 66.0;
 		realDos[0][0] = (realUno - 5.2) * 6;
 		strUno = "hola mundo";
 
+
+		lee(fl);
+		escribe(fibonacci(fl));
 		
-		mientraz( xx < yy ) haz {
-			xx = xx + 1;			
-		}
+		
 	}

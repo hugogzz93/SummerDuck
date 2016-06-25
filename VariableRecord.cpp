@@ -43,18 +43,19 @@ int VariableRecord::arrayAccess(int coordinates[]) {
 		ErrorHandler::invalidAccess(msg);
 	} else if( dimensions == 1) {
 		// vector
-		if (coordinates[0] > sizes[0] || coordinates[0] < 0)
+		if (coordinates[0] > sizes[0]-1 || coordinates[0] < 0)
 		{
 			ErrorHandler::invalidAccess("Accesso fuera de limites");
 		}
 		return coordinates[0];
 	} else {
-		if (coordinates[0] > sizes[0] || coordinates[0] < 0 || coordinates[1] > sizes[1] || coordinates[1] < 0)
+		if (coordinates[0] > sizes[0]-1 || coordinates[0] < 0 || coordinates[1] > sizes[1]-1 || coordinates[1] < 0)
 		{
 			ErrorHandler::invalidAccess("Accesso fuera de limites");
 		}
 		printf(" sizes[%d][%d] [%d][%d] = %d\n", sizes[0], sizes[1], coordinates[0], coordinates[1], coordinates[1]*sizes[0] + coordinates[1]);
-		return coordinates[1]*sizes[0] + coordinates[1];
+		printf("%d * %d + %d\n", coordinates[0], sizes[1], coordinates[1]);
+		return coordinates[0]*sizes[1] + coordinates[1];
 	}
 }
 

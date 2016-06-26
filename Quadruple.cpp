@@ -18,6 +18,14 @@ void Quadruple::setResult(int result) {
 
 string Quadruple::asString(int op) {
 	switch(op) {
+		case I_VER:
+			return "VER";
+			break;
+
+		case I_INSERT_INT:
+			return "INSRT";
+			break;
+
 		case I_WRITE:
 			return "WRITE";
 			break;

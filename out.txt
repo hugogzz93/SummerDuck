@@ -1,216 +1,118 @@
-getting dos by name
-parameters size 0
-getting matrix by name
-parameters size 0
-looking at dos
-getting matrixDos by name
-parameters size 0
-looking at dos
-looking at matrix
-getting vec by name
-parameters size 0
-looking at dos
-looking at matrix
-looking at matrixDos
-getting tres by name
-parameters size 0
-looking at dos
-looking at matrix
-looking at matrixDos
-looking at vec
-getting realUno by name
-parameters size 0
-looking at dos
-looking at matrix
-looking at matrixDos
-looking at vec
-looking at tres
-getting realDos by name
-parameters size 0
-looking at dos
-looking at matrix
-looking at matrixDos
-looking at vec
-looking at tres
-looking at realUno
-getting strUno by name
-parameters size 0
-looking at dos
-looking at matrix
-looking at matrixDos
-looking at vec
-looking at tres
-looking at realUno
-looking at realDos
-getting strDos by name
-parameters size 0
-looking at dos
-looking at matrix
-looking at matrixDos
-looking at vec
-looking at tres
-looking at realUno
-looking at realDos
-looking at strUno
-getting a by name
-parameters size 0
-getting a by name
-parameters size 1
-looking at a == a, 1
-getting a by name
-parameters size 1
-looking at a == a, 1
-getting b by name
-parameters size 0
-getting b by name
-parameters size 1
-looking at b == b, 1
-getting a by name
-parameters size 0
-getting b by name
-parameters size 1
-looking at a == b, 0
-getting a by name
-parameters size 2
-looking at a == a, 1
-getting x by name
-parameters size 0
-getting y by name
-parameters size 1
-looking at x == y, 0
-getting realUno by name
-parameters size 2
-looking at x == realUno, 0
-looking at y == realUno, 0
-getting realDos by name
-parameters size 2
-looking at x == realDos, 0
-looking at y == realDos, 0
-looking at realUno
-getting y by name
-parameters size 2
-looking at x == y, 0
-looking at y == y, 1
-getting y by name
-parameters size 2
-looking at x == y, 0
-looking at y == y, 1
-getting y by name
-parameters size 2
-looking at x == y, 0
-looking at y == y, 1
-getting realUno by name
-parameters size 2
-looking at x == realUno, 0
-looking at y == realUno, 0
-looking at realUno
- sizes[2][3] [1][2] = 6
-1 * 3 + 2
-getting y by name
-parameters size 2
-looking at x == y, 0
-looking at y == y, 1
-getting x by name
-parameters size 2
-looking at x == x, 1
- sizes[2][3] [0][0] = 0
-0 * 3 + 0
-getting a by name
-parameters size 0
-getting uno by name
-parameters size 1
-looking at a == uno, 0
-getting dos by name
-parameters size 1
-looking at a == dos, 0
-looking at uno
-getting a by name
-parameters size 1
-looking at a == a, 1
-getting a by name
-parameters size 1
-looking at a == a, 1
-getting a by name
-parameters size 1
-looking at a == a, 1
-getting a by name
-parameters size 1
-looking at a == a, 1
-getting a by name
-parameters size 0
-getting a by name
-parameters size 1
-looking at a == a, 1
-getting a by name
-parameters size 1
-looking at a == a, 1
-getting a by name
-parameters size 1
-looking at a == a, 1
-getting realUno by name
-parameters size 0
-getting realDos by name
-parameters size 0
-looking at realUno
-getting fl by name
-parameters size 0
-looking at realUno
-looking at realDos
-getting xx by name
-parameters size 0
-looking at realUno
-looking at realDos
-looking at fl
-getting yy by name
-parameters size 0
-looking at realUno
-looking at realDos
-looking at fl
-looking at xx
- sizes[1][2] [0][1] = 2
-0 * 2 + 1
- sizes[2][3] [0][2] = 6
-0 * 3 + 2
- sizes[2][3] [1][2] = 6
-1 * 3 + 2
- sizes[2][3] [0][2] = 6
-0 * 3 + 2
-getting realUno by name
-parameters size 0
-looking at realUno
- sizes[2][3] [1][2] = 6
-1 * 3 + 2
-getting dos by name
-parameters size 0
-looking at realUno
-looking at realDos
-looking at fl
-looking at xx
-looking at yy
-getting dos by name
-parameters size 0
-looking at dos
-getting realUno by name
-parameters size 0
-looking at realUno
- sizes[2][3] [0][0] = 0
-0 * 3 + 0
-getting realUno by name
-parameters size 0
-looking at realUno
- sizes[2][3] [0][1] = 3
-0 * 3 + 1
-getting realUno by name
-parameters size 0
-looking at realUno
- sizes[2][3] [0][1] = 3
-0 * 3 + 1
+g++ -w -std=c++11 -c ErrorHandler.cpp
+g++ -w -std=c++11 -c VariableRecord.cpp	
+g++ -w -std=c++11 -c Quadruple.cpp	
+g++ -w -std=c++11 -c ProcedureRecord.cpp	
+g++ -w -std=c++11 -c ProcedureDirectory.cpp
+g++ -w -std=c++11 -c ProcDirHandler.cpp
+g++ -w -std=c++11 -c SemanticCube.cpp
+g++ -w -std=c++11 -c Memory.cpp	
+g++ -w -std=c++11 -c QuadrupleGenerator.cpp	
+g++ -w -std=c++11 -c VirtualMachine.cpp
+bison -d bison.y
+flex flex.l
+g++ -w -std=c++11 bison.tab.c lex.yy.c  VirtualMachine.o Memory.o Quadruple.o ErrorHandler.o QuadrupleGenerator.o ProcDirHandler.o ProcedureDirectory.o ProcedureRecord.o VariableRecord.o SemanticCube.o -o out
+./out
+getting dos by name for func global
+getting matrix by name for func global
+getting matrixDos by name for func global
+getting vec by name for func global
+getting tres by name for func global
+getting realUno by name for func global
+getting realDos by name for func global
+getting strUno by name for func global
+getting strDos by name for func global
+getting a by name for func modUno
+getting mat by name for func modUno
+getting k by name for func modUno
+decision
+getting a by name for func modUno
+asda
+getting a by name for func modUno
+dec ended @@@
+getting b by name for func nulMod
+getting b by name for func nulMod
+getting a by name for func modDos
+getting b by name for func modDos
+getting a by name for func modDos
+getting x by name for func modTres
+getting y by name for func modTres
+getting realUno by name for func modTres
+getting realDos by name for func modTres
+decision
+getting y by name for func modTres
+getting y by name for func modTres
+getting x by name for func modTres
+lala
+realUno
+getting realUno by name for func modTres
+realUno dims: 2
+nots
+asda
+getting y by name for func modTres
+dec ended @@@
+getting x by name for func modTres
+getting a by name for func fibonacci
+getting uno by name for func fibonacci
+getting dos by name for func fibonacci
+decision
+getting a by name for func fibonacci
+decision
+getting a by name for func fibonacci
+dec ended @@@
+getting a by name for func fibonacci
+getting a by name for func fibonacci
+dec ended @@@
+getting a by name for func factorial
+decision
+getting a by name for func factorial
+getting a by name for func factorial
+getting a by name for func factorial
+getting a by name for func factorial
+dec ended @@@
+getting x by name for func principal
+lala
+x
+ass x
+getting x by name for func principal
+x dims: 1
+inside
+nots
+lala
+x
+ass x
+getting x by name for func principal
+x dims: 1
+inside
+nots
+lala
+x
+ass x
+getting x by name for func principal
+x dims: 1
+inside
+nots
+lala
+x
+getting x by name for func principal
+x dims: 1
+inside
+nots
+lala
+x
+getting x by name for func principal
+x dims: 1
+inside
+nots
+lala
+x
+getting x by name for func principal
+x dims: 1
+inside
+nots
 accepted
 Function Identifiers
-	5: lee
 	3: factorial
 	2: fibonacci
-	4: modDos
 	1: escribe
 	0: modUno
 0 global ()
@@ -224,23 +126,21 @@ Function Identifiers
 	CHAR strUno (2000)
 	CHAR strDos (2001)
 0 escribe ()
-1417578976 lee ()
+1413185936 lee ()
 1 modUno (ENTERO a (3000), )
+	ENTERO mat (3001)
+	ENTERO k (3010)
 5 nulMod (REAL b (4000), )
 2 modDos (REAL a (4000), ENTERO b (3000), )
-1 modTres (REAL x (4000), REAL y (4006), )
-	REAL realUno (4007)
-	REAL realDos (4013)
+1 modTres (REAL x (4000), REAL y (4001), )
+	REAL realUno (4002)
+	REAL realDos (4008)
 1 fibonacci (REAL a (4000), )
 	REAL uno (4001)
 	REAL dos (4002)
 1 factorial (REAL a (4000), )
 0 principal ()
-	REAL realUno (4000)
-	REAL realDos (4006)
-	REAL fl (4012)
-	ENTERO xx (3000)
-	ENTERO yy (3001)
+	REAL x (4000)
 Instructions: global
 Instructions: escribe
 Instructions: lee
@@ -265,77 +165,80 @@ Instructions: modDos
 2 [ *, 10003, -15, -16 ]
 3 [ RET, 0, 0, -16 ]
 Instructions: modTres
-0 [ ==, 4006, 10006, -17 ]
-1 [ ==, 4006, 10007, -18 ]
-2 [ !=, 4006, 10008, -19 ]
+0 [ ==, 4001, 10006, -17 ]
+1 [ ==, 4001, 10007, -18 ]
+2 [ !=, 4000, 10008, -19 ]
 3 [ OR, -18, -19, -20 ]
 4 [ AND, -17, -20, -21 ]
-5 [ <, 4012, 10009, -22 ]
-6 [ AND, -21, -22, -23 ]
-7 [ GOTOF, -23, 0, 10 ]
-8 [ RET, 0, 0, 10010 ]
-9 [ GOTO, 0, 0, 11 ]
-10 [ RET, 0, 0, 4006 ]
-11 [ RET, 0, 0, 4000 ]
+5 [ AND, -21, 10009, -22 ]
+6 [ VER, -22, 2, -1 ]
+7 [ VER, 10010, 3, -1 ]
+8 [ INSRT, 4002, 0, -23 ]
+9 [ INSRT, 3, 0, -25 ]
+10 [ *, -25, -22, -24 ]
+11 [ +, -24, 10010, -26 ]
+12 [ +, -26, -23, -27 ]
+13 [ <, 50027, 10011, -28 ]
+14 [ GOTOF, -28, 0, 17 ]
+15 [ RET, 0, 0, 10012 ]
+16 [ GOTO, 0, 0, 18 ]
+17 [ RET, 0, 0, 4001 ]
+18 [ RET, 0, 0, 4000 ]
 Instructions: fibonacci
-0 [ <=, 4000, 10011, -24 ]
-1 [ GOTOF, -24, 0, 8 ]
-2 [ <=, 4000, 10012, -25 ]
-3 [ GOTOF, -25, 0, 6 ]
-4 [ RET, 0, 0, 10013 ]
+0 [ <=, 4000, 10013, -29 ]
+1 [ GOTOF, -29, 0, 8 ]
+2 [ <=, 4000, 10014, -30 ]
+3 [ GOTOF, -30, 0, 6 ]
+4 [ RET, 0, 0, 10015 ]
 5 [ GOTO, 0, 0, 7 ]
-6 [ RET, 0, 0, 10014 ]
+6 [ RET, 0, 0, 10016 ]
 7 [ GOTO, 0, 0, 18 ]
 8 [ ERA, 2, 0, 0 ]
-9 [ -, 4000, 10015, -26 ]
-10 [ PARAM, -26, 0, 0 ]
-11 [ GOSUB, 2, 0, -27 ]
+9 [ -, 4000, 10017, -31 ]
+10 [ PARAM, -31, 0, 0 ]
+11 [ GOSUB, 2, 0, -32 ]
 12 [ ERA, 2, 0, 0 ]
-13 [ -, 4000, 10016, -28 ]
-14 [ PARAM, -28, 0, 0 ]
-15 [ GOSUB, 2, 0, -29 ]
-16 [ +, -27, -29, -30 ]
-17 [ RET, 0, 0, -30 ]
+13 [ -, 4000, 10018, -33 ]
+14 [ PARAM, -33, 0, 0 ]
+15 [ GOSUB, 2, 0, -34 ]
+16 [ +, -32, -34, -35 ]
+17 [ RET, 0, 0, -35 ]
 Instructions: factorial
-0 [ ==, 4000, 10017, -31 ]
-1 [ GOTOF, -31, 0, 4 ]
-2 [ RET, 0, 0, 10018 ]
+0 [ <=, 4000, 10019, -36 ]
+1 [ GOTOF, -36, 0, 4 ]
+2 [ RET, 0, 0, 4000 ]
 3 [ GOTO, 0, 0, 10 ]
 4 [ ERA, 3, 0, 0 ]
-5 [ -, 4000, 10019, -32 ]
-6 [ PARAM, -32, 0, 0 ]
-7 [ GOSUB, 3, 0, -33 ]
-8 [ *, 4000, -33, -34 ]
-9 [ RET, 0, 0, -34 ]
+5 [ -, 4000, 10020, -37 ]
+6 [ PARAM, -37, 0, 0 ]
+7 [ GOSUB, 3, 0, -38 ]
+8 [ *, 4000, -38, -39 ]
+9 [ RET, 0, 0, -39 ]
 Instructions: principal
-0 [ =, 10020, 0, 3000 ]
-1 [ =, 10021, 0, 3001 ]
-2 [ =, 10022, 0, 0 ]
-3 [ =, 10023, 0, 2 ]
-4 [ ERA, 0, 0, 0 ]
-5 [ PARAM, 10024, 0, 0 ]
-6 [ GOSUB, 0, 0, -35 ]
-7 [ =, 10025, 0, 4002 ]
-8 [ =, 10026, 0, 4005 ]
-9 [ =, 10027, 0, 4008 ]
-10 [ ERA, 4, 0, 0 ]
-11 [ PARAM, 4005, 0, 0 ]
-12 [ PARAM, 0, 0, 0 ]
-13 [ GOSUB, 4, 0, -36 ]
-14 [ =, 10028, 0, 4000 ]
-15 [ -, 4000, 10029, -37 ]
-16 [ *, -37, 10030, -38 ]
-17 [ =, -38, 0, 4006 ]
-18 [ =, 10031, 0, 2000 ]
-19 [ ERA, 5, 0, 0 ]
-20 [ PARAM, 4001, 0, 0 ]
-21 [ GOSUB, 5, 0, -39 ]
-22 [ ERA, 1, 0, 0 ]
-23 [ ERA, 2, 0, 0 ]
-24 [ PARAM, 4001, 0, 0 ]
-25 [ GOSUB, 2, 0, -40 ]
-26 [ PARAM, -40, 0, 0 ]
-27 [ GOSUB, 1, 0, -41 ]
+0 [ VER, 10021, 8, -1 ]
+1 [ INSRT, 4000, 0, -40 ]
+2 [ +, 10021, -40, -41 ]
+3 [ =, 10022, 0, 50041 ]
+4 [ VER, 10023, 8, -1 ]
+5 [ INSRT, 4000, 0, -42 ]
+6 [ +, 10023, -42, -43 ]
+7 [ =, 10024, 0, 50043 ]
+8 [ VER, 10025, 8, -1 ]
+9 [ INSRT, 4000, 0, -44 ]
+10 [ +, 10025, -44, -45 ]
+11 [ VER, 10026, 8, -1 ]
+12 [ INSRT, 4000, 0, -46 ]
+13 [ +, 10026, -46, -47 ]
+14 [ VER, 50047, 8, -1 ]
+15 [ INSRT, 4000, 0, -48 ]
+16 [ +, 50047, -48, -49 ]
+17 [ =, 50049, 0, 50045 ]
+18 [ ERA, 1, 0, 0 ]
+19 [ VER, 10027, 8, -1 ]
+20 [ INSRT, 4000, 0, -50 ]
+21 [ +, 10027, -50, -51 ]
+22 [ PARAM, 50051, 0, 0 ]
+23 [ GOSUB, 1, 0, -52 ]
 constants
 0: int    1
 1: double 4.000000
@@ -346,152 +249,57 @@ constants
 6: int    1
 7: int    0
 8: double 2.500000
-9: int    5
-10: int    1
-11: int    2
-12: int    0
-13: int    0
-14: int    1
-15: int    1
-16: int    2
-17: int    2
+9: int    1
+10: int    2
+11: int    5
+12: int    1
+13: int    2
+14: int    0
+15: int    0
+16: int    1
+17: int    1
 18: int    2
-19: int    1
-20: int    55
-21: int    20
-22: int    151
-23: int    161
-24: int    4
-25: double 44.000000
-26: double 55.000000
-27: double 77.000000
-28: double 66.000000
-29: double 5.200000
-30: int    6
-31: string "hola mundo"
+19: int    2
+20: int    1
+21: int    0
+22: double 2.000000
+23: int    1
+24: double 1.000000
+25: int    2
+26: int    1
+27: int    2
 Starting Virtual Machine...
-Executing: 0 of principal: =
-Assigned - [3000] 10020 (0) to [3000] 3000 (0) (int 55)
-Executing: 1 of principal: =
-Assigned - [3000] 10021 (0) to [3000] 3001 (0) (int 20)
-Executing: 2 of principal: =
-Assigned - [3000] 10022 (0) to [3000] 0 (0) (int 151)
+Executing: 0 of principal: VER
+Executing: 1 of principal: INSRT
+Executing: 2 of principal: +
+int 4000 = int 0 + int 4000
 Executing: 3 of principal: =
-Assigned - [3000] 10023 (0) to [3000] 2 (0) (int 161)
-Executing: 4 of principal: ERA
-Executing: 5 of principal: PARAM
-Executing: 6 of principal: GOSUB
-setting 3000 to type 0
-Assigned - [3000] 10024 (0) to [6000]3000 (0) (int 4)
-Executing: 0 of modUno: <
-bool 0 = int 4 < int 1
-Assigned data to [6000] -10 as type 3 bool 0
-Executing: 1 of modUno: GOTOF
-GOTOF checking: bool 0
-Executing: 4 of modUno: ERA
-Executing: 5 of modUno: -
-int 3 = int 4 - int 1
-Assigned data to [6000] -11 as type 0 int 3
-Executing: 6 of modUno: PARAM
-Executing: 7 of modUno: GOSUB
-setting 3000 to type 0
-Assigned - [6000] -11 (0) to [9000]3000 (0) (int 3)
-Executing: 0 of modUno: <
-bool 0 = int 3 < int 1
-Assigned data to [9000] -10 as type 3 bool 0
-Executing: 1 of modUno: GOTOF
-GOTOF checking: bool 0
-Executing: 4 of modUno: ERA
-Executing: 5 of modUno: -
-int 2 = int 3 - int 1
-Assigned data to [9000] -11 as type 0 int 2
-Executing: 6 of modUno: PARAM
-Executing: 7 of modUno: GOSUB
-setting 3000 to type 0
-Assigned - [9000] -11 (0) to [12000]3000 (0) (int 2)
-Executing: 0 of modUno: <
-bool 0 = int 2 < int 1
-Assigned data to [12000] -10 as type 3 bool 0
-Executing: 1 of modUno: GOTOF
-GOTOF checking: bool 0
-Executing: 4 of modUno: ERA
-Executing: 5 of modUno: -
-int 1 = int 2 - int 1
-Assigned data to [12000] -11 as type 0 int 1
-Executing: 6 of modUno: PARAM
-Executing: 7 of modUno: GOSUB
-setting 3000 to type 0
-Assigned - [12000] -11 (0) to [15000]3000 (0) (int 1)
-Executing: 0 of modUno: <
-bool 0 = int 1 < int 1
-Assigned data to [15000] -10 as type 3 bool 0
-Executing: 1 of modUno: GOTOF
-GOTOF checking: bool 0
-Executing: 4 of modUno: ERA
-Executing: 5 of modUno: -
-int 0 = int 1 - int 1
-Assigned data to [15000] -11 as type 0 int 0
-Executing: 6 of modUno: PARAM
-Executing: 7 of modUno: GOSUB
-setting 3000 to type 0
-Assigned - [15000] -11 (0) to [18000]3000 (0) (int 0)
-Executing: 0 of modUno: <
-bool 1 = int 0 < int 1
-Assigned data to [18000] -10 as type 3 bool 1
-Executing: 1 of modUno: GOTOF
-GOTOF checking: bool 1
-Executing: 2 of modUno: RET
-Assigned - [18000] 10001 (1) to [15000]-12 (5) (float 4.000000)
-Executing: 8 of modUno: RET
-Assigned - [15000] -12 (1) to [12000]-12 (5) (float 4.000000)
-Executing: 8 of modUno: RET
-Assigned - [12000] -12 (1) to [9000]-12 (5) (float 4.000000)
-Executing: 8 of modUno: RET
-Assigned - [9000] -12 (1) to [6000]-12 (5) (float 4.000000)
-Executing: 8 of modUno: RET
-Assigned - [6000] -12 (1) to [3000]-35 (5) (float 4.000000)
+pointer 50041 pointer fl 0.000000l int 4000
+points to: float 0.000000
+Executing: 4 of principal: VER
+Executing: 5 of principal: INSRT
+Executing: 6 of principal: +
+int 4001 = int 1 + int 4000
 Executing: 7 of principal: =
-Assigned - [3000] 10025 (1) to [3000] 4002 (1) (float 44.000000)
-Executing: 8 of principal: =
-Assigned - [3000] 10026 (1) to [3000] 4005 (1) (float 55.000000)
-Executing: 9 of principal: =
-Assigned - [3000] 10027 (1) to [3000] 4008 (1) (float 77.000000)
-Executing: 10 of principal: ERA
-Executing: 11 of principal: PARAM
-Executing: 12 of principal: PARAM
-Executing: 13 of principal: GOSUB
-setting 4000 to type 1
-Assigned - [3000] 4005 (1) to [6000]4000 (1) (float 55.000000)
-setting 3000 to type 0
-Assigned - [3000] 0 (0) to [6000]3000 (0) (int 151)
-Executing: 0 of modDos: /
-float 1.100000 = float 55.000000 / int 50
-Assigned data to [6000] -14 as type 1 float 1.100000
-Executing: 1 of modDos: -
-float -1.900000 = float 1.100000 - int 3
-Assigned data to [6000] -15 as type 1 float -1.900000
-Executing: 2 of modDos: *
-MULTIPLICAITION -3.800000 = -3.800000 w type 1
-float -3.800000 = int 2 * float -1.900000
-Assigned data to [6000] -16 as type 1 float -3.800000
-Executing: 3 of modDos: RET
-Assigned - [6000] -16 (1) to [3000]-36 (5) (float -3.800000)
-Executing: 14 of principal: =
-Assigned - [3000] 10028 (1) to [3000] 4000 (1) (float 66.000000)
-Executing: 15 of principal: -
-float 60.800000 = float 66.000000 - float 5.200000
-Assigned data to [3000] -37 as type 1 float 60.800000
-Executing: 16 of principal: *
-float 364.800001 = float 60.800000 * int 6
-Assigned data to [3000] -38 as type 1 float 364.800001
+pointer 50043 pointer fl 0.000000l int 4001
+points to: float 0.000000
+Executing: 8 of principal: VER
+Executing: 9 of principal: INSRT
+Executing: 10 of principal: +
+int 4002 = int 2 + int 4000
+Executing: 11 of principal: VER
+Executing: 12 of principal: INSRT
+Executing: 13 of principal: +
+int 4001 = int 1 + int 4000
+Executing: 14 of principal: VER
+pointer 50047 pointer fl 0.000000l int 4001
+points to: float 1.000000
+Executing: 15 of principal: INSRT
+Executing: 16 of principal: +
+pointer 50047 pointer fl 0.000000l int 4001
+points to: float 1.000000
+float 4001.000000 = float 1.000000 + int 4000
 Executing: 17 of principal: =
-Assigned - [3000] -38 (1) to [3000] 4006 (1) (float 364.800001)
-Executing: 18 of principal: =
-Assigned - [3000] 10031 (2) to [3000] 2000 (2) (string "hola mundo")
-Executing: 19 of principal: ERA
-Executing: 20 of principal: PARAM
-Executing: 21 of principal: GOSUB
-@@@@@@@@@@@@@
-lee
-null
-Datos incompatibles.
+pointer 50049 pointer fl 0.000000l float 4001.000000
+pointer 1413183696 pointer fl 0.000000l null
+Apuntadores solo deben ser numericos.

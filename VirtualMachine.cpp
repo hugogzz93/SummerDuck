@@ -44,7 +44,6 @@ void VirtualMachine::callProcedure(int id, int retAddress) {
 			MemoryBlock *block = memory->getBlock(basePointer, parameters[i]);
 			cout << *block << endl;
 			cin >> *block;
-			printf("%d\n", 2);
 		}
 		parameters.clear();
 		procedure = directory->getProcedure(callStack.back()); callStack.pop_back();
@@ -142,12 +141,12 @@ void VirtualMachine::ret(Quadruple instruction) {
 
 void VirtualMachine::executeInstruction(Quadruple instruction) {
 	switch(instruction.getOperation()) {
-		case Quadruple::I_WRITE:
-			
+		case Quadruple::I_VER:
+			ver(instruction);
 			break;
 
-		case Quadruple::I_READ:
-			
+		case Quadruple::I_INSERT_INT:
+			insrt(instruction);
 			break;
 
 		case Quadruple::I_RET:
@@ -253,13 +252,13 @@ void VirtualMachine::gotoJ(Quadruple instruction) {
 	
 	if (instruction.getOperation() ==  Quadruple::I_GOTOV) {
 		condition = memory->getBlock(basePointer, instruction.getLeftOperand());
-		cout << "GOTOV checking: ";
-		cout << *condition;
+		// cout << "GOTOV checking: ";
+		// cout << *condition;
 		if (condition->type != Quadruple::T_BOOL) { ErrorHandler::invalidType(); }
 		if (condition->bval) { instructionPointer = instruction.getResult() - 1; }
 	} else if (instruction.getOperation() == Quadruple::I_GOTOF) {
 		condition = memory->getBlock(basePointer, instruction.getLeftOperand());
-		cout << "GOTOF checking: " << *condition << endl;
+		// cout << "GOTOF checking: " << *condition << endl;
 		if (condition->type != Quadruple::T_BOOL) { ErrorHandler::invalidType(); }
 		if (!condition->bval) { instructionPointer = instruction.getResult() - 1; }
 	} else if (instruction.getOperation() == Quadruple::I_GOTO) { 
@@ -273,40 +272,40 @@ void VirtualMachine::arithmetic(Quadruple instruction, int operation) {
 	rBlock = memory->getBlock(basePointer, instruction.getRightOperand());
 	if (operation ==  Quadruple::I_SUMA) {
 		result = *lBlock + *rBlock;
-		cout << result << " = " << *lBlock << " + " << *rBlock << endl;
+		// cout << result << " = " << *lBlock << " + " << *rBlock << endl;
 	} else if (operation ==  Quadruple::I_RESTA) {
 		result = *lBlock - *rBlock;
-		cout << result << " = " << *lBlock << " - " << *rBlock << endl;
+		// cout << result << " = " << *lBlock << " - " << *rBlock << endl;
 	} else if (operation ==  Quadruple::I_MULT) {
 		result = *lBlock * *rBlock;
-		cout << result << " = " << *lBlock << " * " << *rBlock << endl;
+		// cout << result << " = " << *lBlock << " (" << instruction.getLeftOperand() << ") "<< " * " << *rBlock << " (" << instruction.getRightOperand() << ") "<< endl;
 	} else if (operation ==  Quadruple::I_DIV) {
 		result = *lBlock / *rBlock;
-		cout << result << " = " << *lBlock << " / " << *rBlock << endl;
+		// cout << result << " = " << *lBlock << " / " << *rBlock << endl;
 	} else if (operation ==  Quadruple::I_MAYOR_QUE) {
 		result = *lBlock > *rBlock;
-		cout << result << " = " << *lBlock << " > " << *rBlock << endl;
+		// cout << result << " = " << *lBlock << " > " << *rBlock << endl;
 	} else if (operation ==  Quadruple::I_MENOR_QUE) {
 		result = *lBlock < *rBlock;
-		cout << result << " = " << *lBlock << " < " << *rBlock << endl;
+		// cout << result << " = " << *lBlock << " < " << *rBlock << endl;
 	} else if (operation ==  Quadruple::I_MENOR_IGUAL_QUE) {
 		result = *lBlock <= *rBlock;
-		cout << result << " = " << *lBlock << " <= " << *rBlock << endl;
+		// cout << result << " = " << *lBlock << " <= " << *rBlock << endl;
 	} else if (operation ==  Quadruple::I_MAYOR_IGUAL_QUE) {
 		result = *lBlock >= *rBlock;
-		cout << result << " = " << *lBlock << " >= " << *rBlock << endl;
+		// cout << result << " = " << *lBlock << " >= " << *rBlock << endl;
 	} else if (operation ==  Quadruple::I_NO_IGUAL) {
 		result = *lBlock != *rBlock;
-		cout << result << " = " << *lBlock << " != " << *rBlock << endl;
+		// cout << result << " = " << *lBlock << " != " << *rBlock << endl;
 	} else if (operation ==  Quadruple::I_IGUAL) {
 		result = *lBlock == *rBlock;
-		cout << result << " = " << *lBlock << " == " << *rBlock << endl;
+		// cout << result << " = " << *lBlock << " == " << *rBlock << endl;
 	} else if (operation ==  Quadruple::I_OR) {
 		result = *lBlock || *rBlock;
-		cout << result << " = " << *lBlock << " || " << *rBlock << endl;
+		// cout << result << " = " << *lBlock << " || " << *rBlock << endl;
 	} else if (operation ==  Quadruple::I_AND) {
 		result = *lBlock && *rBlock;
-		cout << result << " = " << *lBlock << " && " << *rBlock << endl;
+		// cout << result << " = " << *lBlock << " && " << *rBlock << endl;
 	}
 	memory->setMemory(basePointer, instruction.getResult(), result);
 	
@@ -329,3 +328,25 @@ void VirtualMachine::arithmetic(Quadruple instruction, int operation) {
 // 		ErrorHandler::invalidType();
 // 	}
 // }
+
+
+void VirtualMachine::ver(Quadruple instruction) {
+	MemoryBlock* block = memory->getBlock(basePointer, instruction.getLeftOperand());
+	if (block->type != Quadruple::T_ENTERO && block->type != Quadruple::T_REAL)
+	{
+		printf("on VER instruction ");
+		ErrorHandler::invalidType();
+	}
+	if (block->type == Quadruple::T_ENTERO && block->ival >= instruction.getRightOperand() || block->fval >= instruction.getRightOperand()) {
+		// printf("%d >= %f = %d\n", block->ival, instruction.getRightOperand(), block->ival >= instruction.getRightOperand());
+		printf("on VER instruction ");
+		ErrorHandler::invalidAccess("Accesso fuera de limites");
+	}
+}
+
+void VirtualMachine::insrt(Quadruple instruction) {
+	MemoryBlock data;
+	data.type = Quadruple::T_ENTERO;
+	data.ival = instruction.getLeftOperand();
+	memory->setMemory(basePointer, instruction.getResult(), data);
+}

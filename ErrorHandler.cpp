@@ -62,3 +62,8 @@ void ErrorHandler::InvalidOperation(string msg) {
 	printf("%s\n", msg.c_str());
 	throw "";
 }
+
+void ErrorHandler::InvalidPointerTargetType() {
+	printf("Apuntadores solo deben ser numericos.\n");
+	throw "";
+}

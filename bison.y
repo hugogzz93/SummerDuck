@@ -25,8 +25,11 @@
 	VirtualMachine vm(&directory, &memory);
 
 	// var declaration aux
-	string name_aux, name_auxT;
-	int dimensions_aux, dimensions_auxT, sizes_aux[2], sizes_auxT[2];
+	string name_aux;
+	int dimensions_auxT, dimensions_aux, sizes_auxT[2], sizes_aux[2];
+
+	stack<string> names;
+
 
 	// var_cte aux
 
@@ -61,24 +64,46 @@
 		dataHolder.sizes[1] = sizes_aux[1];
 	}
 
-	inline void saveAux(){
-		name_auxT = name_aux;
-		dimensions_auxT = dimensions_aux;
-		sizes_auxT[0] = sizes_aux[0];
-		sizes_auxT[1] = sizes_aux[1];
-	}
+	// inline void saveAux(){
+	// 	name_auxT = name_aux;
+	// 	dimensions_auxT = dimensions_aux;
+	// 	sizes_auxT[0] = sizes_aux[0];
+	// 	sizes_auxT[1] = sizes_aux[1];
+	// }
 
-	inline void loadAux() {
-		name_aux = name_auxT;
-		dimensions_aux = dimensions_auxT;
-		sizes_aux[0] = sizes_auxT[0];
-		sizes_aux[1] = sizes_auxT[1];
+	// inline void loadAux() {
+	// 	name_aux = name_auxT;
+	// 	dimensions_aux = dimensions_auxT;
+	// 	sizes_aux[0] = sizes_auxT[0];
+	// 	sizes_aux[1] = sizes_auxT[1];
+ 
+	// 	name_auxT = "";
+	// 	dimensions_auxT = 0;
+	// 	sizes_auxT[0] = 0;
+	// 	sizes_auxT[1] = 0;
+	// }
 
-		name_auxT = "";
-		dimensions_auxT = 0;
-		sizes_auxT[0] = 0;
-		sizes_auxT[1] = 0;
-	}
+	// inline void saveAux(){
+	// 	dataHolderAux.sval = name_aux;
+	// 	dataHolderAux.dimensions = dimensions_aux;
+	// 	dataHolderAux.sizes[0] = sizes_aux[0];
+	// 	dataHolderAux.sizes[1] = sizes_aux[1];
+
+	// 	auxDataHolders.push(dataHolderAux);
+	// }
+
+	// inline void loadAux() {
+	// 	dataHolderAux = auxDataHolders.top(); auxDataHolders.pop();
+	// 	name_aux = dataHolderAux.sval;
+	// 	dimensions_aux = dataHolderAux.dimensions;
+	// 	sizes_aux[0] = dataHolderAux.sizes[0];
+	// 	sizes_aux[1] = dataHolderAux.sizes[1];
+
+	// 	dataHolderAux.sval = "";
+	// 	dataHolderAux.dimensions = 0;
+	// 	dataHolderAux.sizes[0] = 0;
+	// 	dataHolderAux.sizes[1] = 0;
+	// }
 
 	inline void checkRegBool() {
 		if (!regBool) {
@@ -222,7 +247,7 @@
 
 	relacion: 
 		exp		{quadrupleGenerator.testForOperation(2); }
-		| exp	{quadrupleGenerator.testForOperation(2); } MENOR_QUE 			{ quadrupleGenerator.pushOperator(Quadruple::I_MENOR_QUE); }  		relacion
+		| exp	{ printf("asda\n"); quadrupleGenerator.testForOperation(2); } MENOR_QUE 			{ quadrupleGenerator.pushOperator(Quadruple::I_MENOR_QUE); }  		relacion
 		| exp	{quadrupleGenerator.testForOperation(2); } MAYOR_QUE 			{ quadrupleGenerator.pushOperator(Quadruple::I_MAYOR_QUE); }  		relacion
 		| exp	{quadrupleGenerator.testForOperation(2); } MENOR_O_IGUAL_QUE 	{ quadrupleGenerator.pushOperator(Quadruple::I_MENOR_IGUAL_QUE); }  relacion
 		| exp	{quadrupleGenerator.testForOperation(2); } MAYOR_O_IGUAL_QUE 	{ quadrupleGenerator.pushOperator(Quadruple::I_MAYOR_IGUAL_QUE); }  relacion;
@@ -247,7 +272,7 @@
 		| O_RESTA var_cte 	{ quadrupleGenerator.pushOperand(); resetAux(); } ;
 
 	var_cte:
-		dim_id			{  dataHolderSetAuxs();  quadrupleGenerator.setFlag(QuadrupleGenerator::C_ID);			}
+		dim_id			{  if(dimensions_aux > 0) { name_aux = names.top(); names.pop(); } dataHolderSetAuxs();  quadrupleGenerator.setFlag(QuadrupleGenerator::C_ID);	}
 		| CTE_ENTERO	{  dataHolder.ival = $1; quadrupleGenerator.setFlag(QuadrupleGenerator::C_ENTERO); 		}
 		| CTE_REAL		{  dataHolder.fval = $1; quadrupleGenerator.setFlag(QuadrupleGenerator::C_REAL); 		}
 		| CTE_CHAR		{  dataHolder.sval = $1; quadrupleGenerator.setFlag(QuadrupleGenerator::C_CHAR); 		}
@@ -269,7 +294,7 @@
 		| REGRESA 			{ quadrupleGenerator.ret(); regBool = true; } ;
 
 	params:
-		tipo dim_id { procedureDirectoryHandler.setVariableType($1); addVariable(ProcDirHandler::PARAMETER); } 
+		tipo ID { name_aux = string($2); dimensions_aux = 0; procedureDirectoryHandler.setVariableType($1); addVariable(ProcDirHandler::PARAMETER); } 
 		params_a;
 	
 	params_a:
@@ -278,10 +303,21 @@
 
 
 	lista_ids:
-		dim_id { addVariable(ProcDirHandler::VARIABLE); } lista_ids_a ;
+		dim_id_dec { addVariable(ProcDirHandler::VARIABLE); } lista_ids_a ;
 
 	lista_ids_a:
 		COMA lista_ids
+		| ;
+
+	dim_id_dec:
+		ID { name_aux = string($1); dimensions_aux = 0; }
+		| vector_id_dec ;
+
+	vector_id_dec:
+		ID LEFT_SQRBRACKET CTE_ENTERO RIGHT_SQRBRACKET { name_aux = string($1);  dimensions_aux = 1; sizes_aux[0] = $3; } matriz_id_dec;
+
+	matriz_id_dec:
+		LEFT_SQRBRACKET CTE_ENTERO RIGHT_SQRBRACKET matriz_id_a { dimensions_aux = 2; sizes_aux[1] = $2; }
 		| ;
 
 	dim_id:
@@ -290,10 +326,10 @@
 		| matriz_id ;
 
 	vector_id:
-		ID LEFT_SQRBRACKET CTE_ENTERO RIGHT_SQRBRACKET { name_aux = string($1);  dimensions_aux = 1; sizes_aux[0] = $3; } ;
+		ID LEFT_SQRBRACKET expresion RIGHT_SQRBRACKET { printf("lala\n"); name_aux = string($1); printf("%s\n", name_aux.c_str()); names.push(name_aux); dimensions_aux = 1; } ;
 
 	matriz_id:
-		vector_id LEFT_SQRBRACKET CTE_ENTERO RIGHT_SQRBRACKET matriz_id_a { dimensions_aux = 2; sizes_aux[1] = $3; } ;
+		vector_id LEFT_SQRBRACKET expresion RIGHT_SQRBRACKET matriz_id_a { dimensions_aux = 2; } ;
 
 	matriz_id_a:
 			O_INV
@@ -301,7 +337,9 @@
 			| ;		
 
 	asignacion:
-		dim_id { saveAux(); } EQUALS expresion { loadAux(); dataHolderSetAuxs(); quadrupleGenerator.assignment(); };
+		dim_id { quadrupleGenerator.setFlag(QuadrupleGenerator::C_ID); if(dimensions_aux > 0) { name_aux = names.top(); names.pop(); } dataHolderSetAuxs();  printf("ass %s\n", dataHolder.sval.c_str()); quadrupleGenerator.pushOperand(); resetAux(); } 
+		EQUALS expresion 
+		{ quadrupleGenerator.assignment(); };
 
 	llamada_func:
 		ID LEFT_PAREN { quadrupleGenerator.loadFunction(string($1)); quadrupleGenerator.addLimit(); } llamada_func_a { quadrupleGenerator.removeLimit(); } RIGHT_PAREN {quadrupleGenerator.gosub(string($1)); } ;
@@ -315,7 +353,7 @@
 		| expresion { quadrupleGenerator.setParameter(); } COMA llamada_func_a ;
 
 	decision:
-		SI LEFT_PAREN expresion { quadrupleGenerator.setGotoF(); } RIGHT_PAREN ENTONCES LEFT_BRACKET estatutos RIGHT_BRACKET decision_b { quadrupleGenerator.completeGoto(); };
+		SI LEFT_PAREN { printf("decision\n"); } expresion { quadrupleGenerator.setGotoF(); } RIGHT_PAREN ENTONCES LEFT_BRACKET estatutos RIGHT_BRACKET decision_b { quadrupleGenerator.completeGoto(); printf("dec ended @@@\n");};
 	
 	decision_b:
 		SINO LEFT_BRACKET { quadrupleGenerator.ifElse(); } estatutos RIGHT_BRACKET 

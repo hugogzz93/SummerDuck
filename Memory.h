@@ -8,6 +8,12 @@
 #include "VariableRecord.h"
 using namespace std;
 
+#define AVAIL_OFFSET 10
+#define CONSTANT_OFFSET 10000
+#define POINTER_OFFSET 50000
+#define NEG_POINTER_OFFSET -100000
+#define GLOBAL_LIM 3000 
+
 struct DataHolder {
 	string sval;
 	int ival;
@@ -484,6 +490,7 @@ public:
 	bool isTemp(int);
 	bool isConstant(int);
 	bool isGlobal(int);
+	bool isPointer(int);
 
 
 private:

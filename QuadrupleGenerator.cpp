@@ -12,7 +12,7 @@ void QuadrupleGenerator::pushOperand() {
 	ProcedureRecord* procedure = handler->getRecord(handler->getScope());
 	if (flag == C_ID) {
 		string id(data->sval);
-		VariableRecord *record, arrayAccessRecord;
+		VariableRecord *record;
 		try {
 			record = procedure->getVariableByName(id);
 		} catch(...) { 
@@ -21,8 +21,7 @@ void QuadrupleGenerator::pushOperand() {
 		}
 
 		if (data->dimensions >= 1) {
-			arrayAccessRecord = *record;
-			arrayAccessRecord.setVAddress(arrayAccessRecord.arrayAccess(data->sizes) + arrayAccessRecord.getVAddress());
+			VariableRecord arrayAccessRecord = arrayAccess(record, data->dimensions);
 			operandStack.push(arrayAccessRecord);
 		} else {
 			operandStack.push(*record);
@@ -42,11 +41,6 @@ void QuadrupleGenerator::pushOperand() {
 		record.setConstant(true);
 		record.setVAddress(memory->saveConstant(record.getType(), *data));
 		operandStack.push(record);
-	} else {
-		// VariableRecord record;
-		// record.setType(procedure->getType());
-		// record.setVAddress(memory->requestAvailMemory());
-		// operandStack.push(record);
 	}
 }
 
@@ -204,14 +198,23 @@ void QuadrupleGenerator::doWhile() {
 }
 
 void QuadrupleGenerator::assignment() {
-	VariableRecord variable = handler->getVariable(data->sval), arrayAccessRecord;
-	VariableRecord operand = operandStack.top(); operandStack.pop();
-	if (data->dimensions >= 1) {
-		// printf("[%d][%d]\n", data->sizes[0], data->sizes[1]);
-		variable.setVAddress(variable.arrayAccess(data->sizes) + variable.getVAddress());
-		// printf("address for %s is %d\n", variable.getName().c_str(), variable.getVAddress());
-	}
-	generateQuadruple(Quadruple::I_ASIGN, operand.getVAddress(), 0, variable.getVAddress() );
+	// VariableRecord variable = handler->getVariable(data->sval), arrayAccessRecord;
+	// VariableRecord operand = operandStack.top(); operandStack.pop();
+
+	// VariableRecord result = arrayAccess(&variable, data->dimensions);
+
+	VariableRecord assigner, assignee;
+	assigner = operandStack.top(); operandStack.pop();
+	assignee = operandStack.top(); operandStack.pop();
+
+// ///////
+	// if (data->dimensions >= 1) {
+	// 	// printf("[%d][%d]\n", data->sizes[0], data->sizes[1]);
+	// 	variable.setVAddress(variable.arrayAccess(data->sizes) + variable.getVAddress());
+	// 	// printf("address for %s is %d\n", variable.getName().c_str(), variable.getVAddress());
+	// }
+// ///////
+	generateQuadruple(Quadruple::I_ASIGN, assigner.getVAddress(), 0, assignee.getVAddress() );
 }
 
 void QuadrupleGenerator::ret() {
@@ -222,4 +225,57 @@ void QuadrupleGenerator::ret() {
 	} else {
 		generateQuadruple(Quadruple::I_RET, 0,0,0);
 	}
+}
+
+VariableRecord QuadrupleGenerator::arrayAccess(VariableRecord* record, int dimensions) {
+	VariableRecord arrayAccessRecord;
+	if (dimensions == 1) {
+		VariableRecord dimOneAccess = operandStack.top(); operandStack.pop();
+		VariableRecord targetAddressContainer;
+
+		generateQuadruple(Quadruple::I_VER, dimOneAccess.getVAddress(),record->sizes[0],-1);
+			
+		targetAddressContainer.setVAddress(memory->requestAvailMemory());
+		targetAddressContainer.setConstant(true);
+		targetAddressContainer.setType(Quadruple::T_ENTERO);
+		targetAddressContainer.setValue(record->getVAddress());
+		generateQuadruple(Quadruple::I_INSERT_INT, record->getVAddress(), 0, targetAddressContainer.getVAddress());
+
+		arrayAccessRecord.setVAddress(memory->requestAvailMemory());
+		arrayAccessRecord.setConstant(true);
+		generateQuadruple(Quadruple::I_SUMA, dimOneAccess.getVAddress(), targetAddressContainer.getVAddress(), arrayAccessRecord.getVAddress());
+		int resultAddress = arrayAccessRecord.getVAddress();
+		arrayAccessRecord.setVAddress((-1 * arrayAccessRecord.getVAddress()) + POINTER_OFFSET);
+	} else if(dimensions == 2 ){
+		VariableRecord dimTwoAccess = operandStack.top(); operandStack.pop();
+		VariableRecord dimOneAccess = operandStack.top(); operandStack.pop();
+		VariableRecord targetDOneAddressContainer, targetDTwoAddressContainer, targetAddressContainer, dimOneMult;
+		generateQuadruple(Quadruple::I_VER, dimOneAccess.getVAddress(),record->sizes[0],-1);
+		generateQuadruple(Quadruple::I_VER, dimTwoAccess.getVAddress(),record->sizes[1],-1);
+			
+		targetAddressContainer.setVAddress(memory->requestAvailMemory());
+		targetAddressContainer.setConstant(true);
+		targetAddressContainer.setType(Quadruple::T_ENTERO);
+		targetAddressContainer.setValue(record->getVAddress());
+		generateQuadruple(Quadruple::I_INSERT_INT, record->getVAddress(), 0, targetAddressContainer.getVAddress());
+
+		targetDOneAddressContainer.setVAddress(memory->requestAvailMemory());
+		targetDOneAddressContainer.setType(Quadruple::T_ENTERO);
+		dimOneMult.setVAddress(memory->requestAvailMemory());
+		dimOneMult.setType(Quadruple::T_ENTERO);
+		generateQuadruple(Quadruple::I_INSERT_INT, record->sizes[1], 0, dimOneMult.getVAddress());
+
+		generateQuadruple(Quadruple::I_MULT, dimOneMult.getVAddress(), dimOneAccess.getVAddress(), targetDOneAddressContainer.getVAddress());
+
+		targetDTwoAddressContainer.setVAddress(memory->requestAvailMemory());
+		targetDTwoAddressContainer.setConstant(true);
+		targetDTwoAddressContainer.setType(Quadruple::T_ENTERO);
+		generateQuadruple(Quadruple::I_SUMA, targetDOneAddressContainer.getVAddress(), dimTwoAccess.getVAddress(), targetDTwoAddressContainer.getVAddress());
+		
+		arrayAccessRecord.setVAddress(memory->requestAvailMemory());
+		arrayAccessRecord.setConstant(true);
+		generateQuadruple(Quadruple::I_SUMA, targetDTwoAddressContainer.getVAddress(), targetAddressContainer.getVAddress(), arrayAccessRecord.getVAddress());
+		arrayAccessRecord.setVAddress((-1 * arrayAccessRecord.getVAddress()) + POINTER_OFFSET);
+	} 
+	return arrayAccessRecord;
 }

@@ -18,6 +18,8 @@ public:
 	void ret(Quadruple);
 	void run();
 	void gotoJ(Quadruple);
+	void ver(Quadruple);
+	void insrt(Quadruple);
 
 private:
 	ProcedureDirectory* directory;

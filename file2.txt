@@ -1,11 +1,16 @@
 
 programa Main;
-	entero :dos, matrix[1][2], matrixDos[3][5], vec[2], tres;
+	entero :dos,
+	 matrix[1][2],
+	 matrixDos[3][5],
+	 vec[2], tres;
+
 	real : realUno, realDos[2][3];
 	char : strUno, strDos;
 
 	modulo real modUno(entero a); {
 		entero: mat[3][3], k;
+		
 		si(a < 1) entonces {
 			regresa 4.0;
 		} sino {
@@ -22,16 +27,16 @@ programa Main;
 		regresa 2 * ((a / 50) - 3);
 	}
 
-	modulo real modTres(real x[2][3], real y); {
+	modulo real modTres(real x, real y); {
 		real : realUno[2][3], realDos[2][3];
 
-		si(y == 1 && (y == 0 || y <> 2.5) && realUno[1][2] < 5) entonces {
+		si(y == 1 && (y == 0 || x <> 2.5) && realUno[1][2] < 5) entonces {
 			regresa 1;
 		} sino {
 			regresa y;
 		}
 
-		regresa x[0][0];
+		regresa x;
 	}
 
 	modulo real fibonacci(real a); {
@@ -49,46 +54,16 @@ programa Main;
 	}
 
 	modulo real factorial(real a); {
-		si(a == 2) entonces {
-			regresa 2;
+		si(a <= 2) entonces {
+			regresa a;
 		} sino {
 			regresa a * factorial(a-1);
 		}
 	}
 
 	principal() {
-		real : realUno[2][3], realDos[2][3], fl;
-		entero: xx, yy;
-		xx = 55;
-		yy = 20;
-		dos = 151;
-		matrix[0][1] = 161;
-		modUno(4);
-		realUno[0][2] = 44.0;
-		realUno[1][2] = 55.0;
-		realDos[0][2] = 77.0;
-		modDos(realUno[1][2], dos);
-		realUno = 66.0;
-		realDos[0][0] = (realUno - 5.2) * 6;
-		strUno = "hola mundo";
-
-		realUno[1][0] = 4.0;
-		realUno[0][1] = 2.0;
-		realUno[1][2] = 6.0;
-		realUno[0][0] = 1.0;
-		realUno[1][1] = 5.0;
-		realUno[0][2] = 3.0;
-
-		escribe(realUno[0][0]);
-		escribe(realUno[0][1]);
-		escribe(realUno[0][2]);
-		escribe(realUno[1][0]);
-		escribe(realUno[1][1]);
-		escribe(realUno[1][2]);
-
-
-		lee(realUno[0][1]);
-		escribe(fibonacci(realUno[0][1]));
-		
-		
+		real : x;
+		lee(x);
+		escribe(factorial(x));
 	}
+

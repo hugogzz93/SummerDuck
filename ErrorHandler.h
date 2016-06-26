@@ -20,6 +20,7 @@ public:
 	static void InvalidInstruction(int);
 	static void MissingArguments(string, int, int);
 	static void InvalidOperation(string);
+	static void InvalidPointerTargetType();
 
 };
 #endif

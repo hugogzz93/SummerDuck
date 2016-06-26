@@ -1,7 +1,5 @@
 #include "Memory.h"
-#define AVAIL_OFFSET 10
-#define CONSTANT_OFFSET 10000
-#define GLOBAL_LIM 3000 
+
 //MUST BE SAME AS PROC_REQ'S
 
 // int Memory::getInt(int address) {
@@ -23,31 +21,31 @@
 void Memory::setMemory(int bP, int lO, int rO) {
 	MemoryBlock *lBlock = getBlock(bP, lO), *rBlock = getBlock(bP, rO);
 	if (rBlock->type != Quadruple::T_NULL && rBlock->type != lBlock->type) {
-		printf("[%d]%d: %d -> [%d]%d: %d\n", bP, lO, lBlock->type, bP, rO, rBlock->type);
+		// printf("[%d]%d: %d -> [%d]%d: %d\n", bP, lO, lBlock->type, bP, rO, rBlock->type);
 		ErrorHandler::invalidType();
 	}
 
 	*rBlock = *lBlock;
-	printf("Assigned - [%d] %d (%d) to [%d] %d (%d) ", bP, lO, lBlock->type, bP, rO, rBlock->type);
-	cout << "(" << *lBlock << ")" << endl;
+	// printf("Assigned - [%d] %d (%d) to [%d] %d (%d) ", bP, lO, lBlock->type, bP, rO, rBlock->type);
+	// cout << "(" << *lBlock << ")" << endl;
 }
 
 void Memory::setMemory(int bP1, int lO, int bP2, int rO) {
 	MemoryBlock *lBlock = getBlock(bP1, lO), *rBlock = getBlock(bP2, rO);
 	if (rBlock->type != Quadruple::T_NULL && rBlock->type != lBlock->type) {
-		printf("[%d]%d: %d -> [%d]%d: %d\n", bP1, lO, lBlock->type, bP2, rO, rBlock->type);
+		// printf("[%d]%d: %d -> [%d]%d: %d\n", bP1, lO, lBlock->type, bP2, rO, rBlock->type);
 		ErrorHandler::invalidType();
 	}
-	printf("Assigned - [%d] %d (%d) to [%d]%d (%d) ", bP1, lO, lBlock->type,  bP2, rO, rBlock->type);
-	cout << "(" << *lBlock << ")" << endl;
+	// printf("Assigned - [%d] %d (%d) to [%d]%d (%d) ", bP1, lO, lBlock->type,  bP2, rO, rBlock->type);
+	// cout << "(" << *lBlock << ")" << endl;
 	*rBlock = *lBlock;
 }
 
 void Memory::setMemory(int bP, int address, MemoryBlock data) {
 	MemoryBlock* destination = getBlock(bP, address);
 	*destination = data;
-	printf("Assigned data to [%d] %d as type %d", bP, address, data.type);
-	cout << " " << data << endl;
+	// printf("Assigned data to [%d] %d as type %d", bP, address, data.type);
+	// cout << " " << data << endl;
 
 }
 
@@ -62,22 +60,33 @@ MemoryBlock* Memory::getBlock(int bP, int address) {
 		return &constants[address - CONSTANT_OFFSET];
 	} else if(isGlobal(address)) {
 		return &memory[-1][address];
+	} else if (isPointer(address)) {
+		// printf("looking at address: %d\n", address);
+		MemoryBlock* pRes;
+		// printf("pointer %d ", address);
+		address -= POINTER_OFFSET;
+		address *= -1;
+		MemoryBlock* pointer = getAvailBlock(bP, address);
+		// cout << *pointer << endl;
+		if (pointer->type == Quadruple::T_ENTERO) {
+			pRes = getBlock(bP, pointer->ival);
+			// printf("points to: ");
+			// cout << *pRes << endl;
+			return getBlock(bP, pointer->ival);
+		} else if(pointer->type == Quadruple::T_REAL) {
+			pRes = getBlock(bP, pointer->fval);
+			// printf("points to: ");
+			// cout << *pRes << endl;
+			return getBlock(bP, pointer->fval);
+		} else {
+			ErrorHandler::InvalidPointerTargetType();
+		}
 	} else {
 		return &memory[bP][address];
 	}
 }
 
 MemoryBlock* Memory::getAvailBlock(int bP, int address) {
-	// if (avail.find(bP) == avail.end()) {
-	// 	unordered_map<int, MemoryBlock> availSpace;
-	// 	avail[bP] = availSpace;
-	// }
-
-	// if (avail[bP].find(address) == avail.end()) {
-	// 	MemoryBlock newBlock;
-	// 	avail[bP][address] = newBlock;
-	// }
-
 	return &avail[bP][address];
 }
 
@@ -193,11 +202,15 @@ bool Memory::isTemp(int address) {
 }
 
 bool Memory::isConstant(int address) {
-	return address >= CONSTANT_OFFSET ? true : false ;
+	return address >= CONSTANT_OFFSET && address < POINTER_OFFSET ? true : false ;
 }
 
 bool Memory::isGlobal(int address) {
 	return address < GLOBAL_LIM ? true : false ;
+}
+
+bool Memory::isPointer(int address) {
+	return address >= POINTER_OFFSET ? true : false ;
 }
 
 void Memory::clearAvail(int bP) {
@@ -211,23 +224,23 @@ void Memory::setType(int bP, int address, int type) {
 
 void Memory::prepareBlocks(int bP, VariableRecord record) {
 	int dimensions = record.getDimensions();
-	printf("\n\n\n");
-	printf("-----------------------------\n");
-	printf("dimensions %d\n", dimensions);
+	// printf("\n\n\n");
+	// printf("-----------------------------\n");
+	// printf("dimensions %d\n", dimensions);
 	if( dimensions == 1) {
 		for (int i = 0; i < record.sizes[0]; ++i) {
-			printf("setting %d to type %d\n", record.getVAddress() + 1, record.getType());
+			// printf("setting %d to type %d\n", record.getVAddress() + 1, record.getType());
 			setType(bP, record.getVAddress() + i,  record.getType());
 		}
 		
 	} else {
 		for (int i = 0; i < record.sizes[0]; ++i) {
 			for (int j = 0; j < record.sizes[1]; ++j) {
-				printf("setting %d to type %d\n", record.getVAddress() + (i * record.sizes[1] + j), record.getType());
-				printf("%d * %d + %d = %d\n", j, i, j, j * i + j);
+				// printf("setting %d to type %d\n", record.getVAddress() + (i * record.sizes[1] + j), record.getType());
+				// printf("%d * %d + %d = %d\n", j, i, j, j * i + j);
 				setType(bP, record.getVAddress() + (i * record.sizes[1] + j),  record.getType());
 			}
 		}
 	}
-	printf("-----------------------------\n");
+	// printf("-----------------------------\n");
 }

@@ -66,7 +66,7 @@ public:
 
 private:
 	string name = "undefined_name", scope = "undefined_scope";
-	int type = -1, vAddress = -1, dimensions = 1;
+	int type = -1, vAddress = -1, dimensions = 0;
 	bool constant = false;
 	Data data;
 	SemanticCube cube;

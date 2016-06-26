@@ -60,5 +60,6 @@ private:
 
 	void generateQuadruple(int, int, int, int);
 	void executeOperation();
+	VariableRecord arrayAccess(VariableRecord*, int);
 };
 #endif

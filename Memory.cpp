@@ -140,7 +140,11 @@ void Memory::prepareBlocks(int bP, VariableRecord record) {
 	// printf("\n\n\n");
 	// printf("-----------------------------\n");
 	// printf("dimensions %d\n", dimensions);
-	if( dimensions == 1) {
+	if (dimensions == 0) {
+		// printf("setting %d to type %d\n", record.getVAddress(), record.getType());
+		setType(bP, record.getVAddress(), record.getType());
+	}
+	else if( dimensions == 1) {
 		for (int i = 0; i < record.sizes[0]; ++i) {
 			// printf("setting %d to type %d\n", record.getVAddress() + 1, record.getType());
 			setType(bP, record.getVAddress() + i,  record.getType());

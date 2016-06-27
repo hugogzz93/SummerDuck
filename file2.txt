@@ -1,42 +1,36 @@
 
 programa Main;
-	
-	principal() {
-		entero : w, x[2][2], y[2][2], res[2][2], z;
-
-		z = 0; w = 0;
-		x[0][0] = 5;
-		x[0][1] = 7;
-		x[1][0] = 12;
-		x[1][1] = 4;
-
+principal() {
+		entero : vector[10], sorted[10], it, min, itD, itDD;
 		
-		repite {
-			w = 0;
-			repite {
-				y[z][w] = z * w;
-				w = w + 1;
-			} hasta( w == 2 ) ;
-			z = z + 1;
-		} hasta(z == 2 ) ;
+		it = 0; min = 999;
 
-		
 
-		res[0][0] = x[0][0] * y[0][0] + x[0][1] * y[1][0];
-		res[0][1] = x[0][0] * y[0][1] + x[0][1] * y[1][1];
-		res[1][0] = x[1][0] * y[0][0] + x[1][1] * y[1][0];
-		res[1][1] = x[1][0] * y[0][1] + x[1][1] * y[1][1];
-		
-		escribe("matriz uno:");
-		escribe(x[0][0]," ",x[0][1]);
-		escribe(x[1][0]," ",x[1][1]);
+		vector[0] = 1;
+		vector[1] = 65;
+		vector[2] = 3;
+		vector[3] = 6;
+		vector[4] = 12;
+		vector[5] = 92;
+		vector[6] = 34;
+		vector[7] = 4;
+		vector[8] = 55;
+		vector[9] = 115;
 
-		escribe("matriz dos:");
-		escribe(y[0][0]," ",y[0][1]);
-		escribe(y[1][0]," ",y[1][1]);
+		mientraz(it < 10) haz {
+			itD = 0;
+			min = 999;
+			mientraz(itD < 10) haz {
+				si(min > vector[itD]) entonces {
+					min = vector[itD];
+					itDD = itD;
+				}
+				itD = itD + 1;
+			}
+			vector[itDD] = 1000;
+			sorted[it] = min;
+			it = it + 1;
+		}
 
-		escribe("resultado:");
-		escribe(res[0][0]," ",res[0][1]);
-		escribe(res[1][0]," ",res[1][1]);
+		escribe("{ ", sorted[0], ", ",sorted[1], ", ", sorted[2], ", ", sorted[3], ", ", sorted[4], ", ", sorted[5], ", ", sorted[6], ", ", sorted[7], ", ", sorted[8], ", ", sorted[9], "}");
 	}
-

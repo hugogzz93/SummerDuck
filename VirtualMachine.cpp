@@ -7,7 +7,7 @@ VirtualMachine::VirtualMachine(ProcedureDirectory* directory, Memory* memory): d
 }
 
 void VirtualMachine::run() {
-	printf("Starting Virtual Machine...\n");
+	// printf("Starting Virtual Machine...\n");
 	Quadruple instruction;
 	procedure = directory->getFunctionByName("principal");
 
@@ -20,11 +20,11 @@ void VirtualMachine::run() {
 	stackPointer += MEM_REQ;
 	while(!(procedure->getName() == "principal" && instructionPointer >= procedure->getQuadruples()->size())) {
 		instruction = procedure->getQuadruples()->operator[](instructionPointer);
-		printf("Executing: %d of %s: %s\n", instructionPointer, procedure->getName().c_str(), Quadruple::asString(instruction.getOperation()).c_str());
+		// printf("Executing: %d of %s: %s\n", instructionPointer, procedure->getName().c_str(), Quadruple::asString(instruction.getOperation()).c_str());
 		executeInstruction(instruction);
 		instructionPointer++;
 	}
-	printf("Finished Executing\n");
+	// printf("Finished Executing\n");
 }
 
 void VirtualMachine::era(int id) {
@@ -38,19 +38,15 @@ void VirtualMachine::callProcedure(int id, int retAddress) {
 	callStack.push_back(directory->getIdentifier(procedure->getName()));
 	procedure = directory->getProcedure(id);
 	if (procedure->getName() == "lee") {
-		printf("@@@@@@@@@@@@@\n");
-		printf("lee\n");
 		for (int i = 0; i < parameters.size(); ++i) {
 			MemoryBlock *block = memory->getBlock(basePointer, parameters[i]);
-			cout << *block << endl;
+			// cout << *block << endl;
 			cin >> *block;
 		}
 		parameters.clear();
 		procedure = directory->getProcedure(callStack.back()); callStack.pop_back();
 		return;
 	} else if (procedure->getName() == "escribe") {
-			printf("@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
-			printf("escribe\n");
 		for (int i = 0; i < parameters.size(); ++i) {
 			MemoryBlock *block = memory->getBlock(basePointer, parameters[i]);
 				switch(block->type) {
@@ -327,6 +323,7 @@ void VirtualMachine::arithmetic(Quadruple instruction, int operation) {
 
 void VirtualMachine::ver(Quadruple instruction) {
 	MemoryBlock* block = memory->getBlock(basePointer, instruction.getLeftOperand());
+	// printf("verifying that %d < %d\n", block->ival, instruction.getRightOperand());
 	if (block->type != Quadruple::T_ENTERO && block->type != Quadruple::T_REAL)
 	{
 		printf("on VER instruction ");

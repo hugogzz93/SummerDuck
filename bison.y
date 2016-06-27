@@ -49,11 +49,10 @@
 	}
 
 	inline void finish() {
-		printf("accepted\n");
 		procedureDirectoryHandler.registerProcedure();
-		directory.listDirectory(true);
-		directory.listInstructions();
-		memory.debugMemory();
+		// directory.listDirectory(true);
+		// directory.listInstructions();
+		// memory.debugMemory();
 		vm.run();
 	}
 
@@ -279,14 +278,14 @@
 
 	dim_id:
 		ID { name_aux = string($1); dimensions_aux = 0; }
-		| vector_id
+		| vector_id 
 		| matriz_id ;
 
 	vector_id:
-		ID LEFT_SQRBRACKET expresion RIGHT_SQRBRACKET { printf("lala\n"); name_aux = string($1); printf("%s\n", name_aux.c_str()); names.push(name_aux); dimensions_aux = 1; } ;
+		ID LEFT_SQRBRACKET { quadrupleGenerator.addLimit(); } expresion {quadrupleGenerator.removeLimit(); } RIGHT_SQRBRACKET { name_aux = string($1); names.push(name_aux); dimensions_aux = 1; } ;
 
 	matriz_id:
-		vector_id LEFT_SQRBRACKET expresion RIGHT_SQRBRACKET matriz_id_a { dimensions_aux = 2; } ;
+		vector_id LEFT_SQRBRACKET { quadrupleGenerator.addLimit(); } expresion {quadrupleGenerator.removeLimit(); } RIGHT_SQRBRACKET matriz_id_a { dimensions_aux = 2; } ;
 
 	matriz_id_a:
 			O_INV
@@ -294,7 +293,7 @@
 			| ;		
 
 	asignacion:
-		dim_id { quadrupleGenerator.setFlag(QuadrupleGenerator::C_ID); if(dimensions_aux > 0) { name_aux = names.top(); names.pop(); } dataHolderSetAuxs();  printf("ass %s\n", dataHolder.sval.c_str()); quadrupleGenerator.pushOperand(); resetAux(); } 
+		dim_id { quadrupleGenerator.setFlag(QuadrupleGenerator::C_ID); if(dimensions_aux > 0) { name_aux = names.top(); names.pop(); } dataHolderSetAuxs(); quadrupleGenerator.pushOperand(); resetAux(); } 
 		EQUALS expresion 
 		{ quadrupleGenerator.assignment(); };
 
@@ -310,7 +309,7 @@
 		| expresion { quadrupleGenerator.setParameter(); } COMA llamada_func_a ;
 
 	decision:
-		SI LEFT_PAREN { printf("decision\n"); } expresion { quadrupleGenerator.setGotoF(); } RIGHT_PAREN ENTONCES LEFT_BRACKET estatutos RIGHT_BRACKET decision_b { quadrupleGenerator.completeGoto(); printf("dec ended @@@\n");};
+		SI LEFT_PAREN expresion { quadrupleGenerator.setGotoF(); } RIGHT_PAREN ENTONCES LEFT_BRACKET estatutos RIGHT_BRACKET decision_b { quadrupleGenerator.completeGoto(); };
 	
 	decision_b:
 		SINO LEFT_BRACKET { quadrupleGenerator.ifElse(); } estatutos RIGHT_BRACKET 
@@ -320,7 +319,7 @@
 		MIENTRAZ LEFT_PAREN { quadrupleGenerator.startWhile(); } expresion { quadrupleGenerator.setGotoF(); } RIGHT_PAREN HAZ LEFT_BRACKET estatutos { quadrupleGenerator.endWhile(); }RIGHT_BRACKET ;
 
 	ciclo_do_while:
-		REPITE LEFT_BRACKET { quadrupleGenerator.doWhile(); } estatutos RIGHT_BRACKET HASTA LEFT_PAREN expresion { quadrupleGenerator.setGotoV(); } RIGHT_PAREN ;
+		REPITE LEFT_BRACKET { quadrupleGenerator.doWhile(); } estatutos RIGHT_BRACKET HASTA LEFT_PAREN expresion { quadrupleGenerator.endRepeat(); } RIGHT_PAREN ;
 
 	estatuto:
 		asignacion SEMI_COLON

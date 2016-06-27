@@ -41,7 +41,6 @@ void QuadrupleGenerator::pushOperand() {
 			   remove( s.begin(), s.end(), '\"' ),
 			   s.end()
 		   	);
-		   	printf("trimmed %s\n", s.c_str());
 			record.setValue(s);
 		}
 		record.setConstant(true);
@@ -187,6 +186,14 @@ void QuadrupleGenerator::endWhile() {
 	Quadruple jump = (*quadruples)[gotoFJump];
 	jump.setResult(quadruples->size());
 	(*quadruples)[gotoFJump] = jump;
+}
+
+void QuadrupleGenerator::endRepeat() {
+	ProcedureRecord* record = handler->getRecord(ProcDirHandler::LOCAL);
+	vector<Quadruple>* quadruples = record->getQuadruples();
+	VariableRecord condition = operandStack.top(); operandStack.pop();
+	generateQuadruple(Quadruple::I_GOTOF, condition.getVAddress(), 0, jumpStack.top());
+	jumpStack.pop();
 }
 
 void QuadrupleGenerator::setGotoV() {

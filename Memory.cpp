@@ -17,7 +17,7 @@ void Memory::setMemory(int bP, int lO, int rO) {
 void Memory::setMemory(int bP1, int lO, int bP2, int rO) {
 	MemoryBlock *lBlock = getBlock(bP1, lO), *rBlock = getBlock(bP2, rO);
 	if (rBlock->type != Quadruple::T_NULL && rBlock->type != lBlock->type) {
-		printf("[%d]%d: %d -> [%d]%d: %d\n", bP1, lO, lBlock->type, bP2, rO, rBlock->type);
+		// printf("[%d]%d: %d -> [%d]%d: %d\n", bP1, lO, lBlock->type, bP2, rO, rBlock->type);
 		ErrorHandler::invalidType();
 	}
 	// printf("Assigned - [%d] %d (%d) to [%d]%d (%d) ", bP1, lO, lBlock->type,  bP2, rO, rBlock->type);

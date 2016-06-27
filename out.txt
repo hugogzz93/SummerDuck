@@ -1,48 +1,3 @@
-getting dos by name for func global
-getting matrix by name for func global
-getting matrixDos by name for func global
-getting vec by name for func global
-getting tres by name for func global
-getting realUno by name for func global
-getting realDos by name for func global
-getting strUno by name for func global
-getting strDos by name for func global
-getting a by name for func modUno
-getting mat by name for func modUno
-getting k by name for func modUno
-decision
-getting a by name for func modUno
-getting a by name for func modUno
-dec ended @@@
-getting b by name for func nulMod
-getting b by name for func nulMod
-getting a by name for func modDos
-getting b by name for func modDos
-getting a by name for func modDos
-getting a by name for func fibonacci
-getting uno by name for func fibonacci
-getting dos by name for func fibonacci
-decision
-getting a by name for func fibonacci
-decision
-getting a by name for func fibonacci
-dec ended @@@
-getting a by name for func fibonacci
-getting a by name for func fibonacci
-dec ended @@@
-getting a by name for func factorial
-decision
-getting a by name for func factorial
-getting a by name for func factorial
-getting a by name for func factorial
-getting a by name for func factorial
-dec ended @@@
-getting str by name for func principal
-ass str
-getting str by name for func principal
-trimmed hello
-getting str by name for func principal
-accepted
 Function Identifiers
 	3: factorial
 	2: fibonacci
@@ -59,7 +14,7 @@ Function Identifiers
 	CHAR strUno (2000)
 	CHAR strDos (2001)
 0 escribe ()
-1474556320 lee ()
+1539059120 lee ()
 1 modUno (ENTERO a (3000), )
 	ENTERO mat (3001)
 	ENTERO k (3010)
@@ -70,7 +25,11 @@ Function Identifiers
 	ENTERO dos (3002)
 0 factorial (ENTERO a (3000), )
 0 principal ()
-	CHAR str (5000)
+	ENTERO w (3000)
+	ENTERO x (3001)
+	ENTERO y (3005)
+	ENTERO res (3009)
+	ENTERO z (3013)
 Instructions: global
 Instructions: escribe
 Instructions: lee
@@ -125,10 +84,346 @@ Instructions: factorial
 8 [ *, 3000, -26, -27 ]
 9 [ RET, 0, 0, -27 ]
 Instructions: principal
-0 [ =, 10014, 0, 5000 ]
-1 [ ERA, 1, 0, 0 ]
-2 [ PARAM, 5000, 0, 0 ]
-3 [ GOSUB, 1, 0, -28 ]
+0 [ =, 10014, 0, 3013 ]
+1 [ =, 10015, 0, 3000 ]
+2 [ VER, 10016, 2, -1 ]
+3 [ VER, 10017, 2, -1 ]
+4 [ INSRT, 3001, 0, -28 ]
+5 [ INSRT, 2, 0, -30 ]
+6 [ *, -30, 10016, -29 ]
+7 [ +, -29, 10017, -31 ]
+8 [ +, -31, -28, -32 ]
+9 [ =, 10018, 0, 50032 ]
+10 [ VER, 10019, 2, -1 ]
+11 [ VER, 10020, 2, -1 ]
+12 [ INSRT, 3001, 0, -33 ]
+13 [ INSRT, 2, 0, -35 ]
+14 [ *, -35, 10019, -34 ]
+15 [ +, -34, 10020, -36 ]
+16 [ +, -36, -33, -37 ]
+17 [ =, 10021, 0, 50037 ]
+18 [ VER, 10022, 2, -1 ]
+19 [ VER, 10023, 2, -1 ]
+20 [ INSRT, 3001, 0, -38 ]
+21 [ INSRT, 2, 0, -40 ]
+22 [ *, -40, 10022, -39 ]
+23 [ +, -39, 10023, -41 ]
+24 [ +, -41, -38, -42 ]
+25 [ =, 10024, 0, 50042 ]
+26 [ VER, 10025, 2, -1 ]
+27 [ VER, 10026, 2, -1 ]
+28 [ INSRT, 3001, 0, -43 ]
+29 [ INSRT, 2, 0, -45 ]
+30 [ *, -45, 10025, -44 ]
+31 [ +, -44, 10026, -46 ]
+32 [ +, -46, -43, -47 ]
+33 [ =, 10027, 0, 50047 ]
+34 [ ERA, 1, 0, 0 ]
+35 [ PARAM, 10028, 0, 0 ]
+36 [ GOSUB, 1, 0, -48 ]
+37 [ ERA, 1, 0, 0 ]
+38 [ PARAM, 10029, 0, 0 ]
+39 [ PARAM, 10030, 0, 0 ]
+40 [ PARAM, 10031, 0, 0 ]
+41 [ PARAM, 10032, 0, 0 ]
+42 [ VER, 10033, 2, -1 ]
+43 [ VER, 10034, 2, -1 ]
+44 [ INSRT, 3001, 0, -49 ]
+45 [ INSRT, 2, 0, -51 ]
+46 [ *, -51, 10033, -50 ]
+47 [ +, -50, 10034, -52 ]
+48 [ +, -52, -49, -53 ]
+49 [ PARAM, 50053, 0, 0 ]
+50 [ GOSUB, 1, 0, -54 ]
+51 [ ERA, 1, 0, 0 ]
+52 [ PARAM, 10035, 0, 0 ]
+53 [ PARAM, 10036, 0, 0 ]
+54 [ PARAM, 10037, 0, 0 ]
+55 [ PARAM, 10038, 0, 0 ]
+56 [ VER, 10039, 2, -1 ]
+57 [ VER, 10040, 2, -1 ]
+58 [ INSRT, 3001, 0, -55 ]
+59 [ INSRT, 2, 0, -57 ]
+60 [ *, -57, 10039, -56 ]
+61 [ +, -56, 10040, -58 ]
+62 [ +, -58, -55, -59 ]
+63 [ PARAM, 50059, 0, 0 ]
+64 [ GOSUB, 1, 0, -60 ]
+65 [ ERA, 1, 0, 0 ]
+66 [ PARAM, 10041, 0, 0 ]
+67 [ PARAM, 10042, 0, 0 ]
+68 [ PARAM, 10043, 0, 0 ]
+69 [ PARAM, 10044, 0, 0 ]
+70 [ VER, 10045, 2, -1 ]
+71 [ VER, 10046, 2, -1 ]
+72 [ INSRT, 3001, 0, -61 ]
+73 [ INSRT, 2, 0, -63 ]
+74 [ *, -63, 10045, -62 ]
+75 [ +, -62, 10046, -64 ]
+76 [ +, -64, -61, -65 ]
+77 [ PARAM, 50065, 0, 0 ]
+78 [ GOSUB, 1, 0, -66 ]
+79 [ ERA, 1, 0, 0 ]
+80 [ PARAM, 10047, 0, 0 ]
+81 [ PARAM, 10048, 0, 0 ]
+82 [ PARAM, 10049, 0, 0 ]
+83 [ PARAM, 10050, 0, 0 ]
+84 [ VER, 10051, 2, -1 ]
+85 [ VER, 10052, 2, -1 ]
+86 [ INSRT, 3001, 0, -67 ]
+87 [ INSRT, 2, 0, -69 ]
+88 [ *, -69, 10051, -68 ]
+89 [ +, -68, 10052, -70 ]
+90 [ +, -70, -67, -71 ]
+91 [ PARAM, 50071, 0, 0 ]
+92 [ GOSUB, 1, 0, -72 ]
+93 [ ERA, 1, 0, 0 ]
+94 [ PARAM, 10053, 0, 0 ]
+95 [ GOSUB, 1, 0, -73 ]
+96 [ =, 10054, 0, 3000 ]
+97 [ VER, 3013, 2, -1 ]
+98 [ VER, 3000, 2, -1 ]
+99 [ INSRT, 3005, 0, -74 ]
+100 [ INSRT, 2, 0, -76 ]
+101 [ *, -76, 3013, -75 ]
+102 [ +, -75, 3000, -77 ]
+103 [ +, -77, -74, -78 ]
+104 [ *, 3013, 3000, -79 ]
+105 [ =, -79, 0, 50078 ]
+106 [ +, 3000, 10055, -80 ]
+107 [ =, -80, 0, 3000 ]
+108 [ ERA, 1, 0, 0 ]
+109 [ PARAM, 3013, 0, 0 ]
+110 [ PARAM, 10056, 0, 0 ]
+111 [ PARAM, 3000, 0, 0 ]
+112 [ PARAM, 10057, 0, 0 ]
+113 [ *, 3013, 3000, -81 ]
+114 [ PARAM, -81, 0, 0 ]
+115 [ GOSUB, 1, 0, -82 ]
+116 [ ==, 3000, 10058, -83 ]
+117 [ GOTOF, -83, 0, 97 ]
+118 [ +, 3013, 10059, -84 ]
+119 [ =, -84, 0, 3013 ]
+120 [ ==, 3013, 10060, -85 ]
+121 [ GOTOF, -85, 0, 96 ]
+122 [ ERA, 1, 0, 0 ]
+123 [ PARAM, 10061, 0, 0 ]
+124 [ GOSUB, 1, 0, -86 ]
+125 [ VER, 10062, 2, -1 ]
+126 [ VER, 10063, 2, -1 ]
+127 [ INSRT, 3009, 0, -87 ]
+128 [ INSRT, 2, 0, -89 ]
+129 [ *, -89, 10062, -88 ]
+130 [ +, -88, 10063, -90 ]
+131 [ +, -90, -87, -91 ]
+132 [ VER, 10064, 2, -1 ]
+133 [ VER, 10065, 2, -1 ]
+134 [ INSRT, 3001, 0, -92 ]
+135 [ INSRT, 2, 0, -94 ]
+136 [ *, -94, 10064, -93 ]
+137 [ +, -93, 10065, -95 ]
+138 [ +, -95, -92, -96 ]
+139 [ *, 50096, 10066, -97 ]
+140 [ VER, -97, 2, -1 ]
+141 [ VER, 10067, 2, -1 ]
+142 [ INSRT, 3005, 0, -98 ]
+143 [ INSRT, 2, 0, -100 ]
+144 [ *, -100, -97, -99 ]
+145 [ +, -99, 10067, -101 ]
+146 [ +, -101, -98, -102 ]
+147 [ +, 50102, 10068, -103 ]
+148 [ VER, -103, 2, -1 ]
+149 [ VER, 10069, 2, -1 ]
+150 [ INSRT, 3001, 0, -104 ]
+151 [ INSRT, 2, 0, -106 ]
+152 [ *, -106, -103, -105 ]
+153 [ +, -105, 10069, -107 ]
+154 [ +, -107, -104, -108 ]
+155 [ *, 50108, 10070, -109 ]
+156 [ VER, -109, 2, -1 ]
+157 [ VER, 10071, 2, -1 ]
+158 [ INSRT, 3005, 0, -110 ]
+159 [ INSRT, 2, 0, -112 ]
+160 [ *, -112, -109, -111 ]
+161 [ +, -111, 10071, -113 ]
+162 [ +, -113, -110, -114 ]
+163 [ =, 50114, 0, 50091 ]
+164 [ VER, 10072, 2, -1 ]
+165 [ VER, 10073, 2, -1 ]
+166 [ INSRT, 3009, 0, -115 ]
+167 [ INSRT, 2, 0, -117 ]
+168 [ *, -117, 10072, -116 ]
+169 [ +, -116, 10073, -118 ]
+170 [ +, -118, -115, -119 ]
+171 [ VER, 10074, 2, -1 ]
+172 [ VER, 10075, 2, -1 ]
+173 [ INSRT, 3001, 0, -120 ]
+174 [ INSRT, 2, 0, -122 ]
+175 [ *, -122, 10074, -121 ]
+176 [ +, -121, 10075, -123 ]
+177 [ +, -123, -120, -124 ]
+178 [ *, 50124, 10076, -125 ]
+179 [ VER, -125, 2, -1 ]
+180 [ VER, 10077, 2, -1 ]
+181 [ INSRT, 3005, 0, -126 ]
+182 [ INSRT, 2, 0, -128 ]
+183 [ *, -128, -125, -127 ]
+184 [ +, -127, 10077, -129 ]
+185 [ +, -129, -126, -130 ]
+186 [ +, 50130, 10078, -131 ]
+187 [ VER, -131, 2, -1 ]
+188 [ VER, 10079, 2, -1 ]
+189 [ INSRT, 3001, 0, -132 ]
+190 [ INSRT, 2, 0, -134 ]
+191 [ *, -134, -131, -133 ]
+192 [ +, -133, 10079, -135 ]
+193 [ +, -135, -132, -136 ]
+194 [ *, 50136, 10080, -137 ]
+195 [ VER, -137, 2, -1 ]
+196 [ VER, 10081, 2, -1 ]
+197 [ INSRT, 3005, 0, -138 ]
+198 [ INSRT, 2, 0, -140 ]
+199 [ *, -140, -137, -139 ]
+200 [ +, -139, 10081, -141 ]
+201 [ +, -141, -138, -142 ]
+202 [ =, 50142, 0, 50119 ]
+203 [ VER, 10082, 2, -1 ]
+204 [ VER, 10083, 2, -1 ]
+205 [ INSRT, 3009, 0, -143 ]
+206 [ INSRT, 2, 0, -145 ]
+207 [ *, -145, 10082, -144 ]
+208 [ +, -144, 10083, -146 ]
+209 [ +, -146, -143, -147 ]
+210 [ VER, 10084, 2, -1 ]
+211 [ VER, 10085, 2, -1 ]
+212 [ INSRT, 3001, 0, -148 ]
+213 [ INSRT, 2, 0, -150 ]
+214 [ *, -150, 10084, -149 ]
+215 [ +, -149, 10085, -151 ]
+216 [ +, -151, -148, -152 ]
+217 [ *, 50152, 10086, -153 ]
+218 [ VER, -153, 2, -1 ]
+219 [ VER, 10087, 2, -1 ]
+220 [ INSRT, 3005, 0, -154 ]
+221 [ INSRT, 2, 0, -156 ]
+222 [ *, -156, -153, -155 ]
+223 [ +, -155, 10087, -157 ]
+224 [ +, -157, -154, -158 ]
+225 [ +, 50158, 10088, -159 ]
+226 [ VER, -159, 2, -1 ]
+227 [ VER, 10089, 2, -1 ]
+228 [ INSRT, 3001, 0, -160 ]
+229 [ INSRT, 2, 0, -162 ]
+230 [ *, -162, -159, -161 ]
+231 [ +, -161, 10089, -163 ]
+232 [ +, -163, -160, -164 ]
+233 [ *, 50164, 10090, -165 ]
+234 [ VER, -165, 2, -1 ]
+235 [ VER, 10091, 2, -1 ]
+236 [ INSRT, 3005, 0, -166 ]
+237 [ INSRT, 2, 0, -168 ]
+238 [ *, -168, -165, -167 ]
+239 [ +, -167, 10091, -169 ]
+240 [ +, -169, -166, -170 ]
+241 [ =, 50170, 0, 50147 ]
+242 [ VER, 10092, 2, -1 ]
+243 [ VER, 10093, 2, -1 ]
+244 [ INSRT, 3009, 0, -171 ]
+245 [ INSRT, 2, 0, -173 ]
+246 [ *, -173, 10092, -172 ]
+247 [ +, -172, 10093, -174 ]
+248 [ +, -174, -171, -175 ]
+249 [ VER, 10094, 2, -1 ]
+250 [ VER, 10095, 2, -1 ]
+251 [ INSRT, 3001, 0, -176 ]
+252 [ INSRT, 2, 0, -178 ]
+253 [ *, -178, 10094, -177 ]
+254 [ +, -177, 10095, -179 ]
+255 [ +, -179, -176, -180 ]
+256 [ *, 50180, 10096, -181 ]
+257 [ VER, -181, 2, -1 ]
+258 [ VER, 10097, 2, -1 ]
+259 [ INSRT, 3005, 0, -182 ]
+260 [ INSRT, 2, 0, -184 ]
+261 [ *, -184, -181, -183 ]
+262 [ +, -183, 10097, -185 ]
+263 [ +, -185, -182, -186 ]
+264 [ +, 50186, 10098, -187 ]
+265 [ VER, -187, 2, -1 ]
+266 [ VER, 10099, 2, -1 ]
+267 [ INSRT, 3001, 0, -188 ]
+268 [ INSRT, 2, 0, -190 ]
+269 [ *, -190, -187, -189 ]
+270 [ +, -189, 10099, -191 ]
+271 [ +, -191, -188, -192 ]
+272 [ *, 50192, 10100, -193 ]
+273 [ VER, -193, 2, -1 ]
+274 [ VER, 10101, 2, -1 ]
+275 [ INSRT, 3005, 0, -194 ]
+276 [ INSRT, 2, 0, -196 ]
+277 [ *, -196, -193, -195 ]
+278 [ +, -195, 10101, -197 ]
+279 [ +, -197, -194, -198 ]
+280 [ =, 50198, 0, 50175 ]
+281 [ ERA, 1, 0, 0 ]
+282 [ PARAM, 10102, 0, 0 ]
+283 [ GOSUB, 1, 0, -199 ]
+284 [ ERA, 1, 0, 0 ]
+285 [ PARAM, 10103, 0, 0 ]
+286 [ PARAM, 10104, 0, 0 ]
+287 [ PARAM, 10105, 0, 0 ]
+288 [ PARAM, 10106, 0, 0 ]
+289 [ VER, 10107, 2, -1 ]
+290 [ VER, 10108, 2, -1 ]
+291 [ INSRT, 3009, 0, -200 ]
+292 [ INSRT, 2, 0, -202 ]
+293 [ *, -202, 10107, -201 ]
+294 [ +, -201, 10108, -203 ]
+295 [ +, -203, -200, -204 ]
+296 [ PARAM, 50204, 0, 0 ]
+297 [ GOSUB, 1, 0, -205 ]
+298 [ ERA, 1, 0, 0 ]
+299 [ PARAM, 10109, 0, 0 ]
+300 [ PARAM, 10110, 0, 0 ]
+301 [ PARAM, 10111, 0, 0 ]
+302 [ PARAM, 10112, 0, 0 ]
+303 [ VER, 10113, 2, -1 ]
+304 [ VER, 10114, 2, -1 ]
+305 [ INSRT, 3009, 0, -206 ]
+306 [ INSRT, 2, 0, -208 ]
+307 [ *, -208, 10113, -207 ]
+308 [ +, -207, 10114, -209 ]
+309 [ +, -209, -206, -210 ]
+310 [ PARAM, 50210, 0, 0 ]
+311 [ GOSUB, 1, 0, -211 ]
+312 [ ERA, 1, 0, 0 ]
+313 [ PARAM, 10115, 0, 0 ]
+314 [ PARAM, 10116, 0, 0 ]
+315 [ PARAM, 10117, 0, 0 ]
+316 [ PARAM, 10118, 0, 0 ]
+317 [ VER, 10119, 2, -1 ]
+318 [ VER, 10120, 2, -1 ]
+319 [ INSRT, 3009, 0, -212 ]
+320 [ INSRT, 2, 0, -214 ]
+321 [ *, -214, 10119, -213 ]
+322 [ +, -213, 10120, -215 ]
+323 [ +, -215, -212, -216 ]
+324 [ PARAM, 50216, 0, 0 ]
+325 [ GOSUB, 1, 0, -217 ]
+326 [ ERA, 1, 0, 0 ]
+327 [ PARAM, 10121, 0, 0 ]
+328 [ PARAM, 10122, 0, 0 ]
+329 [ PARAM, 10123, 0, 0 ]
+330 [ PARAM, 10124, 0, 0 ]
+331 [ VER, 10125, 2, -1 ]
+332 [ VER, 10126, 2, -1 ]
+333 [ INSRT, 3009, 0, -218 ]
+334 [ INSRT, 2, 0, -220 ]
+335 [ *, -220, 10125, -219 ]
+336 [ +, -219, 10126, -221 ]
+337 [ +, -221, -218, -222 ]
+338 [ PARAM, 50222, 0, 0 ]
+339 [ GOSUB, 1, 0, -223 ]
 constants
 0: int    1
 1: double 4.000000
@@ -144,13 +439,515 @@ constants
 11: int    2
 12: int    2
 13: int    1
-14: string "hello"
+14: int    0
+15: int    0
+16: int    0
+17: int    0
+18: int    5
+19: int    0
+20: int    1
+21: int    666
+22: int    1
+23: int    0
+24: int    12
+25: int    1
+26: int    1
+27: int    4
+28: string matriz uno:
+29: int    0
+30: string  
+31: int    0
+32: string  
+33: int    0
+34: int    0
+35: int    0
+36: string  
+37: int    1
+38: string  
+39: int    0
+40: int    1
+41: int    1
+42: string  
+43: int    0
+44: string  
+45: int    1
+46: int    0
+47: int    1
+48: string  
+49: int    1
+50: string  
+51: int    1
+52: int    1
+53: string matriz dos: 
+54: int    0
+55: int    1
+56: string  
+57: string  
+58: int    2
+59: int    1
+60: int    2
+61: string resultado
+62: int    0
+63: int    0
+64: int    0
+65: int    0
+66: int    0
+67: int    0
+68: int    0
+69: int    1
+70: int    1
+71: int    0
+72: int    0
+73: int    1
+74: int    0
+75: int    0
+76: int    0
+77: int    1
+78: int    0
+79: int    1
+80: int    1
+81: int    1
+82: int    1
+83: int    0
+84: int    1
+85: int    0
+86: int    0
+87: int    0
+88: int    1
+89: int    1
+90: int    1
+91: int    0
+92: int    1
+93: int    1
+94: int    1
+95: int    0
+96: int    0
+97: int    1
+98: int    1
+99: int    1
+100: int    1
+101: int    1
+102: string matriz tres:
+103: int    0
+104: string  
+105: int    0
+106: string  
+107: int    0
+108: int    0
+109: int    0
+110: string  
+111: int    1
+112: string  
+113: int    0
+114: int    1
+115: int    1
+116: string  
+117: int    0
+118: string  
+119: int    1
+120: int    0
+121: int    1
+122: string  
+123: int    1
+124: string  
+125: int    1
+126: int    1
 Starting Virtual Machine...
 Executing: 0 of principal: =
-Executing: 1 of principal: ERA
-Executing: 2 of principal: PARAM
-Executing: 3 of principal: GOSUB
-@@@@@@@@@@@@@@@@@@@@@@@@@@
-escribe
-"hello"
-Finished Executing
+Assigned - [3000] 10014 (0) to [3000] 3013 (0) (int 0)
+Executing: 1 of principal: =
+Assigned - [3000] 10015 (0) to [3000] 3000 (0) (int 0)
+Executing: 2 of principal: VER
+verifying that 0 < 2
+Executing: 3 of principal: VER
+verifying that 0 < 2
+Executing: 4 of principal: INSRT
+Executing: 5 of principal: INSRT
+Executing: 6 of principal: *
+int 0 = int 2 (-30)  * int 0 (10016) 
+Executing: 7 of principal: +
+int 0 = int 0 + int 0
+Executing: 8 of principal: +
+int 3001 = int 0 + int 3001
+Executing: 9 of principal: =
+looking at address: 50032
+pointer 50032 int 3001
+points to: int 0
+Assigned - [3000] 10018 (0) to [3000] 50032 (0) (int 5)
+Executing: 10 of principal: VER
+verifying that 0 < 2
+Executing: 11 of principal: VER
+verifying that 1 < 2
+Executing: 12 of principal: INSRT
+Executing: 13 of principal: INSRT
+Executing: 14 of principal: *
+int 0 = int 2 (-35)  * int 0 (10019) 
+Executing: 15 of principal: +
+int 1 = int 0 + int 1
+Executing: 16 of principal: +
+int 3002 = int 1 + int 3001
+Executing: 17 of principal: =
+looking at address: 50037
+pointer 50037 int 3002
+points to: int 0
+Assigned - [3000] 10021 (0) to [3000] 50037 (0) (int 666)
+Executing: 18 of principal: VER
+verifying that 1 < 2
+Executing: 19 of principal: VER
+verifying that 0 < 2
+Executing: 20 of principal: INSRT
+Executing: 21 of principal: INSRT
+Executing: 22 of principal: *
+int 2 = int 2 (-40)  * int 1 (10022) 
+Executing: 23 of principal: +
+int 2 = int 2 + int 0
+Executing: 24 of principal: +
+int 3003 = int 2 + int 3001
+Executing: 25 of principal: =
+looking at address: 50042
+pointer 50042 int 3003
+points to: int 0
+Assigned - [3000] 10024 (0) to [3000] 50042 (0) (int 12)
+Executing: 26 of principal: VER
+verifying that 1 < 2
+Executing: 27 of principal: VER
+verifying that 1 < 2
+Executing: 28 of principal: INSRT
+Executing: 29 of principal: INSRT
+Executing: 30 of principal: *
+int 2 = int 2 (-45)  * int 1 (10025) 
+Executing: 31 of principal: +
+int 3 = int 2 + int 1
+Executing: 32 of principal: +
+int 3004 = int 3 + int 3001
+Executing: 33 of principal: =
+looking at address: 50047
+pointer 50047 int 3004
+points to: int 0
+Assigned - [3000] 10027 (0) to [3000] 50047 (0) (int 4)
+Executing: 34 of principal: ERA
+Executing: 35 of principal: PARAM
+Executing: 36 of principal: GOSUB
+matriz uno:
+Executing: 37 of principal: ERA
+Executing: 38 of principal: PARAM
+Executing: 39 of principal: PARAM
+Executing: 40 of principal: PARAM
+Executing: 41 of principal: PARAM
+Executing: 42 of principal: VER
+verifying that 0 < 2
+Executing: 43 of principal: VER
+verifying that 0 < 2
+Executing: 44 of principal: INSRT
+Executing: 45 of principal: INSRT
+Executing: 46 of principal: *
+int 0 = int 2 (-51)  * int 0 (10033) 
+Executing: 47 of principal: +
+int 0 = int 0 + int 0
+Executing: 48 of principal: +
+int 3001 = int 0 + int 3001
+Executing: 49 of principal: PARAM
+Executing: 50 of principal: GOSUB
+0 0 looking at address: 50053
+pointer 50053 int 3001
+points to: int 5
+5
+Executing: 51 of principal: ERA
+Executing: 52 of principal: PARAM
+Executing: 53 of principal: PARAM
+Executing: 54 of principal: PARAM
+Executing: 55 of principal: PARAM
+Executing: 56 of principal: VER
+verifying that 0 < 2
+Executing: 57 of principal: VER
+verifying that 1 < 2
+Executing: 58 of principal: INSRT
+Executing: 59 of principal: INSRT
+Executing: 60 of principal: *
+int 0 = int 2 (-57)  * int 0 (10039) 
+Executing: 61 of principal: +
+int 1 = int 0 + int 1
+Executing: 62 of principal: +
+int 3002 = int 1 + int 3001
+Executing: 63 of principal: PARAM
+Executing: 64 of principal: GOSUB
+0 1 looking at address: 50059
+pointer 50059 int 3002
+points to: int 666
+666
+Executing: 65 of principal: ERA
+Executing: 66 of principal: PARAM
+Executing: 67 of principal: PARAM
+Executing: 68 of principal: PARAM
+Executing: 69 of principal: PARAM
+Executing: 70 of principal: VER
+verifying that 1 < 2
+Executing: 71 of principal: VER
+verifying that 0 < 2
+Executing: 72 of principal: INSRT
+Executing: 73 of principal: INSRT
+Executing: 74 of principal: *
+int 2 = int 2 (-63)  * int 1 (10045) 
+Executing: 75 of principal: +
+int 2 = int 2 + int 0
+Executing: 76 of principal: +
+int 3003 = int 2 + int 3001
+Executing: 77 of principal: PARAM
+Executing: 78 of principal: GOSUB
+1 0 looking at address: 50065
+pointer 50065 int 3003
+points to: int 12
+12
+Executing: 79 of principal: ERA
+Executing: 80 of principal: PARAM
+Executing: 81 of principal: PARAM
+Executing: 82 of principal: PARAM
+Executing: 83 of principal: PARAM
+Executing: 84 of principal: VER
+verifying that 1 < 2
+Executing: 85 of principal: VER
+verifying that 1 < 2
+Executing: 86 of principal: INSRT
+Executing: 87 of principal: INSRT
+Executing: 88 of principal: *
+int 2 = int 2 (-69)  * int 1 (10051) 
+Executing: 89 of principal: +
+int 3 = int 2 + int 1
+Executing: 90 of principal: +
+int 3004 = int 3 + int 3001
+Executing: 91 of principal: PARAM
+Executing: 92 of principal: GOSUB
+1 1 looking at address: 50071
+pointer 50071 int 3004
+points to: int 4
+4
+Executing: 93 of principal: ERA
+Executing: 94 of principal: PARAM
+Executing: 95 of principal: GOSUB
+matriz dos: 
+Executing: 96 of principal: =
+Assigned - [3000] 10054 (0) to [3000] 3000 (0) (int 0)
+Executing: 97 of principal: VER
+verifying that 0 < 2
+Executing: 98 of principal: VER
+verifying that 0 < 2
+Executing: 99 of principal: INSRT
+Executing: 100 of principal: INSRT
+Executing: 101 of principal: *
+int 0 = int 2 (-76)  * int 0 (3013) 
+Executing: 102 of principal: +
+int 0 = int 0 + int 0
+Executing: 103 of principal: +
+int 3005 = int 0 + int 3005
+Executing: 104 of principal: *
+int 0 = int 0 (3013)  * int 0 (3000) 
+Executing: 105 of principal: =
+looking at address: 50078
+pointer 50078 int 3005
+points to: int 0
+Assigned - [3000] -79 (0) to [3000] 50078 (0) (int 0)
+Executing: 106 of principal: +
+int 1 = int 0 + int 1
+Executing: 107 of principal: =
+Assigned - [3000] -80 (0) to [3000] 3000 (0) (int 1)
+Executing: 108 of principal: ERA
+Executing: 109 of principal: PARAM
+Executing: 110 of principal: PARAM
+Executing: 111 of principal: PARAM
+Executing: 112 of principal: PARAM
+Executing: 113 of principal: *
+int 0 = int 0 (3013)  * int 1 (3000) 
+Executing: 114 of principal: PARAM
+Executing: 115 of principal: GOSUB
+0 1 0
+Executing: 116 of principal: ==
+Executing: 117 of principal: GOTOF
+Executing: 97 of principal: VER
+verifying that 0 < 2
+Executing: 98 of principal: VER
+verifying that 1 < 2
+Executing: 99 of principal: INSRT
+Executing: 100 of principal: INSRT
+Executing: 101 of principal: *
+int 0 = int 2 (-76)  * int 0 (3013) 
+Executing: 102 of principal: +
+int 1 = int 0 + int 1
+Executing: 103 of principal: +
+int 3006 = int 1 + int 3005
+Executing: 104 of principal: *
+int 0 = int 0 (3013)  * int 1 (3000) 
+Executing: 105 of principal: =
+looking at address: 50078
+pointer 50078 int 3006
+points to: int 0
+Assigned - [3000] -79 (0) to [3000] 50078 (0) (int 0)
+Executing: 106 of principal: +
+int 2 = int 1 + int 1
+Executing: 107 of principal: =
+Assigned - [3000] -80 (0) to [3000] 3000 (0) (int 2)
+Executing: 108 of principal: ERA
+Executing: 109 of principal: PARAM
+Executing: 110 of principal: PARAM
+Executing: 111 of principal: PARAM
+Executing: 112 of principal: PARAM
+Executing: 113 of principal: *
+int 0 = int 0 (3013)  * int 2 (3000) 
+Executing: 114 of principal: PARAM
+Executing: 115 of principal: GOSUB
+0 2 0
+Executing: 116 of principal: ==
+Executing: 117 of principal: GOTOF
+Executing: 118 of principal: +
+int 1 = int 0 + int 1
+Executing: 119 of principal: =
+Assigned - [3000] -84 (0) to [3000] 3013 (0) (int 1)
+Executing: 120 of principal: ==
+Executing: 121 of principal: GOTOF
+Executing: 96 of principal: =
+Assigned - [3000] 10054 (0) to [3000] 3000 (0) (int 0)
+Executing: 97 of principal: VER
+verifying that 1 < 2
+Executing: 98 of principal: VER
+verifying that 0 < 2
+Executing: 99 of principal: INSRT
+Executing: 100 of principal: INSRT
+Executing: 101 of principal: *
+int 2 = int 2 (-76)  * int 1 (3013) 
+Executing: 102 of principal: +
+int 2 = int 2 + int 0
+Executing: 103 of principal: +
+int 3007 = int 2 + int 3005
+Executing: 104 of principal: *
+int 0 = int 1 (3013)  * int 0 (3000) 
+Executing: 105 of principal: =
+looking at address: 50078
+pointer 50078 int 3007
+points to: int 0
+Assigned - [3000] -79 (0) to [3000] 50078 (0) (int 0)
+Executing: 106 of principal: +
+int 1 = int 0 + int 1
+Executing: 107 of principal: =
+Assigned - [3000] -80 (0) to [3000] 3000 (0) (int 1)
+Executing: 108 of principal: ERA
+Executing: 109 of principal: PARAM
+Executing: 110 of principal: PARAM
+Executing: 111 of principal: PARAM
+Executing: 112 of principal: PARAM
+Executing: 113 of principal: *
+int 1 = int 1 (3013)  * int 1 (3000) 
+Executing: 114 of principal: PARAM
+Executing: 115 of principal: GOSUB
+1 1 1
+Executing: 116 of principal: ==
+Executing: 117 of principal: GOTOF
+Executing: 97 of principal: VER
+verifying that 1 < 2
+Executing: 98 of principal: VER
+verifying that 1 < 2
+Executing: 99 of principal: INSRT
+Executing: 100 of principal: INSRT
+Executing: 101 of principal: *
+int 2 = int 2 (-76)  * int 1 (3013) 
+Executing: 102 of principal: +
+int 3 = int 2 + int 1
+Executing: 103 of principal: +
+int 3008 = int 3 + int 3005
+Executing: 104 of principal: *
+int 1 = int 1 (3013)  * int 1 (3000) 
+Executing: 105 of principal: =
+looking at address: 50078
+pointer 50078 int 3008
+points to: int 0
+Assigned - [3000] -79 (0) to [3000] 50078 (0) (int 1)
+Executing: 106 of principal: +
+int 2 = int 1 + int 1
+Executing: 107 of principal: =
+Assigned - [3000] -80 (0) to [3000] 3000 (0) (int 2)
+Executing: 108 of principal: ERA
+Executing: 109 of principal: PARAM
+Executing: 110 of principal: PARAM
+Executing: 111 of principal: PARAM
+Executing: 112 of principal: PARAM
+Executing: 113 of principal: *
+int 2 = int 1 (3013)  * int 2 (3000) 
+Executing: 114 of principal: PARAM
+Executing: 115 of principal: GOSUB
+1 2 2
+Executing: 116 of principal: ==
+Executing: 117 of principal: GOTOF
+Executing: 118 of principal: +
+int 2 = int 1 + int 1
+Executing: 119 of principal: =
+Assigned - [3000] -84 (0) to [3000] 3013 (0) (int 2)
+Executing: 120 of principal: ==
+Executing: 121 of principal: GOTOF
+Executing: 122 of principal: ERA
+Executing: 123 of principal: PARAM
+Executing: 124 of principal: GOSUB
+resultado
+Executing: 125 of principal: VER
+verifying that 0 < 2
+Executing: 126 of principal: VER
+verifying that 0 < 2
+Executing: 127 of principal: INSRT
+Executing: 128 of principal: INSRT
+Executing: 129 of principal: *
+int 0 = int 2 (-89)  * int 0 (10062) 
+Executing: 130 of principal: +
+int 0 = int 0 + int 0
+Executing: 131 of principal: +
+int 3009 = int 0 + int 3009
+Executing: 132 of principal: VER
+verifying that 0 < 2
+Executing: 133 of principal: VER
+verifying that 0 < 2
+Executing: 134 of principal: INSRT
+Executing: 135 of principal: INSRT
+Executing: 136 of principal: *
+int 0 = int 2 (-94)  * int 0 (10064) 
+Executing: 137 of principal: +
+int 0 = int 0 + int 0
+Executing: 138 of principal: +
+int 3001 = int 0 + int 3001
+Executing: 139 of principal: *
+looking at address: 50096
+pointer 50096 int 3001
+points to: int 5
+int 0 = int 5 (50096)  * int 0 (10066) 
+Executing: 140 of principal: VER
+verifying that 0 < 2
+Executing: 141 of principal: VER
+verifying that 0 < 2
+Executing: 142 of principal: INSRT
+Executing: 143 of principal: INSRT
+Executing: 144 of principal: *
+int 0 = int 2 (-100)  * int 0 (-97) 
+Executing: 145 of principal: +
+int 0 = int 0 + int 0
+Executing: 146 of principal: +
+int 3005 = int 0 + int 3005
+Executing: 147 of principal: +
+looking at address: 50102
+pointer 50102 int 3005
+points to: int 0
+int 0 = int 0 + int 0
+Executing: 148 of principal: VER
+verifying that 0 < 2
+Executing: 149 of principal: VER
+verifying that 1 < 2
+Executing: 150 of principal: INSRT
+Executing: 151 of principal: INSRT
+Executing: 152 of principal: *
+int 0 = int 2 (-106)  * int 0 (-103) 
+Executing: 153 of principal: +
+int 1 = int 0 + int 1
+Executing: 154 of principal: +
+int 3002 = int 1 + int 3001
+Executing: 155 of principal: *
+looking at address: 50108
+pointer 50108 int 3002
+points to: int 666
+int 666 = int 666 (50108)  * int 1 (10070) 
+Executing: 156 of principal: VER
+verifying that 666 < 2
+on VER instruction Accesso fuera de limites

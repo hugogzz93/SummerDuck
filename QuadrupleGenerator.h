@@ -38,6 +38,7 @@ public:
 	void ifElse();
 	void startWhile();
 	void endWhile();
+	void endRepeat();
 	void setGotoV();
 	void doWhile();
 

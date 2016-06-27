@@ -1,63 +1,42 @@
 
 programa Main;
-	entero :dos,
-	 matrix[1][2],
-	 matrixDos[3][5],
-	 vec[2], tres;
-
-	real : realUno, realDos[2][3];
-	char : strUno, strDos;
-
-	modulo real modUno(entero a); {
-		entero: mat[3][3], k;
-		
-		si(a < 1) entonces {
-			regresa 4.0;
-		} sino {
-			regresa modUno(a - 1);
-		}
-	}
-
-	modulo nulo nulMod(real b); {
-		escribe(b);
-		regresa;
-	}
-
-	modulo char modDos(real a, entero b); {
-		regresa 2 * ((a / 50) - 3);
-	}
-
-	modulo entero fibonacci(entero a); {
-		entero : uno, dos;
-
-		si(a <= 2) entonces {
-			si(a <= 0) entonces {
-				regresa 0;
-			} sino {
-				regresa 1;
-			}
-		} sino {
-			regresa fibonacci(a-1) + fibonacci(a-2);
-		}
-	}
-
-	modulo entero factorial(entero a); {
-		si(a <= 2) entonces {
-			regresa a;
-		} sino {
-			regresa a * factorial(a-1);
-		}
-	}
-
 	
-
 	principal() {
-		char : str, st;
-		entero : x;
-		str = "hello";
-		st = " world";
-		st = str + st;
-		x = 1 + 2 * 3;
-		escribe(x);
+		entero : w, x[2][2], y[2][2], res[2][2], z;
+
+		z = 0; w = 0;
+		x[0][0] = 5;
+		x[0][1] = 7;
+		x[1][0] = 12;
+		x[1][1] = 4;
+
+		
+		repite {
+			w = 0;
+			repite {
+				y[z][w] = z * w;
+				w = w + 1;
+			} hasta( w == 2 ) ;
+			z = z + 1;
+		} hasta(z == 2 ) ;
+
+		
+
+		res[0][0] = x[0][0] * y[0][0] + x[0][1] * y[1][0];
+		res[0][1] = x[0][0] * y[0][1] + x[0][1] * y[1][1];
+		res[1][0] = x[1][0] * y[0][0] + x[1][1] * y[1][0];
+		res[1][1] = x[1][0] * y[0][1] + x[1][1] * y[1][1];
+		
+		escribe("matriz uno:");
+		escribe(x[0][0]," ",x[0][1]);
+		escribe(x[1][0]," ",x[1][1]);
+
+		escribe("matriz dos:");
+		escribe(y[0][0]," ",y[0][1]);
+		escribe(y[1][0]," ",y[1][1]);
+
+		escribe("resultado:");
+		escribe(res[0][0]," ",res[0][1]);
+		escribe(res[1][0]," ",res[1][1]);
 	}
 

@@ -79,7 +79,7 @@ void ProcedureRecord::setType(int type) {
 
 VariableRecord *ProcedureRecord::getVariableByName(string name) {
 
-	printf("getting %s by name for func %s\n", name.c_str(), this->name.c_str());
+	// printf("getting %s by name for func %s\n", name.c_str(), this->name.c_str());
 	// printf("parameters size %d\n", parameters.size());
 	for (std::vector<VariableRecord>::iterator record = parameters.begin(); record != parameters.end(); ++record)
 	{

@@ -55,10 +55,10 @@ private:
   };
 
   dimThree intString = {
-  	{ Quadruple::I_SUMA, Quadruple::T_CHAR},
-  	{ Quadruple::I_RESTA, Quadruple::T_CHAR},
-  	{ Quadruple::I_DIV, Quadruple::T_CHAR},
-  	{ Quadruple::I_MULT, Quadruple::T_CHAR},
+  	{ Quadruple::I_SUMA, Quadruple::T_INVALID},
+  	{ Quadruple::I_RESTA, Quadruple::T_INVALID},
+  	{ Quadruple::I_DIV, Quadruple::T_INVALID},
+  	{ Quadruple::I_MULT, Quadruple::T_INVALID},
     { Quadruple::I_MAYOR_QUE, Quadruple::T_INVALID},
     { Quadruple::I_MENOR_IGUAL_QUE, Quadruple::T_INVALID},
     { Quadruple::I_MENOR_QUE, Quadruple::T_INVALID},

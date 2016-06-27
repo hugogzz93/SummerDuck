@@ -137,7 +137,12 @@ struct MemoryBlock
 					ErrorHandler::invalidType();
 				}
 			} else if (type == Quadruple::T_CHAR) {
-				ErrorHandler::InvalidOperation("No se pueden hacer operaciones aritmeticas con chars");
+				if (rhs.type == Quadruple::T_CHAR) {
+					result.sval = sval + rhs.sval;
+					result.type = Quadruple::T_CHAR;
+				} else {
+					ErrorHandler::invalidType();
+				}
 			} else if (type == Quadruple::T_BOOL) {
 				ErrorHandler::InvalidOperation("No se pueden hacer operaciones aritmeticas con bools");
 			}
@@ -167,7 +172,7 @@ struct MemoryBlock
 					ErrorHandler::invalidType();
 				}
 			} else if (type == Quadruple::T_CHAR) {
-				ErrorHandler::InvalidOperation("No se pueden hacer operaciones aritmeticas con chars");
+				ErrorHandler::InvalidOperation("No se pueden hacer restas con chars");
 			} else if (type == Quadruple::T_BOOL) {
 				ErrorHandler::InvalidOperation("No se pueden hacer operaciones aritmeticas con bools");
 			}
@@ -198,7 +203,7 @@ struct MemoryBlock
 					ErrorHandler::invalidType();
 				}
 			} else if (type == Quadruple::T_CHAR) {
-				ErrorHandler::InvalidOperation("No se pueden hacer operaciones aritmeticas con chars");
+				ErrorHandler::InvalidOperation("No se pueden hacer multiplicaciones con chars");
 			} else if (type == Quadruple::T_BOOL) {
 				ErrorHandler::InvalidOperation("No se pueden hacer operaciones aritmeticas con bools");
 			}
@@ -228,7 +233,7 @@ struct MemoryBlock
 					ErrorHandler::invalidType();
 				}
 			} else if (type == Quadruple::T_CHAR) {
-				ErrorHandler::InvalidOperation("No se pueden hacer operaciones aritmeticas con chars");
+				ErrorHandler::InvalidOperation("No se pueden hacer divisiones con chars");
 			} else if (type == Quadruple::T_BOOL) {
 				ErrorHandler::InvalidOperation("No se pueden hacer operaciones aritmeticas con bools");
 			}

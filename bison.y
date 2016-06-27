@@ -64,47 +64,6 @@
 		dataHolder.sizes[1] = sizes_aux[1];
 	}
 
-	// inline void saveAux(){
-	// 	name_auxT = name_aux;
-	// 	dimensions_auxT = dimensions_aux;
-	// 	sizes_auxT[0] = sizes_aux[0];
-	// 	sizes_auxT[1] = sizes_aux[1];
-	// }
-
-	// inline void loadAux() {
-	// 	name_aux = name_auxT;
-	// 	dimensions_aux = dimensions_auxT;
-	// 	sizes_aux[0] = sizes_auxT[0];
-	// 	sizes_aux[1] = sizes_auxT[1];
- 
-	// 	name_auxT = "";
-	// 	dimensions_auxT = 0;
-	// 	sizes_auxT[0] = 0;
-	// 	sizes_auxT[1] = 0;
-	// }
-
-	// inline void saveAux(){
-	// 	dataHolderAux.sval = name_aux;
-	// 	dataHolderAux.dimensions = dimensions_aux;
-	// 	dataHolderAux.sizes[0] = sizes_aux[0];
-	// 	dataHolderAux.sizes[1] = sizes_aux[1];
-
-	// 	auxDataHolders.push(dataHolderAux);
-	// }
-
-	// inline void loadAux() {
-	// 	dataHolderAux = auxDataHolders.top(); auxDataHolders.pop();
-	// 	name_aux = dataHolderAux.sval;
-	// 	dimensions_aux = dataHolderAux.dimensions;
-	// 	sizes_aux[0] = dataHolderAux.sizes[0];
-	// 	sizes_aux[1] = dataHolderAux.sizes[1];
-
-	// 	dataHolderAux.sval = "";
-	// 	dataHolderAux.dimensions = 0;
-	// 	dataHolderAux.sizes[0] = 0;
-	// 	dataHolderAux.sizes[1] = 0;
-	// }
-
 	inline void checkRegBool() {
 		if (!regBool) {
 			ErrorHandler::badSyntax("Faltó la expresión 'regresa' en una función.");
@@ -247,23 +206,21 @@
 
 	relacion: 
 		exp		{quadrupleGenerator.testForOperation(2); }
-		| exp	{ printf("asda\n"); quadrupleGenerator.testForOperation(2); } MENOR_QUE 			{ quadrupleGenerator.pushOperator(Quadruple::I_MENOR_QUE); }  		relacion
+		| exp	{quadrupleGenerator.testForOperation(2); } MENOR_QUE 			{ quadrupleGenerator.pushOperator(Quadruple::I_MENOR_QUE); }  		relacion
 		| exp	{quadrupleGenerator.testForOperation(2); } MAYOR_QUE 			{ quadrupleGenerator.pushOperator(Quadruple::I_MAYOR_QUE); }  		relacion
 		| exp	{quadrupleGenerator.testForOperation(2); } MENOR_O_IGUAL_QUE 	{ quadrupleGenerator.pushOperator(Quadruple::I_MENOR_IGUAL_QUE); }  relacion
 		| exp	{quadrupleGenerator.testForOperation(2); } MAYOR_O_IGUAL_QUE 	{ quadrupleGenerator.pushOperator(Quadruple::I_MAYOR_IGUAL_QUE); }  relacion;
 
 	exp:
-		termino		{quadrupleGenerator.testForOperation(1); }
-		| termino	{quadrupleGenerator.testForOperation(1); } O_SUMA 	{ quadrupleGenerator.pushOperator(Quadruple::I_SUMA); }  	exp
-		| termino	{quadrupleGenerator.testForOperation(1); } O_RESTA 	{ quadrupleGenerator.pushOperator(Quadruple::I_RESTA);}  	exp;
-		// | termino	{quadrupleGenerator.testForOperation(1); } O_OR 	{ quadrupleGenerator.pushOperator(Quadruple::I_OR); 	}  	exp ;
+		termino		{ quadrupleGenerator.testForOperation(1); }
+		| termino	{ quadrupleGenerator.testForOperation(1); } O_SUMA 	{ quadrupleGenerator.pushOperator(Quadruple::I_SUMA); }  	exp
+		| termino	{ quadrupleGenerator.testForOperation(1); } O_RESTA 	{ quadrupleGenerator.pushOperator(Quadruple::I_RESTA);}  	exp;
 
 
 	termino:
 		factor 	 { quadrupleGenerator.testForOperation(0); }
 		| factor { quadrupleGenerator.testForOperation(0); } O_MULT 	 { quadrupleGenerator.pushOperator(Quadruple::I_MULT);} termino
 		| factor { quadrupleGenerator.testForOperation(0); } O_DIVISION  { quadrupleGenerator.pushOperator(Quadruple::I_DIV); } termino 
-		// | factor { quadrupleGenerator.testForOperation(0); } O_AND 		 { quadrupleGenerator.pushOperator(Quadruple::I_AND); } termino ;
 
 	factor:
 		LEFT_PAREN { quadrupleGenerator.addLimit(); } expresion  {quadrupleGenerator.removeLimit(); } RIGHT_PAREN
@@ -275,8 +232,8 @@
 		dim_id			{  if(dimensions_aux > 0) { name_aux = names.top(); names.pop(); } dataHolderSetAuxs();  quadrupleGenerator.setFlag(QuadrupleGenerator::C_ID);	}
 		| CTE_ENTERO	{  dataHolder.ival = $1; quadrupleGenerator.setFlag(QuadrupleGenerator::C_ENTERO); 		}
 		| CTE_REAL		{  dataHolder.fval = $1; quadrupleGenerator.setFlag(QuadrupleGenerator::C_REAL); 		}
-		| CTE_CHAR		{  dataHolder.sval = $1; quadrupleGenerator.setFlag(QuadrupleGenerator::C_CHAR); 		}
-		| llamada_func 	{  						 quadrupleGenerator.setFlag(QuadrupleGenerator::C_FUNC_CALL); 	} ; /* result will be in stack */
+		| CTE_CHAR		{  string s($1);  s.erase(remove( s.begin(), s.end(), '\"' ), s.end() ); dataHolder.sval = s; quadrupleGenerator.setFlag(QuadrupleGenerator::C_CHAR); 		}
+		| llamada_func 	{  quadrupleGenerator.setFlag(QuadrupleGenerator::C_FUNC_CALL); 	} ; /* result will be in stack */
 
 
 	dec_func:

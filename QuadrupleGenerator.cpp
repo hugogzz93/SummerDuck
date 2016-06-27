@@ -36,7 +36,13 @@ void QuadrupleGenerator::pushOperand() {
 			record.setValue(data->fval);
 		} else if(flag == C_CHAR){
 			record.setType(Quadruple::T_CHAR);
-			record.setValue(data->sval);
+			string s = data->sval;
+			s.erase(
+			   remove( s.begin(), s.end(), '\"' ),
+			   s.end()
+		   	);
+		   	printf("trimmed %s\n", s.c_str());
+			record.setValue(s);
 		}
 		record.setConstant(true);
 		record.setVAddress(memory->saveConstant(record.getType(), *data));
@@ -50,14 +56,14 @@ void QuadrupleGenerator::pushOperator(int op) {
 
 void QuadrupleGenerator::testForOperation(int type) {
 	if ( operatorStack.empty() || operatorStack.top() == Quadruple::I_LIMIT || operandStack.size() < 2 || operatorStack.empty()) { return ; }
-	if(type == 0 && operatorStack.top() == Quadruple::I_MULT || operatorStack.top() == Quadruple::I_DIV ) {
+	if(type == 0 && (operatorStack.top() == Quadruple::I_MULT || operatorStack.top() == Quadruple::I_DIV )) {
 		executeOperation();
-	} else if(type == 1 && operatorStack.top() == Quadruple::I_RESTA || operatorStack.top() == Quadruple::I_SUMA) {
+	} else if(type == 1 && (operatorStack.top() == Quadruple::I_RESTA || operatorStack.top() == Quadruple::I_SUMA)) {
 		executeOperation();
-	} else if(type == 2 && operatorStack.top() == Quadruple::I_MENOR_QUE ||operatorStack.top() == Quadruple::I_MENOR_IGUAL_QUE ||
+	} else if(type == 2 && (operatorStack.top() == Quadruple::I_MENOR_QUE ||operatorStack.top() == Quadruple::I_MENOR_IGUAL_QUE) ||
 				 operatorStack.top() == Quadruple::I_MAYOR_QUE || operatorStack.top() == Quadruple::I_MAYOR_IGUAL_QUE) {
 		executeOperation();
-	} else if(type == 3 && operatorStack.top() == Quadruple::I_IGUAL || operatorStack.top() == Quadruple::I_NO_IGUAL) {
+	} else if(type == 3 && (operatorStack.top() == Quadruple::I_IGUAL || operatorStack.top() == Quadruple::I_NO_IGUAL)) {
 		executeOperation();
 	} else if(type == 4 && operatorStack.top() == Quadruple::I_AND) {
 		executeOperation();

@@ -91,12 +91,7 @@ void VirtualMachine::callProcedure(int id, int retAddress) {
 	if (procedure->getType() != Quadruple::T_NULL) {
 		retAddresses.push_back(retAddress);
 	}
-	// if (stackPointer + MEM_REQ > memory->getMemory()->size()) {
-	// 	memory->allocateSpace(MEM_REQ);
-	// 	stackPointer = memory->getMemory()->size();
-	// } else {
-		stackPointer += MEM_REQ;
-	// }
+	stackPointer += MEM_REQ;
 
 	vector<VariableRecord> funcParameters = *procedure->getParameters();
 	vector<VariableRecord> funcVariables = *procedure->getVariables();

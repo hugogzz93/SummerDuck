@@ -1,17 +1,3 @@
-g++ -w -std=c++11 -c ErrorHandler.cpp
-g++ -w -std=c++11 -c VariableRecord.cpp	
-g++ -w -std=c++11 -c Quadruple.cpp	
-g++ -w -std=c++11 -c ProcedureRecord.cpp	
-g++ -w -std=c++11 -c ProcedureDirectory.cpp
-g++ -w -std=c++11 -c ProcDirHandler.cpp
-g++ -w -std=c++11 -c SemanticCube.cpp
-g++ -w -std=c++11 -c Memory.cpp	
-g++ -w -std=c++11 -c QuadrupleGenerator.cpp	
-g++ -w -std=c++11 -c VirtualMachine.cpp
-bison -d bison.y
-flex flex.l
-g++ -w -std=c++11 bison.tab.c lex.yy.c  VirtualMachine.o Memory.o Quadruple.o ErrorHandler.o QuadrupleGenerator.o ProcDirHandler.o ProcedureDirectory.o ProcedureRecord.o VariableRecord.o SemanticCube.o -o out
-./out
 getting dos by name for func global
 getting matrix by name for func global
 getting matrixDos by name for func global
@@ -26,7 +12,6 @@ getting mat by name for func modUno
 getting k by name for func modUno
 decision
 getting a by name for func modUno
-asda
 getting a by name for func modUno
 dec ended @@@
 getting b by name for func nulMod
@@ -34,23 +19,6 @@ getting b by name for func nulMod
 getting a by name for func modDos
 getting b by name for func modDos
 getting a by name for func modDos
-getting x by name for func modTres
-getting y by name for func modTres
-getting realUno by name for func modTres
-getting realDos by name for func modTres
-decision
-getting y by name for func modTres
-getting y by name for func modTres
-getting x by name for func modTres
-lala
-realUno
-getting realUno by name for func modTres
-realUno dims: 2
-nots
-asda
-getting y by name for func modTres
-dec ended @@@
-getting x by name for func modTres
 getting a by name for func fibonacci
 getting uno by name for func fibonacci
 getting dos by name for func fibonacci
@@ -69,46 +37,11 @@ getting a by name for func factorial
 getting a by name for func factorial
 getting a by name for func factorial
 dec ended @@@
-getting x by name for func principal
-lala
-x
-ass x
-getting x by name for func principal
-x dims: 1
-inside
-nots
-lala
-x
-ass x
-getting x by name for func principal
-x dims: 1
-inside
-nots
-lala
-x
-ass x
-getting x by name for func principal
-x dims: 1
-inside
-nots
-lala
-x
-getting x by name for func principal
-x dims: 1
-inside
-nots
-lala
-x
-getting x by name for func principal
-x dims: 1
-inside
-nots
-lala
-x
-getting x by name for func principal
-x dims: 1
-inside
-nots
+getting str by name for func principal
+ass str
+getting str by name for func principal
+trimmed hello
+getting str by name for func principal
 accepted
 Function Identifiers
 	3: factorial
@@ -126,21 +59,18 @@ Function Identifiers
 	CHAR strUno (2000)
 	CHAR strDos (2001)
 0 escribe ()
-1413185936 lee ()
+1474556320 lee ()
 1 modUno (ENTERO a (3000), )
 	ENTERO mat (3001)
 	ENTERO k (3010)
 5 nulMod (REAL b (4000), )
 2 modDos (REAL a (4000), ENTERO b (3000), )
-1 modTres (REAL x (4000), REAL y (4001), )
-	REAL realUno (4002)
-	REAL realDos (4008)
-1 fibonacci (REAL a (4000), )
-	REAL uno (4001)
-	REAL dos (4002)
-1 factorial (REAL a (4000), )
+0 fibonacci (ENTERO a (3000), )
+	ENTERO uno (3001)
+	ENTERO dos (3002)
+0 factorial (ENTERO a (3000), )
 0 principal ()
-	REAL x (4000)
+	CHAR str (5000)
 Instructions: global
 Instructions: escribe
 Instructions: lee
@@ -164,81 +94,41 @@ Instructions: modDos
 1 [ -, -14, 10005, -15 ]
 2 [ *, 10003, -15, -16 ]
 3 [ RET, 0, 0, -16 ]
-Instructions: modTres
-0 [ ==, 4001, 10006, -17 ]
-1 [ ==, 4001, 10007, -18 ]
-2 [ !=, 4000, 10008, -19 ]
-3 [ OR, -18, -19, -20 ]
-4 [ AND, -17, -20, -21 ]
-5 [ AND, -21, 10009, -22 ]
-6 [ VER, -22, 2, -1 ]
-7 [ VER, 10010, 3, -1 ]
-8 [ INSRT, 4002, 0, -23 ]
-9 [ INSRT, 3, 0, -25 ]
-10 [ *, -25, -22, -24 ]
-11 [ +, -24, 10010, -26 ]
-12 [ +, -26, -23, -27 ]
-13 [ <, 50027, 10011, -28 ]
-14 [ GOTOF, -28, 0, 17 ]
-15 [ RET, 0, 0, 10012 ]
-16 [ GOTO, 0, 0, 18 ]
-17 [ RET, 0, 0, 4001 ]
-18 [ RET, 0, 0, 4000 ]
 Instructions: fibonacci
-0 [ <=, 4000, 10013, -29 ]
-1 [ GOTOF, -29, 0, 8 ]
-2 [ <=, 4000, 10014, -30 ]
-3 [ GOTOF, -30, 0, 6 ]
-4 [ RET, 0, 0, 10015 ]
+0 [ <=, 3000, 10006, -17 ]
+1 [ GOTOF, -17, 0, 8 ]
+2 [ <=, 3000, 10007, -18 ]
+3 [ GOTOF, -18, 0, 6 ]
+4 [ RET, 0, 0, 10008 ]
 5 [ GOTO, 0, 0, 7 ]
-6 [ RET, 0, 0, 10016 ]
+6 [ RET, 0, 0, 10009 ]
 7 [ GOTO, 0, 0, 18 ]
 8 [ ERA, 2, 0, 0 ]
-9 [ -, 4000, 10017, -31 ]
-10 [ PARAM, -31, 0, 0 ]
-11 [ GOSUB, 2, 0, -32 ]
+9 [ -, 3000, 10010, -19 ]
+10 [ PARAM, -19, 0, 0 ]
+11 [ GOSUB, 2, 0, -20 ]
 12 [ ERA, 2, 0, 0 ]
-13 [ -, 4000, 10018, -33 ]
-14 [ PARAM, -33, 0, 0 ]
-15 [ GOSUB, 2, 0, -34 ]
-16 [ +, -32, -34, -35 ]
-17 [ RET, 0, 0, -35 ]
+13 [ -, 3000, 10011, -21 ]
+14 [ PARAM, -21, 0, 0 ]
+15 [ GOSUB, 2, 0, -22 ]
+16 [ +, -20, -22, -23 ]
+17 [ RET, 0, 0, -23 ]
 Instructions: factorial
-0 [ <=, 4000, 10019, -36 ]
-1 [ GOTOF, -36, 0, 4 ]
-2 [ RET, 0, 0, 4000 ]
+0 [ <=, 3000, 10012, -24 ]
+1 [ GOTOF, -24, 0, 4 ]
+2 [ RET, 0, 0, 3000 ]
 3 [ GOTO, 0, 0, 10 ]
 4 [ ERA, 3, 0, 0 ]
-5 [ -, 4000, 10020, -37 ]
-6 [ PARAM, -37, 0, 0 ]
-7 [ GOSUB, 3, 0, -38 ]
-8 [ *, 4000, -38, -39 ]
-9 [ RET, 0, 0, -39 ]
+5 [ -, 3000, 10013, -25 ]
+6 [ PARAM, -25, 0, 0 ]
+7 [ GOSUB, 3, 0, -26 ]
+8 [ *, 3000, -26, -27 ]
+9 [ RET, 0, 0, -27 ]
 Instructions: principal
-0 [ VER, 10021, 8, -1 ]
-1 [ INSRT, 4000, 0, -40 ]
-2 [ +, 10021, -40, -41 ]
-3 [ =, 10022, 0, 50041 ]
-4 [ VER, 10023, 8, -1 ]
-5 [ INSRT, 4000, 0, -42 ]
-6 [ +, 10023, -42, -43 ]
-7 [ =, 10024, 0, 50043 ]
-8 [ VER, 10025, 8, -1 ]
-9 [ INSRT, 4000, 0, -44 ]
-10 [ +, 10025, -44, -45 ]
-11 [ VER, 10026, 8, -1 ]
-12 [ INSRT, 4000, 0, -46 ]
-13 [ +, 10026, -46, -47 ]
-14 [ VER, 50047, 8, -1 ]
-15 [ INSRT, 4000, 0, -48 ]
-16 [ +, 50047, -48, -49 ]
-17 [ =, 50049, 0, 50045 ]
-18 [ ERA, 1, 0, 0 ]
-19 [ VER, 10027, 8, -1 ]
-20 [ INSRT, 4000, 0, -50 ]
-21 [ +, 10027, -50, -51 ]
-22 [ PARAM, 50051, 0, 0 ]
-23 [ GOSUB, 1, 0, -52 ]
+0 [ =, 10014, 0, 5000 ]
+1 [ ERA, 1, 0, 0 ]
+2 [ PARAM, 5000, 0, 0 ]
+3 [ GOSUB, 1, 0, -28 ]
 constants
 0: int    1
 1: double 4.000000
@@ -246,60 +136,21 @@ constants
 3: int    2
 4: int    50
 5: int    3
-6: int    1
+6: int    2
 7: int    0
-8: double 2.500000
+8: int    0
 9: int    1
-10: int    2
-11: int    5
-12: int    1
-13: int    2
-14: int    0
-15: int    0
-16: int    1
-17: int    1
-18: int    2
-19: int    2
-20: int    1
-21: int    0
-22: double 2.000000
-23: int    1
-24: double 1.000000
-25: int    2
-26: int    1
-27: int    2
+10: int    1
+11: int    2
+12: int    2
+13: int    1
+14: string "hello"
 Starting Virtual Machine...
-Executing: 0 of principal: VER
-Executing: 1 of principal: INSRT
-Executing: 2 of principal: +
-int 4000 = int 0 + int 4000
-Executing: 3 of principal: =
-pointer 50041 pointer fl 0.000000l int 4000
-points to: float 0.000000
-Executing: 4 of principal: VER
-Executing: 5 of principal: INSRT
-Executing: 6 of principal: +
-int 4001 = int 1 + int 4000
-Executing: 7 of principal: =
-pointer 50043 pointer fl 0.000000l int 4001
-points to: float 0.000000
-Executing: 8 of principal: VER
-Executing: 9 of principal: INSRT
-Executing: 10 of principal: +
-int 4002 = int 2 + int 4000
-Executing: 11 of principal: VER
-Executing: 12 of principal: INSRT
-Executing: 13 of principal: +
-int 4001 = int 1 + int 4000
-Executing: 14 of principal: VER
-pointer 50047 pointer fl 0.000000l int 4001
-points to: float 1.000000
-Executing: 15 of principal: INSRT
-Executing: 16 of principal: +
-pointer 50047 pointer fl 0.000000l int 4001
-points to: float 1.000000
-float 4001.000000 = float 1.000000 + int 4000
-Executing: 17 of principal: =
-pointer 50049 pointer fl 0.000000l float 4001.000000
-pointer 1413183696 pointer fl 0.000000l null
-Apuntadores solo deben ser numericos.
+Executing: 0 of principal: =
+Executing: 1 of principal: ERA
+Executing: 2 of principal: PARAM
+Executing: 3 of principal: GOSUB
+@@@@@@@@@@@@@@@@@@@@@@@@@@
+escribe
+"hello"
+Finished Executing
